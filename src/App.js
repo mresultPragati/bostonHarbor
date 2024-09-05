@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import './OverrideStyled.css';
+import { Routes, Route, Router } from "react-router-dom";
+import Dashboard from './dashboard';
+import TopBar from './MenuBar/TopBar';
+import { FinancialForm } from './financialForm/FinancialForm';
+import { AdvisorAnalysis } from './advisorAnalysis/AdvisorAnalysis';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TopBar />
+      <div style={{ padding: "0 5rem 0 5rem" }}>
+        <Routes>
+          <Route path='/' element={<Dashboard />} />
+          <Route path='/financialForm' element={<FinancialForm />} />
+          <Route path='/advisorAnalysis' element={<AdvisorAnalysis />} />
+        </Routes>
+
+      </div>
     </div>
   );
 }
