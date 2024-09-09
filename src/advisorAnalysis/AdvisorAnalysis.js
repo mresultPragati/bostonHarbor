@@ -7,6 +7,8 @@ import { BostonAlertMessage } from "../resusedComponents/BostonAlertMessage";
 import { generateSuggestions } from "../api/apiServiece";
 import { AdvisoryUsingFile } from "./AdvisorUsingFile";
 import { AdvisorUsingText } from "./AdvisorUsingText";
+import { BostonBarChart } from "../resusedComponents/BostonBarChart";
+import { BostonPieChart } from "../resusedComponents/BostonPieChart";
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 // import { CloudIcon } from '@mui/icons-material';
 
@@ -14,6 +16,8 @@ import { AdvisorUsingText } from "./AdvisorUsingText";
 export const AdvisorAnalysis = () => {
     const [assessmentFile, setAssessmentFile] = useState(null);
     const [financialFile, setFinancialFile] = useState(null);
+    const [barChartData, setBarChartData] = useState(null);
+    const [pieChartData, setPieChartData] = useState(null);
     const [investMentValue, setInvestMentValue] = useState('SuggestInvestments');
     const [investorPersonalityVal, setInvestorPersonalityVal] = useState('');
     const [htmlResponse, setHtmlResponse] = useState('');
@@ -54,14 +58,19 @@ export const AdvisorAnalysis = () => {
         formData.append('assessmentFile', assessmentFile);
 
         console.log(assessmentFile, financialFile);
-        const resp = generateSuggestions(formData, "multipart/form-data");
+        const resp =await generateSuggestions(formData, "multipart/form-data");
 
         const result = resp?.data
+        console.log("resultt",result,resp);
+        
         if (result?.status === 200) {
             setShowLoader(false);
             setAlertMsg({ msg: result?.message, severity: "success" });
             setHtmlResponse(result?.investmentSuggestions);
+            setBarChartData(result?.barChartData);
+            setPieChartData(result?.pieChartData);
         } else {
+            setShowLoader(false)
             setAlertMsg({ msg: result?.message, severity: "error" });
             console.log(result);
         }
@@ -111,6 +120,9 @@ export const AdvisorAnalysis = () => {
 
             {/* -----------------------------Investment Suggestion---------------------- */}
             <div className="mt-5" style={{ textAlign: "start" }} dangerouslySetInnerHTML={{ __html: htmlResponse }} />
+       <BostonBarChart data={barChartData}/>
+       <BostonPieChart data={pieChartData}/>
+       
         </>
     )
 }

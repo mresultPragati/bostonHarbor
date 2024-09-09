@@ -14,7 +14,7 @@ export const BostonAlertMessage = (props) => {
         open={alertMsg.msg}
         autoHideDuration={3000} // 3 seconds
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }} // Position of the popup
+        anchorOrigin={{ vertical: "top", horizontal: "end" }} // Position of the popup
       >
         <Alert
           onClose={handleClose}
