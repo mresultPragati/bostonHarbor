@@ -17,9 +17,10 @@ export const BostonAlertMessage = (props) => {
         anchorOrigin={{ vertical: "top", horizontal: "end" }} // Position of the popup
       >
         <Alert
+          variant="filled"
           onClose={handleClose}
           severity={alertMsg?.severity}
-          sx={{ width: "100%" }}
+          sx={{ width: "50%" }}
         >
           {alertMsg?.msg}
         </Alert>

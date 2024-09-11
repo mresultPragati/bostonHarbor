@@ -1,140 +1,147 @@
-import { Box, Button, Checkbox, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { BostonClientLabel } from "../FinancialStyle";
 
-export const RetirementGoalForm = (props) => {
+export const InsuranceCoverage = (props) => {
   const { handleInputChange, formData } = props;
-
-  const handleChange = (e) => {
-    handleInputChange(e);
-  };
-
   return (
     <>
-      {/* --------------------------------YOUR RETIREMENT GOAL--------------------------- */}
-      <h5 className="mt-4">YOUR RETIREMENT GOAL</h5>
+      {" "}
+      {/* --------------------------------INSURANCE COVERAGE: Your protected Plan--------------------------- */}
       <div>
-        <tr className="row">
-          <td className="col-8"></td>
-          <td className="col-2">
-            {" "}
-            <label> Client</label>
+        <tr className="row mt-5">
+          <td className="col-8">
+            <BostonClientLabel>INSURANCE COVERAGE:</BostonClientLabel>
           </td>
           <td className="col-2">
             {" "}
-            <label>Co-Client</label>
+            <label> Benefit</label>
+          </td>
+          <td className="col-2">
+            {" "}
+            <label>Monthly Payment</label>
           </td>
         </tr>
+
         <tr className="row mt-2">
-          <BostonClientLabel className="col-8 mr-2">
-            When do you plan to retire? (age or date)
+          <BostonClientLabel className="col-8 ">
+            Life Insurance - client
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="retireAgeClient"
-              value={formData.retireAgeClient}
-              onChange={(e) => handleChange(e)}
+              name="benefitLIClient"
+              value={formData.benefitLIClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
+
           <td className="col-2">
             <TextField
               variant="standard"
-              name="retireAgeCoClient"
-              value={formData.retireAgeCoClient}
-              onChange={(e) => handleChange(e)}
-              fullWidth
-            />
-          </td>
-        </tr>
-        <tr className="row mt-2">
-          <BostonClientLabel className="col-8 mr-2">
-            Social Security Benefit (include expected start date)
-          </BostonClientLabel>
-          <td className="col-2">
-            <TextField
-              variant="standard"
-              name="socialBenefitClient"
-              value={formData.socialBenefitClient}
-              onChange={(e) => handleChange(e)}
-              fullWidth
-            />
-          </td>
-          <td className="col-2">
-            <TextField
-              variant="standard"
-              name="socialBenefitCoClient"
-              value={formData.socialBenefitCoClient}
-              onChange={(e) => handleChange(e)}
+              name="monthlyPayLIClient"
+              value={formData.monthlyPayLIClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
         </tr>
+
         <tr className="row mt-2">
           <BostonClientLabel className="col-8 mr-2">
-            Pension Benefit (include expected start date)
+            Life Insurance - co-client
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="pensionBenefitClient"
-              value={formData.pensionBenefitClient}
-              onChange={(e) => handleChange(e)}
+              name="benefitLICoClient"
+              value={formData.benefitLICoClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
+
           <td className="col-2">
             <TextField
               variant="standard"
-              name="pensionBenefitCoClient"
-              value={formData.pensionBenefitCoClient}
-              onChange={(e) => handleChange(e)}
+              name="monthlyPayLICoClient"
+              value={formData.monthlyPayLICoClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
         </tr>
+
         <tr className="row mt-2">
           <BostonClientLabel className="col-8 mr-2">
-            Other Expected Income (rental, part-time work, etc.)
+            Disability Income - client
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="otherIncomeClient"
-              value={formData.otherIncomeClient}
-              onChange={(e) => handleChange(e)}
+              name="benefitDisableClient"
+              value={formData.benefitDisableClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
+
           <td className="col-2">
             <TextField
               variant="standard"
-              name="otherIncomeCoClient"
-              value={formData.otherIncomeCoClient}
-              onChange={(e) => handleChange(e)}
+              name="monthlyPayDisableClient"
+              value={formData.monthlyPayDisableClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
         </tr>
+
         <tr className="row mt-2">
           <BostonClientLabel className="col-8 mr-2">
-            Estimated Annual Retirement Expense ($ or % of current salary)
+            Disability Income - co-client
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="annualRetireClient"
-              value={formData.annualRetireClient}
-              onChange={(e) => handleChange(e)}
+              name="benefitDisableCoClient"
+              value={formData.benefitDisableCoClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>
+
           <td className="col-2">
             <TextField
               variant="standard"
-              name="annualRetireCoClient"
-              value={formData.annualRetireCoClient}
-              onChange={(e) => handleChange(e)}
+              name="monthlyPayDisableCoClient"
+              value={formData.monthlyPayDisableCoClient}
+              onChange={(e) => handleInputChange(e)}
+              fullWidth
+            />
+          </td>
+        </tr>
+
+        <tr className="row mt-2">
+          <BostonClientLabel className="col-8 mr-2">
+            Long-term care - client
+          </BostonClientLabel>
+          <td className="col-2">
+            <TextField
+              variant="standard"
+              name="benefitLongTermClient"
+              value={formData.benefitLongTermClient}
+              onChange={(e) => handleInputChange(e)}
+              fullWidth
+            />
+          </td>
+
+          <td className="col-2">
+            <TextField
+              variant="standard"
+              name="monthlyPayLongTermClient"
+              value={formData.monthlyPayLongTermClient}
+              onChange={(e) => handleInputChange(e)}
               fullWidth
             />
           </td>

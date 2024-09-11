@@ -9,8 +9,8 @@ import { AdvisoryUsingFile } from "./AdvisorUsingFile";
 import { AdvisorUsingText } from "./AdvisorUsingText";
 import { BostonBarChart } from "../resusedComponents/BostonBarChart";
 import { BostonPieChart } from "../resusedComponents/BostonPieChart";
-// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-// import { CloudIcon } from '@mui/icons-material';
+import { extractHtmlContent } from "./constants/AdvisorContant";
+
 
 
 export const AdvisorAnalysis = () => {
@@ -27,30 +27,6 @@ export const AdvisorAnalysis = () => {
         severity: ""
     });
 
-    // const handleInvestmentChange = (event) => {
-    //     setInvestMentValue(event.target.value);
-    // };
-
-    // const handleInvestorChange = (event) => {
-    //     setInvestorPersonalityVal(event.target.value);
-    // };
-
-    // const handleAssessmentFileChange = (event) => {
-    //     const file = event?.target?.files?.[0];
-    //     console.log("Selected file:", file, event);
-    //     if (file) {
-    //         setAssessmentFile(file);
-    //     }
-    // };
-
-    // const handleFinancialFileChange = (event) => {
-    //     const file = event?.target?.files?.[0];
-    //     console.log("Selected file:", file);
-    //     if (file) {
-    //         setFinancialFile(file);
-    //     }
-    // };
-
     const handleUploadClick = async () => {
         setShowLoader(true)
         const formData = new FormData();
@@ -58,11 +34,11 @@ export const AdvisorAnalysis = () => {
         formData.append('assessmentFile', assessmentFile);
 
         console.log(assessmentFile, financialFile);
-        const resp =await generateSuggestions(formData, "multipart/form-data");
+        const resp = await generateSuggestions(formData, "multipart/form-data");
 
         const result = resp?.data
-        console.log("resultt",result,resp);
-        
+        console.log("resultt", result, resp);
+
         if (result?.status === 200) {
             setShowLoader(false);
             setAlertMsg({ msg: result?.message, severity: "success" });
@@ -72,37 +48,10 @@ export const AdvisorAnalysis = () => {
         } else {
             setShowLoader(false)
             setAlertMsg({ msg: result?.message, severity: "error" });
-            console.log(result);
         }
-
-        // try {
-        //     const res = await axios.post('http://127.0.0.1:5000/generate-investment-suggestions', formData, {
-        //         headers: {
-        //             'Content-Type': 'multipart/form-data'  // Important to handle file uploads
-        //         }
-        //     });
-
-        //     setShowLoader(true)
-        //     const result = res?.data;
-        //     console.log("result", result);
-        //     if (result?.status === 200) {
-        //         setShowLoader(false)
-        //         setAlertMsg(result?.message)
-        //         setHtmlResponse(result?.investmentSuggestions)
-        //     } else {
-        //         console.log(result);
-
-        //     }
-
-        // } catch (error) {
-        //     console.error("Error:", error);
-        //     // alert(Error: ${error.response ? error.response.data.message : 'Unknown error'});
-        // }
-
-
     };
-    
-    
+
+
     return (
         <>
             <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
@@ -119,10 +68,38 @@ export const AdvisorAnalysis = () => {
             <Button className="mt-5" variant="contained" onClick={() => handleUploadClick()}>Generate Investment Suggestion</Button>
 
             {/* -----------------------------Investment Suggestion---------------------- */}
-            <div className="mt-5" style={{ textAlign: "start" }} dangerouslySetInnerHTML={{ __html: htmlResponse }} />
-       <BostonBarChart data={barChartData}/>
-       <BostonPieChart data={pieChartData}/>
-       
+
+            <div className="mt-5 mb-5" style={{ textAlign: "start" }}>
+                <div className="mt-5"
+                    style={{ textAlign: "start" }}
+                    dangerouslySetInnerHTML={{ __html: extractHtmlContent(htmlResponse, "Investment Allocation:", "Percentage Allocation for Conservative Investments:").initial }}
+                />
+
+                <div className="row">
+                    <div className="col-7">
+                        {/* <div style={{ display: "block", flex: 2, }}> */}
+                        <div className="mt-5"
+                            style={{ textAlign: "start" }}
+                            dangerouslySetInnerHTML={{ __html: extractHtmlContent(htmlResponse, "Investment Allocation:", "Percentage Allocation for Conservative Investments:").extracted }}
+                        />
+                        {/* {parse(extracted)} */}
+                    </div>
+                    <div className="col-5" style={{ flex: 1, padding: "6rem 0 0 2rem" }}>
+                        <BostonPieChart data={pieChartData} />
+                    </div>
+                </div>
+
+                {/* ---------------------------------------------*/}
+
+                <BostonBarChart data={barChartData} />
+                <div className="mt-5"
+                    style={{ textAlign: "start" }}
+                    dangerouslySetInnerHTML={{ __html: extractHtmlContent(htmlResponse, "Investment Allocation:", "Percentage Allocation for Conservative Investments:").remainingHtml }}
+                />
+
+                {/*  {parse(remainingHtml)} */}
+
+            </div>
         </>
     )
 }

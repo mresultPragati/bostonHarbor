@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { BostonFileName } from "./AdvisorStyled";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 
 export const AdvisoryUsingFile = (props) => {
   const { assessmentFile, setAssessmentFile, financialFile, setFinancialFile } =
@@ -7,7 +8,6 @@ export const AdvisoryUsingFile = (props) => {
 
   const handleAssessmentFileChange = (event) => {
     const file = event?.target?.files?.[0];
-    // console.log("Selected file:", file, event);
     if (file) {
       setAssessmentFile(file);
     }
@@ -15,7 +15,6 @@ export const AdvisoryUsingFile = (props) => {
 
   const handleFinancialFileChange = (event) => {
     const file = event?.target?.files?.[0];
-    // console.log("Selected file:", file);
     if (file) {
       setFinancialFile(file);
     }
@@ -30,7 +29,7 @@ export const AdvisoryUsingFile = (props) => {
             variant="outlined"
             style={{ color: "#002a4a" }}
             tabIndex={-1}
-            // startIcon={<CloudIcon />}
+            startIcon={<CloudUploadOutlinedIcon />}
           >
             Upload Assessment Document
             <input
@@ -39,7 +38,6 @@ export const AdvisoryUsingFile = (props) => {
               type="file"
               onChange={(event) => {
                 handleAssessmentFileChange(event);
-                console.log("file", event, event?.target?.files);
               }}
               // multiple
             />
@@ -53,7 +51,7 @@ export const AdvisoryUsingFile = (props) => {
             variant="outlined"
             style={{ color: "#002a4a" }}
             tabIndex={-1}
-            // startIcon={<CloudIcon />}
+            startIcon={<CloudUploadOutlinedIcon />}
           >
             Upload Financial Document
             <input

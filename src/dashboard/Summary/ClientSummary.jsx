@@ -24,7 +24,7 @@ const ClientSummary = () => {
         <TextField size="small" placeholder="Search" />
       </div>
       <ClientSummaryTable summaryData={summaryData} />
-      <BostonPaginationElement />
+      {/* <BostonPaginationElement /> */}
     </SummaryContainer>
   );
 };

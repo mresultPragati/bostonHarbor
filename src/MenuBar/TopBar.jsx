@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ClientSummary from "../dashboard/Summary/ClientSummary";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { navigatorPath } from "./constant/TopBarConst";
 // import { BostonTopBar } from "./TopBarStyled";
 
 const BostonTopBar = styled.div`
@@ -21,18 +22,17 @@ const BostonTopBar = styled.div`
 `;
 
 const pages = [
-  { name: "Dashboard", path: "/" },
-  { name: "Financial Form", path: "/financialForm" },
-  { name: "Investor Assessment", path: "/" },
-  { name: "Advisor Analysis", path: "/advisorAnalysis" },
+  { name: "Dashboard", path: navigatorPath?.dashboard },
+  { name: "Financial Form", path: navigatorPath?.financialForm },
+  { name: "Investor Assessment", path: navigatorPath?.InvestmentPersonality },
+  { name: "Advisor Analysis", path: navigatorPath?.advisorAnalysis },
 ];
 const settings = ["Profile", "Logout"];
 
 const TopBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  // (useState < null) | (HTMLElement > null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  // (useState < null) | (HTMLElement > null);
+  const locationPath = window?.location?.pathname;
 
   const navigate = useNavigate();
 
@@ -87,6 +87,7 @@ const TopBar = () => {
             >
               <img
                 height={30}
+                alt="bostonLogo"
                 src={"http://bostonharborwealth.com/img/logo-main-blue.png"}
               />
               {/* BOSTON HARBOR */}
@@ -101,7 +102,21 @@ const TopBar = () => {
                 <Button
                   key={page}
                   onClick={() => handlePageMenu(page.path)}
-                  sx={{ my: 2, color: "#002a4a", display: "block" }}
+                  sx={{
+                    height: "4rem",
+                    // my: 2,
+                    // color: "#002a4a",
+                    display: "block",
+                    boxShadow:
+                      locationPath === page.path
+                        ? "0 7px 0 -1px #1d7ad7db"
+                        : "",
+                    color:
+                      locationPath === page.path
+                        ? "0 7px 0 0 #1f5b95"
+                        : "#002a4a",
+                    fontSize: locationPath === page.path ? "14px" : "12.5px",
+                  }}
                 >
                   {page.name}
                 </Button>
@@ -171,7 +186,7 @@ const TopBar = () => {
             </Typography>
             {/* ---------------------------End Small screen-------------- */}
 
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, marginLeft: "1rem" }}>
               {/* <Tooltip title="Open settings"> */}
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Profile" />
