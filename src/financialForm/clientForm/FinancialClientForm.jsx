@@ -10,7 +10,7 @@ export const ClientForm = (props) => {
             variant="standard"
             label="Client Name"
             name="clientName"
-            value={formData.clientName}
+            value={formData?.clientDetail?.clientName}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             required
@@ -21,7 +21,7 @@ export const ClientForm = (props) => {
             label="Mobile No."
             variant="standard"
             name="clientMoNo"
-            value={formData.clientMoNo}
+            value={formData?.clientDetail?.clientMoNo}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             required
@@ -32,7 +32,7 @@ export const ClientForm = (props) => {
             label="Age"
             variant="standard"
             name="clientAge"
-            value={formData.clientAge}
+            value={formData?.clientDetail?.clientAge}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             required
@@ -46,7 +46,7 @@ export const ClientForm = (props) => {
             variant="standard"
             label=" Co-Client Name "
             name="coClientName"
-            value={formData.coClientName}
+            value={formData?.clientDetail?.coClientName}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             // required
@@ -57,7 +57,7 @@ export const ClientForm = (props) => {
             label="Mobile No."
             variant="standard"
             name="coMobileNo"
-            value={formData.coMobileNo}
+            value={formData?.clientDetail?.coMobileNo}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             // required
@@ -68,7 +68,7 @@ export const ClientForm = (props) => {
             label="Age"
             variant="standard"
             name="coClientAge"
-            value={formData.coClientAge}
+            value={formData?.clientDetail?.coClientAge}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             // required

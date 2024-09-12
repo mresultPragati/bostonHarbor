@@ -30,7 +30,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="benefitLIClient"
-              value={formData.benefitLIClient}
+              value={
+                formData?.insuranceCoverage?.lifeInsuranceClient
+                  ?.benefitLIClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -40,7 +43,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="monthlyPayLIClient"
-              value={formData.monthlyPayLIClient}
+              value={
+                formData?.insuranceCoverage?.lifeInsuranceClient
+                  ?.monthlyPayLIClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -55,7 +61,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="benefitLICoClient"
-              value={formData.benefitLICoClient}
+              value={
+                formData?.insuranceCoverage?.lifeInsuranceCoClient
+                  ?.benefitLICoClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -65,7 +74,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="monthlyPayLICoClient"
-              value={formData.monthlyPayLICoClient}
+              value={
+                formData?.insuranceCoverage?.lifeInsuranceCoClient
+                  ?.monthlyPayLICoClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -80,7 +92,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="benefitDisableClient"
-              value={formData.benefitDisableClient}
+              value={
+                formData?.insuranceCoverage?.disableIncomeClient
+                  ?.benefitDisableClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -90,7 +105,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="monthlyPayDisableClient"
-              value={formData.monthlyPayDisableClient}
+              value={
+                formData?.insuranceCoverage?.disableIncomeClient
+                  ?.monthlyPayDisableClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -105,7 +123,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="benefitDisableCoClient"
-              value={formData.benefitDisableCoClient}
+              value={
+                formData?.insuranceCoverage?.disableIncomeCoClient
+                  ?.benefitDisableCoClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -115,7 +136,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="monthlyPayDisableCoClient"
-              value={formData.monthlyPayDisableCoClient}
+              value={
+                formData?.insuranceCoverage?.disableIncomeCoClient
+                  ?.monthlyPayDisableCoClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -130,7 +154,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="benefitLongTermClient"
-              value={formData.benefitLongTermClient}
+              value={
+                formData?.insuranceCoverage?.longTermCoClient
+                  ?.benefitLongTermClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -140,7 +167,10 @@ export const InsuranceCoverage = (props) => {
             <TextField
               variant="standard"
               name="monthlyPayLongTermClient"
-              value={formData.monthlyPayLongTermClient}
+              value={
+                formData?.insuranceCoverage?.longTermCoClient
+                  ?.monthlyPayLongTermClient
+              }
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />

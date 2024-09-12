@@ -20,7 +20,7 @@ export const AdvisorAnalysis = () => {
     const [barChartData, setBarChartData] = useState(null);
     const [pieChartData, setPieChartData] = useState(null);
     const [lineChartData, setLineChartData] = useState(null);
-    const [investMentValue, setInvestMentValue] = useState('SuggestInvestments');
+    const [investMentValue, setInvestMentValue] = useState('Suggest Investments');
     const [investorPersonalityVal, setInvestorPersonalityVal] = useState('');
     const [htmlResponse, setHtmlResponse] = useState('');
     const [showLoader, setShowLoader] = useState(false);
@@ -28,8 +28,11 @@ export const AdvisorAnalysis = () => {
         msg: "",
         severity: ""
     });
+    const [selectedClient, setSelectedClient] = useState({});
 
     const handleUploadClick = async () => {
+        console.log("DATATA", investMentValue, selectedClient, investorPersonalityVal);
+
         setShowLoader(true)
         const formData = new FormData();
         formData.append('financialFile', financialFile);
@@ -60,7 +63,10 @@ export const AdvisorAnalysis = () => {
             <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
             {showLoader && <BostonLoader />}
 
-            <AdvisorUsingText investorPersonalityVal={investorPersonalityVal} investMentValue={investMentValue} setInvestMentValue={setInvestMentValue} setInvestorPersonalityVal={setInvestorPersonalityVal} />
+            <AdvisorUsingText investorPersonalityVal={investorPersonalityVal}
+                setSelectedClient={setSelectedClient} investMentValue={investMentValue}
+                setInvestMentValue={setInvestMentValue}
+                setInvestorPersonalityVal={setInvestorPersonalityVal} />
             <div className="d-flex  justify-content-center mt-5 mb-5">
 
                 <hr style={{ width: "30%" }} />
@@ -68,7 +74,11 @@ export const AdvisorAnalysis = () => {
                 <hr style={{ width: "30%" }} />
             </div>
             <AdvisoryUsingFile assessmentFile={assessmentFile} setAssessmentFile={setAssessmentFile} financialFile={financialFile} setFinancialFile={setFinancialFile} />
-            <Button className="mt-5" variant="contained" onClick={() => handleUploadClick()}>Generate Investment Suggestion</Button>
+            <Button className="mt-5" variant="contained"
+                // disabled={(!assessmentFile || !financialFile) &&
+                //     (!selectedClient?.uniqueId ||
+                //         !selectedClient?.clientDetail?.clientName || !investMentValue)}
+                onClick={() => handleUploadClick()}>Generate Investment Suggestion</Button>
 
             {/* -----------------------------Investment Suggestion---------------------- */}
 
@@ -99,7 +109,7 @@ export const AdvisorAnalysis = () => {
                     style={{ textAlign: "start" }}
                     dangerouslySetInnerHTML={{ __html: extractHtmlContent(htmlResponse, "Investment Allocation:", "Percentage Allocation for Conservative Investments:").remainingHtml }}
                 />
-                 <BostonLineChart data={lineChartData}/>
+                <BostonLineChart data={lineChartData} />
                 {/*  {parse(remainingHtml)} */}
 
             </div>

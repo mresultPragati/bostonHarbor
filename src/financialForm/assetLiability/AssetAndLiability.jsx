@@ -35,7 +35,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentLibKb"
-                value={formData.currentLibKb}
+                value={formData?.assetsLiabilities?.assetLibKB?.currentLibKb}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -45,7 +45,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualLibKb"
-                value={formData.annualLibKb}
+                value={formData?.assetsLiabilities?.assetLibKB?.annualLibKb}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -60,7 +60,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentLibIRAs"
-                value={formData.currentLibIRAs}
+                value={
+                  formData?.assetsLiabilities?.assetLibSimpIRAS?.currentLibIRAs
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -70,7 +72,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualLibIRAs"
-                value={formData.annualLibIRAs}
+                value={
+                  formData?.assetsLiabilities?.assetLibSimpIRAS?.annualLibIRAs
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -85,7 +89,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentIRA"
-                value={formData.currentIRA}
+                value={formData?.assetsLiabilities?.assetLibIRA?.currentIRA}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -95,7 +99,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualIRA"
-                value={formData.annualIRA}
+                value={formData?.assetsLiabilities?.assetLibIRA?.annualIRA}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -110,7 +114,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentLibAcc"
-                value={formData.currentLibAcc}
+                value={formData?.assetsLiabilities?.assetLibAcc?.currentLibAcc}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -120,7 +124,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualLibAcc"
-                value={formData.annualLibAcc}
+                value={formData?.assetsLiabilities?.assetLibAcc?.annualLibAcc}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -135,7 +139,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentCashAcc"
-                value={formData.currentCashAcc}
+                value={
+                  formData?.assetsLiabilities?.assetLibCashAcc?.currentCashAcc
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -145,7 +151,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualCashAcc"
-                value={formData.annualCashAcc}
+                value={
+                  formData?.assetsLiabilities?.assetLibCashAcc?.annualCashAcc
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -159,7 +167,10 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentAnnuities"
-                value={formData.currentAnnuities}
+                value={
+                  formData?.assetsLiabilities?.assetLibAnnuities
+                    ?.currentAnnuities
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -169,7 +180,10 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualAnnuities"
-                value={formData.annualAnnuities}
+                value={
+                  formData?.assetsLiabilities?.assetLibAnnuities
+                    ?.annualAnnuities
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -183,7 +197,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="current529Plan"
-                value={formData.current529Plan}
+                value={
+                  formData?.assetsLiabilities?.assetLib529Plan?.current529Plan
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -193,7 +209,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annual529Plan"
-                value={formData.annual529Plan}
+                value={
+                  formData?.assetsLiabilities?.assetLib529Plan?.annual529Plan
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -205,7 +223,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentLibHome"
-                value={formData.currentLibHome}
+                value={
+                  formData?.assetsLiabilities?.assetLibHome?.currentLibHome
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -215,7 +235,7 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualLibHome"
-                value={formData.annualLibHome}
+                value={formData?.assetsLiabilities?.assetLibHome?.annualLibHome}
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -229,7 +249,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentEstate"
-                value={formData.currentEstate}
+                value={
+                  formData?.assetsLiabilities?.assetLibEstate?.currentEstate
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -239,7 +261,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualEstate"
-                value={formData.annualEstate}
+                value={
+                  formData?.assetsLiabilities?.assetLibEstate?.annualEstate
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -253,7 +277,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentBusiness"
-                value={formData.currentBusiness}
+                value={
+                  formData?.assetsLiabilities?.assetLibBusiness?.currentBusiness
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -263,7 +289,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualBusiness"
-                value={formData.annualBusiness}
+                value={
+                  formData?.assetsLiabilities?.assetLibBusiness?.annualBusiness
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -277,7 +305,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="currentOtherLib"
-                value={formData.currentOtherLib}
+                value={
+                  formData?.assetsLiabilities?.assetLibOther?.currentOtherLib
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />
@@ -287,7 +317,9 @@ export const AssetAndLiability = (props) => {
               <TextField
                 variant="standard"
                 name="annualOtherLib"
-                value={formData.annualOtherLib}
+                value={
+                  formData?.assetsLiabilities?.assetLibOther?.annualOtherLib
+                }
                 onChange={(e) => handleInputChange(e)}
                 fullWidth
               />

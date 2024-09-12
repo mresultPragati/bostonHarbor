@@ -22,77 +22,101 @@ export const finalDataToSet = (obj) => {
   } = obj;
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
 
-  var assetLibKB = {
-    currentLibKb: formData?.currentLibKb || "",
-    annualLibKb: formData?.annualLibKb || "",
+  var clientDetail = {
+    clientName: formData?.clientName || "",
+    clientMoNo: formData?.clientMoNo || "",
+    clientAge: formData?.clientAge || "",
+    coClientName: formData?.coClientName || "",
+    coMobileNo: formData?.coMobileNo || "",
+    coClientAge: formData?.coClientAge || "",
   };
 
-  var assetLibSimpIRAS = {
-    currentLibIRAs: formData?.currentLibIRAs || "",
-    annualLibIRAs: formData?.annualLibIRAs || "",
+  var retirementGoal = {
+    retirementPlan: {
+      retirementAgeClient: formData?.retirementAgeClient || "",
+      retirementAgeCoClient: formData?.retirementAgeCoClient || "",
+    },
+    socialBenefit: {
+      socialBenefitClient: formData?.socialBenefitClient || "",
+      socialBenefitCoClient: formData?.socialBenefitCoClient || "",
+    },
+    pensionBenefit: {
+      pensionBenefitClient: formData?.pensionBenefitClient || "",
+      pensionBenefitCoClient: formData?.pensionBenefitCoClient || "",
+    },
+    otherIncome: {
+      otherIncomeClient: formData?.otherIncomeClient || "",
+      otherIncomeCoClient: formData?.otherIncomeCoClient || "",
+    },
+    annualRetirement: {
+      annualRetireClient: formData?.annualRetireClient || "",
+      annualRetireCoClient: formData?.annualRetireCoClient || "",
+    },
   };
 
-  var assetLibIRA = {
-    currentIRA: formData?.currentIRA || "",
-    annualIRA: formData?.annualIRA || "",
+  var assetsLiabilities = {
+    assetLibKB: {
+      currentLibKb: formData?.currentLibKb || "",
+      annualLibKb: formData?.annualLibKb || "",
+    },
+    assetLibSimpIRAS: {
+      currentLibIRAs: formData?.currentLibIRAs || "",
+      annualLibIRAs: formData?.annualLibIRAs || "",
+    },
+    assetLibIRA: {
+      currentIRA: formData?.currentIRA || "",
+      annualIRA: formData?.annualIRA || "",
+    },
+    assetLibAcc: {
+      currentLibAcc: formData?.currentLibAcc || "",
+      annualLibAcc: formData?.annualLibAcc || "",
+    },
+    assetLibCashAcc: {
+      currentCashAcc: formData?.currentCashAcc || "",
+      annualCashAcc: formData?.annualCashAcc || "",
+    },
+    assetLibAnnuities: {
+      currentAnnuities: formData?.currentAnnuities || "",
+      annualAnnuities: formData?.annualAnnuities || "",
+    },
+    assetLib529Plan: {
+      current529Plan: formData?.current529Plan || "",
+      annual529Plan: formData?.annual529Plan || "",
+    },
+    assetLibHome: {
+      currentLibHome: formData?.currentLibHome || "",
+      annualLibHome: formData?.annualLibHome || "",
+    },
+    assetLibEstate: {
+      currentEstate: formData?.currentEstate || "",
+      annualEstate: formData?.annualEstate || "",
+    },
+    assetLibBusiness: {
+      currentBusiness: formData?.currentBusiness || "",
+      annualBusiness: formData?.annualBusiness || "",
+    },
+    assetLibOther: {
+      currentOtherLib: formData?.currentOtherLib || "",
+      annualOtherLib: formData?.annualOtherLib || "",
+    },
   };
 
-  var assetLibAcc = {
-    currentLibAcc: formData?.currentLibAcc || "",
-    annualLibAcc: formData?.annualLibAcc || "",
-  };
-
-  var assetLibCashAcc = {
-    currentCashAcc: formData?.currentCashAcc || "",
-    annualCashAcc: formData?.annualCashAcc || "",
-  };
-
-  var assetLibAnnuities = {
-    currentAnnuities: formData?.currentAnnuities || "",
-    annualAnnuities: formData?.annualAnnuities || "",
-  };
-
-  var assetLib529Plan = {
-    current529Plan: formData?.current529Plan || "",
-    annual529Plan: formData?.annual529Plan || "",
-  };
-
-  var assetLibHome = {
-    currentLibHome: formData?.currentLibHome || "",
-    annualLibHome: formData?.annualLibHome || "",
-  };
-
-  var assetLibEstate = {
-    currentEstate: formData?.currentEstate || "",
-    annualEstate: formData?.annualEstate || "",
-  };
-
-  var assetLibBusiness = {
-    currentBusiness: formData?.currentBusiness || "",
-    annualBusiness: formData?.annualBusiness || "",
-  };
-
-  var assetLibOther = {
-    currentOtherLib: formData?.currentOtherLib || "",
-    annualOtherLib: formData?.annualOtherLib || "",
-  };
-
-  var liabilityKb = {
-    libBalanceBk: formData?.libBalanceBk || "",
-    libInterestRateKb: formData?.libInterestRateKb || "",
-    libMonthlyPayKb: formData?.libMonthlyPayKb || "",
-  };
-
-  var liabilitySimpIRAs = {
-    libBalanceIRAs: formData?.libBalanceIRAs || "",
-    libInterestRateIRAs: formData?.libInterestRateIRAs || "",
-    libMonthlyPayIRAs: formData?.libMonthlyPayIRAs || "",
-  };
-
-  var liabilityIRA = {
-    balanceIRA: formData?.balanceIRA || "",
-    interestRateIRA: formData?.interestRateIRA || "",
-    monthlyPayIRA: formData?.monthlyPayIRA || "",
+  var myLiabilities = {
+    liabilityKb: {
+      libBalanceBk: formData?.libBalanceBk || "",
+      libInterestRateKb: formData?.libInterestRateKb || "",
+      libMonthlyPayKb: formData?.libMonthlyPayKb || "",
+    },
+    liabilitySimpIRAs: {
+      libBalanceIRAs: formData?.libBalanceIRAs || "",
+      libInterestRateIRAs: formData?.libInterestRateIRAs || "",
+      libMonthlyPayIRAs: formData?.libMonthlyPayIRAs || "",
+    },
+    liabilityIRA: {
+      balanceIRA: formData?.balanceIRA || "",
+      interestRateIRA: formData?.interestRateIRA || "",
+      monthlyPayIRA: formData?.monthlyPayIRA || "",
+    },
   };
 
   var protectionPlan = {
@@ -103,61 +127,126 @@ export const finalDataToSet = (obj) => {
     checkAttorney: formData?.checkAttorney ? formData?.checkAttorney : false,
     checkTrust: formData?.checkTrust ? formData?.checkTrust : false,
   };
+
+  // var assetLibKB = {
+  //   currentLibKb: formData?.currentLibKb || "",
+  //   annualLibKb: formData?.annualLibKb || "",
+  // };
+
+  // var assetLibSimpIRAS = {
+  //   currentLibIRAs: formData?.currentLibIRAs || "",
+  //   annualLibIRAs: formData?.annualLibIRAs || "",
+  // };
+
+  // var assetLibIRA = {
+  //   currentIRA: formData?.currentIRA || "",
+  //   annualIRA: formData?.annualIRA || "",
+  // };
+
+  // var assetLibAcc = {
+  //   currentLibAcc: formData?.currentLibAcc || "",
+  //   annualLibAcc: formData?.annualLibAcc || "",
+  // };
+
+  // var assetLibCashAcc = {
+  //   currentCashAcc: formData?.currentCashAcc || "",
+  //   annualCashAcc: formData?.annualCashAcc || "",
+  // };
+
+  // var assetLibAnnuities = {
+  //   currentAnnuities: formData?.currentAnnuities || "",
+  //   annualAnnuities: formData?.annualAnnuities || "",
+  // };
+
+  // var assetLib529Plan = {
+  //   current529Plan: formData?.current529Plan || "",
+  //   annual529Plan: formData?.annual529Plan || "",
+  // };
+
+  // var assetLibHome = {
+  //   currentLibHome: formData?.currentLibHome || "",
+  //   annualLibHome: formData?.annualLibHome || "",
+  // };
+
+  // var assetLibEstate = {
+  //   currentEstate: formData?.currentEstate || "",
+  //   annualEstate: formData?.annualEstate || "",
+  // };
+
+  // var assetLibBusiness = {
+  //   currentBusiness: formData?.currentBusiness || "",
+  //   annualBusiness: formData?.annualBusiness || "",
+  // };
+
+  // var assetLibOther = {
+  //   currentOtherLib: formData?.currentOtherLib || "",
+  //   annualOtherLib: formData?.annualOtherLib || "",
+  // };
+
+  // var liabilityKb = {
+  //   libBalanceBk: formData?.libBalanceBk || "",
+  //   libInterestRateKb: formData?.libInterestRateKb || "",
+  //   libMonthlyPayKb: formData?.libMonthlyPayKb || "",
+  // };
+
+  // var liabilitySimpIRAs = {
+  //   libBalanceIRAs: formData?.libBalanceIRAs || "",
+  //   libInterestRateIRAs: formData?.libInterestRateIRAs || "",
+  //   libMonthlyPayIRAs: formData?.libMonthlyPayIRAs || "",
+  // };
+
+  // var liabilityIRA = {
+  //   balanceIRA: formData?.balanceIRA || "",
+  //   interestRateIRA: formData?.interestRateIRA || "",
+  //   monthlyPayIRA: formData?.monthlyPayIRA || "",
+  // };
+
   // }
 
-  var clientDetail = {
-    clientName: formData?.clientName || "",
-    clientMoNo: formData?.clientMoNo || "",
-    clientAge: formData?.clientAge || "",
-    coClientName: formData?.coClientName || "",
-    coMobileNo: formData?.coMobileNo || "",
-    coClientAge: formData?.coClientAge || "",
-  };
-
   var insuranceCoverage = {
-    benefitLIClient: formData?.benefitLIClient || "",
-    monthlyPayLIClient: formData?.monthlyPayLIClient || "",
-    benefitLICoClient: formData?.benefitLICoClient || "",
-    monthlyPayLICoClient: formData?.monthlyPayLICoClient || "",
-    benefitDisableClient: formData?.benefitDisableClient || "",
-    monthlyPayDisableClient: formData?.monthlyPayDisableClient || "",
-    benefitDisableCoClient: formData?.benefitDisableCoClient || "",
-    monthlyPayDisableCoClient: formData?.monthlyPayDisableCoClient || "",
-    benefitLongTermClient: formData?.benefitLongTermClient || "",
-    monthlyPayLongTermClient: formData?.monthlyPayLongTermClient || "",
-  };
-
-  var retirementGoal = {
-    retireAgeClient: formData?.retireAgeClient || "",
-    retireAgeCoClient: formData?.retireAgeCoClient || "",
-    socialBenefitClient: formData?.socialBenefitClient || "",
-    socialBenefitCoClient: formData?.socialBenefitCoClient || "",
-    pensionBenefitClient: formData?.pensionBenefitClient || "",
-    pensionBenefitCoClient: formData?.pensionBenefitCoClient || "",
-    otherIncomeClient: formData?.otherIncomeClient || "",
-    otherIncomeCoClient: formData?.otherIncomeCoClient || "",
-    annualRetireClient: formData?.annualRetireClient || "",
-    annualRetireCoClient: formData?.annualRetireCoClient || "",
+    lifeInsuranceClient: {
+      benefitLIClient: formData?.benefitLIClient || "",
+      monthlyPayLIClient: formData?.monthlyPayLIClient || "",
+    },
+    lifeInsuranceCoClient: {
+      benefitLICoClient: formData?.benefitLICoClient || "",
+      monthlyPayLICoClient: formData?.monthlyPayLICoClient || "",
+    },
+    disableIncomeClient: {
+      benefitDisableClient: formData?.benefitDisableClient || "",
+      monthlyPayDisableClient: formData?.monthlyPayDisableClient || "",
+    },
+    disableIncomeCoClient: {
+      benefitDisableCoClient: formData?.benefitDisableCoClient || "",
+      monthlyPayDisableCoClient: formData?.monthlyPayDisableCoClient || "",
+    },
+    longTermCoClient: {
+      benefitLongTermClient: formData?.benefitLongTermClient || "",
+      monthlyPayLongTermClient: formData?.monthlyPayLongTermClient || "",
+    },
   };
 
   setFinalData({
     ...finalData,
     clientDetail: clientDetail || {},
     retirementGoal: retirementGoal || {},
-    assetLibKB: assetLibKB || {},
-    assetLibIRA: assetLibIRA || {},
-    assetLibSimpIRAS: assetLibSimpIRAS || {},
-    assetLibAcc: assetLibAcc || {},
-    assetLibCashAcc: assetLibCashAcc || {},
-    assetLibAnnuities: assetLibAnnuities || {},
-    assetLib529Plan: assetLib529Plan || {},
-    assetLibHome: assetLibHome || {},
-    assetLibEstate: assetLibEstate || {},
-    assetLibBusiness: assetLibBusiness || {},
-    assetLibOther: assetLibOther || {},
-    liabilityKb: liabilityKb || {},
-    liabilitySimpIRAs: liabilitySimpIRAs || {},
-    liabilityIRA: liabilityIRA || {},
+    assetsLiabilities: assetsLiabilities || {},
+    myLiabilities: myLiabilities || {},
+
+    // assetLibKB: assetLibKB || {},
+    // assetLibIRA: assetLibIRA || {},
+    // assetLibSimpIRAS: assetLibSimpIRAS || {},
+    // assetLibAcc: assetLibAcc || {},
+    // assetLibCashAcc: assetLibCashAcc || {},
+    // assetLibAnnuities: assetLibAnnuities || {},
+    // assetLib529Plan: assetLib529Plan || {},
+    // assetLibHome: assetLibHome || {},
+    // assetLibEstate: assetLibEstate || {},
+    // assetLibBusiness: assetLibBusiness || {},
+    // assetLibOther: assetLibOther || {},
+    // liabilityKb: liabilityKb || {},
+    // liabilitySimpIRAs: liabilitySimpIRAs || {},
+    // liabilityIRA: liabilityIRA || {},
     protectionPlan: protectionPlan,
     insuranceCoverage: insuranceCoverage || {},
     goalFields: goalFields || [],
@@ -201,27 +290,38 @@ export const checkModeOfForm = (
   if (id) {
     setFormType(mode.edit);
     const result = clientList?.find((item) => item.uniqueId === id);
-    console.log("goalFieldsgoalFields", result);
+    console.log("goalFieldsgoalFields", result["assetsLiabilities"]);
 
     const mergedObject = {
-      ...result?.["clientDetail"],
-      ...result?.["assetLib529Plan"],
-      ...result?.["assetLibAcc"],
-      ...result?.["assetLibAnnuities"],
-      ...result?.["assetLibBusiness"],
-      ...result?.["assetLibCashAcc"],
-      ...result?.["assetLibEstate"],
-      ...result?.["assetLibHome"],
-      ...result?.["assetLibIRA"],
-      ...result?.["assetLibKB"],
-      ...result?.["assetLibOther"],
-      ...result?.["assetLibSimpIRAS"],
-      ...result?.["insuranceCoverage"],
-      ...result?.["liabilityIRA"],
-      ...result?.["liabilityKb"],
-      ...result?.["liabilitySimpIRAs"],
-      ...result?.["protectionPlan"],
-      ...result?.["retirementGoal"],
+      // ...result?.["clientDetail"],
+      // -------
+      // ...result?.["assetLib529Plan"],
+      // ...result?.["assetLibAcc"],
+      // ...result?.["assetLibAnnuities"],
+      // ...result?.["assetLibBusiness"],
+      // ...result?.["assetLibCashAcc"],
+      // ...result?.["assetLibEstate"],
+      // ...result?.["assetLibHome"],
+      // ...result?.["assetLibIRA"],
+      // ...result?.["assetLibKB"],
+      // ...result?.["assetLibOther"],
+      // ...result?.["assetLibSimpIRAS"],
+      // ...result?.["liabilityIRA"],
+      // ...result?.["liabilityKb"],
+      // ...result?.["liabilitySimpIRAs"],
+      // ...result?.["protectionPlan"],
+      // -----
+      // ...result?.["insuranceCoverage"],
+      // ...result?.["retirementGoal"],
+      // ...result?.["assetsLiabilities"],
+      // ...result?.["myLiabilities"],
+
+      clientDetail: result?.clientDetail,
+      insuranceCoverage: result?.insuranceCoverage,
+      retirementGoal: result?.retirementGoal,
+      assetsLiabilities: result?.assetsLiabilities,
+      protectionPlan: result?.protectionPlan,
+      myLiabilities: result?.myLiabilities,
       goalFields: result?.goalFields,
       incomeFields: result?.incomeFields,
       uniqueId: result?.uniqueId,
@@ -248,6 +348,7 @@ export const handleFinancialForm = (obj) => {
     goalFields,
     incomeFields,
   } = obj;
+  console.log("finalldatat", finalData);
 
   if (!id) {
     const summaryArr = [];
