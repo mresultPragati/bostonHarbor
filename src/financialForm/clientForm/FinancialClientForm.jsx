@@ -2,6 +2,8 @@ import { TextField } from "@mui/material";
 
 export const ClientForm = (props) => {
   const { handleInputChange, formData } = props;
+  console.log("clientDetail", formData);
+
   return (
     <>
       <div className="row mb-3">
@@ -10,7 +12,7 @@ export const ClientForm = (props) => {
             variant="standard"
             label="Client Name"
             name="clientName"
-            value={formData?.clientDetail?.clientName}
+            value={formData?.clientName}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             required
@@ -21,7 +23,7 @@ export const ClientForm = (props) => {
             label="Mobile No."
             variant="standard"
             name="clientMoNo"
-            value={formData?.clientDetail?.clientMoNo}
+            value={formData?.clientMoNo}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             required
@@ -32,7 +34,7 @@ export const ClientForm = (props) => {
             label="Age"
             variant="standard"
             name="clientAge"
-            value={formData?.clientDetail?.clientAge}
+            value={formData?.clientAge}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             required
@@ -46,7 +48,7 @@ export const ClientForm = (props) => {
             variant="standard"
             label=" Co-Client Name "
             name="coClientName"
-            value={formData?.clientDetail?.coClientName}
+            value={formData?.coClientName}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             // required
@@ -57,7 +59,7 @@ export const ClientForm = (props) => {
             label="Mobile No."
             variant="standard"
             name="coMobileNo"
-            value={formData?.clientDetail?.coMobileNo}
+            value={formData?.coMobileNo}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             // required
@@ -68,7 +70,7 @@ export const ClientForm = (props) => {
             label="Age"
             variant="standard"
             name="coClientAge"
-            value={formData?.clientDetail?.coClientAge}
+            value={formData?.coClientAge}
             onChange={(e) => handleInputChange(e)}
             fullWidth
             // required

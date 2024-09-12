@@ -37,7 +37,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="libBalanceBk"
-              value={formData?.myLiabilities?.liabilityKb?.libBalanceBk}
+              value={formData?.libBalanceBk}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -46,7 +46,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="libInterestRateKb"
-              value={formData?.myLiabilities?.liabilityKb?.libInterestRateKb}
+              value={formData?.libInterestRateKb}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -56,7 +56,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="libMonthlyPayKb"
-              value={formData?.myLiabilities?.liabilityKb?.libMonthlyPayKb}
+              value={formData?.libMonthlyPayKb}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -71,7 +71,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="libBalanceIRAs"
-              value={formData?.myLiabilities?.liabilitySimpIRAs?.libBalanceIRAs}
+              value={formData?.libBalanceIRAs}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -80,9 +80,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="libInterestRateIRAs"
-              value={
-                formData?.myLiabilities?.liabilitySimpIRAs?.libInterestRateIRAs
-              }
+              value={formData?.libInterestRateIRAs}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -92,9 +90,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="libMonthlyPayIRAs"
-              value={
-                formData?.myLiabilities?.liabilitySimpIRAs?.libMonthlyPayIRAs
-              }
+              value={formData?.libMonthlyPayIRAs}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -109,7 +105,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="balanceIRA"
-              value={formData?.myLiabilities?.liabilityIRA?.balanceIRA}
+              value={formData?.balanceIRA}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -118,7 +114,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="interestRateIRA"
-              value={formData?.myLiabilities?.liabilityIRA?.interestRateIRA}
+              value={formData?.interestRateIRA}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -128,7 +124,7 @@ export const MyLiability = (props) => {
             <TextField
               variant="standard"
               name="monthlyPayIRA"
-              value={formData?.myLiabilities?.liabilityIRA?.monthlyPayIRA}
+              value={formData?.monthlyPayIRA}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />

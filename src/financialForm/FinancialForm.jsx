@@ -41,10 +41,12 @@ export const FinancialForm = () => {
   useEffect(() => {
     setFormData({
       ...formData,
-      checkWill: false,
-      checkHealthCare: false,
-      checkAttorney: false,
-      checkTrust: false,
+      protectionPlan: {
+        checkWill: false,
+        checkHealthCare: false,
+        checkAttorney: false,
+        checkTrust: false,
+      },
     });
   }, []);
 
@@ -157,9 +159,14 @@ export const FinancialForm = () => {
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
     if (e.target?.type === "checkbox") {
+      console.log("protectionPlan", checked, name, checked);
+
       setFormData({
         ...formData,
-        [name]: checked ? checked : false,
+        protectionPlan: {
+          ...formData["protectionPlan"],
+          [name]: checked ? checked : false,
+        },
       });
     } else {
       setFormData({

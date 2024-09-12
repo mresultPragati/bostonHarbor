@@ -290,7 +290,7 @@ export const checkModeOfForm = (
   if (id) {
     setFormType(mode.edit);
     const result = clientList?.find((item) => item.uniqueId === id);
-    console.log("goalFieldsgoalFields", result["assetsLiabilities"]);
+    console.log("goalFieldsgoalFields", result?.["assetsLiabilities"]);
 
     const mergedObject = {
       // ...result?.["clientDetail"],
@@ -316,23 +316,51 @@ export const checkModeOfForm = (
       // ...result?.["assetsLiabilities"],
       // ...result?.["myLiabilities"],
 
-      clientDetail: result?.clientDetail,
-      insuranceCoverage: result?.insuranceCoverage,
-      retirementGoal: result?.retirementGoal,
-      assetsLiabilities: result?.assetsLiabilities,
+      ...result?.clientDetail,
+      ...result?.insuranceCoverage,
+      ...result?.retirementGoal,
+      ...result?.assetsLiabilities,
+      ...result?.myLiabilities,
       protectionPlan: result?.protectionPlan,
-      myLiabilities: result?.myLiabilities,
       goalFields: result?.goalFields,
       incomeFields: result?.incomeFields,
       uniqueId: result?.uniqueId,
       date: result?.date,
+      // clientDetail: result?.clientDetail,
+      // insuranceCoverage: result?.insuranceCoverage,
+      // retirementGoal: result?.retirementGoal,
+      // assetsLiabilities: result?.assetsLiabilities,
+      // myLiabilities: result?.myLiabilities,
+      // protectionPlan: result?.protectionPlan,
+      // goalFields: result?.goalFields,
+      // incomeFields: result?.incomeFields,
+      // uniqueId: result?.uniqueId,
+      // date: result?.date,
     };
-    console.log("mergedObject", result, mergedObject);
+    console.log("mergedObject", result, "merge==>", mergedObject, "sped", {
+      ...result?.retirementGoal,
+    });
 
     setFormData(mergedObject);
     setGoalFields(result?.goalFields);
     setIncomeFields(result?.incomeFields);
   } else setFormType(mode.addNew);
+};
+
+export const generateUniqueId = (name) => {
+  const nameParts = name?.split(" ");
+
+  // Extract the first letter of the first name and last name
+  const firstInitial = nameParts[0] ? nameParts?.[0][0] : "";
+  const lastInitial = nameParts?.[1] ? nameParts[1][0] : "";
+
+  // Generate a random 4-digit number for uniqueness
+  const randomNumber = Math.floor(1000 + Math.random() * 9000);
+
+  // Combine initials with random number
+  const uniqueId = `${firstInitial}${lastInitial}${randomNumber}`;
+
+  return uniqueId;
 };
 
 export const handleFinancialForm = (obj) => {
@@ -353,25 +381,10 @@ export const handleFinancialForm = (obj) => {
   if (!id) {
     const summaryArr = [];
     const date = new Date();
+
     const fullDate = `${date.getDate()}/${
       date.getMonth() + 1
     }/${date.getFullYear()}`; // +1 since months are 0-indexed
-
-    const generateUniqueId = (name) => {
-      const nameParts = name.split(" ");
-
-      // Extract the first letter of the first name and last name
-      const firstInitial = nameParts[0] ? nameParts[0][0] : "";
-      const lastInitial = nameParts[1] ? nameParts[1][0] : "";
-
-      // Generate a random 4-digit number for uniqueness
-      const randomNumber = Math.floor(1000 + Math.random() * 9000);
-
-      // Combine initials with random number
-      const uniqueId = `${firstInitial}${lastInitial}${randomNumber}`;
-
-      return uniqueId;
-    };
 
     setFinalData({
       ...finalData,

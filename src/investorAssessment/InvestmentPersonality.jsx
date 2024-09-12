@@ -383,7 +383,9 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
             </div>
           </div>
         ) : (
-          <h6 className="mt-5">Please Enter the client Name or client Id</h6>
+          <h6 className="mt-5">
+            Please Enter the client name or client Id in above field
+          </h6>
         )}
       </div>
     </>

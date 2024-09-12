@@ -29,7 +29,7 @@ export const AnnualIncome = (props) => {
           </tr>
 
           <tr className="row mt-2">
-            {incomeFields.map((field, index) => (
+            {incomeFields?.map((field, index) => (
               <div key={index} style={{ display: "flex" }} className="mt-2">
                 <td className="col-6 mr-5" style={{ marginRight: "5.5rem" }}>
                   <TextField

@@ -46,7 +46,7 @@ export const BostonClientSearch = ({ setSelectedClient, width }) => {
               }}
             >
               <List>
-                {filteredClients.map((client) => (
+                {filteredClients?.map((client) => (
                   <ListItem
                     button
                     onClick={() => {

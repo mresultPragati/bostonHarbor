@@ -7,6 +7,7 @@ export const RetirementGoalForm = (props) => {
   const handleChange = (e) => {
     handleInputChange(e);
   };
+  console.log("formData::", formData);
 
   return (
     <>
@@ -32,9 +33,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="retirementAgeClient"
-              value={
-                formData?.retirementGoal?.retirementPlan?.retirementAgeClient
-              }
+              value={formData?.retirementPlan?.retirementAgeClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -43,9 +42,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="retirementAgeCoClient"
-              value={
-                formData?.retirementGoal?.retirementPlan?.retirementAgeCoClient
-              }
+              value={formData?.retirementPlan?.retirementAgeCoClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -59,9 +56,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="socialBenefitClient"
-              value={
-                formData?.retirementGoal?.socialBenefit?.socialBenefitClient
-              }
+              value={formData?.retirementPlan?.socialBenefitClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -70,9 +65,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="socialBenefitCoClient"
-              value={
-                formData?.retirementGoal?.socialBenefit?.socialBenefitCoClient
-              }
+              value={formData?.retirementPlan?.socialBenefitCoClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -86,9 +79,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="pensionBenefitClient"
-              value={
-                formData?.retirementGoal?.pensionBenefit?.pensionBenefitClient
-              }
+              value={formData?.retirementPlan?.pensionBenefitClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -97,9 +88,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="pensionBenefitCoClient"
-              value={
-                formData?.retirementGoal?.pensionBenefit?.pensionBenefitCoClient
-              }
+              value={formData?.retirementPlan?.pensionBenefitCoClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -113,7 +102,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="otherIncomeClient"
-              value={formData?.retirementGoal?.otherIncome?.otherIncomeClient}
+              value={formData?.retirementPlan?.otherIncomeClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -122,7 +111,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="otherIncomeCoClient"
-              value={formData?.retirementGoal?.otherIncome?.otherIncomeCoClient}
+              value={formData?.retirementPlan?.otherIncomeCoClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -136,9 +125,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="annualRetireClient"
-              value={
-                formData?.retirementGoal?.annualRetirement?.annualRetireClient
-              }
+              value={formData?.retirementPlan?.annualRetireClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
@@ -147,9 +134,7 @@ export const RetirementGoalForm = (props) => {
             <TextField
               variant="standard"
               name="annualRetireCoClient"
-              value={
-                formData?.retirementGoal?.annualRetirement?.annualRetireCoClient
-              }
+              value={formData?.retirementPlan?.annualRetireCoClient}
               onChange={(e) => handleChange(e)}
               fullWidth
             />
