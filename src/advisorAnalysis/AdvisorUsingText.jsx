@@ -6,6 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 import { BostonClientSearch } from "../resusedComponents/BostonClientSearch";
+import { useEffect } from "react";
 
 export const AdvisorUsingText = (props) => {
   const {
@@ -14,7 +15,13 @@ export const AdvisorUsingText = (props) => {
     setInvestMentValue,
     setInvestorPersonalityVal,
     setSelectedClient,
+    selectedClient
   } = props;
+console.log("selectedClient",selectedClient?.investment_personality);
+
+useEffect(()=>{
+setInvestorPersonalityVal(selectedClient?.investment_personality)
+},[selectedClient])
 
   const handleInvestmentChange = (event) => {
     setInvestMentValue(event.target.value);
@@ -66,11 +73,11 @@ export const AdvisorUsingText = (props) => {
               placeholder="Investor Personality"
               fullWidth
             >
-              <MenuItem value={"conservativeInvestor"}>
+              <MenuItem value={"Conservative Investor"}>
                 Conservative Investor
               </MenuItem>
-              <MenuItem value={"moderateInvestor"}>Moderate Investor</MenuItem>
-              <MenuItem value={"aggressiveInvestor"}>
+              <MenuItem value={"Moderate Investor"}>Moderate Investor</MenuItem>
+              <MenuItem value={"Aggressive Investor"}>
                 Aggressive Investor
               </MenuItem>
             </Select>
