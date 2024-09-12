@@ -43,10 +43,19 @@ const InvestmentPersonality = () => {
   return (
     <>
       <div className="mb-5">
-        <Typography className="mb-5" variant="h5" gutterBottom>
+        <Typography className="mb-4" variant="h5" gutterBottom>
           Investment Personality Questions
         </Typography>
-        <div style={{ textAlign: "start" }}>
+        <TextField
+          variant="standard"
+          label="Name Of Client"
+          name="clientName"
+          value={formData.clientName}
+          onChange={(e) => handleInputChange(e)}
+          className="w-50"
+        />
+
+        <div className="mt-5" style={{ textAlign: "start" }}>
           <div className="row">
             <div className="col-sm-1 col-md-1"></div>
             <div className="col-sm-11 col-md-11">

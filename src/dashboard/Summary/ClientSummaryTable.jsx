@@ -67,14 +67,20 @@ export const ClientSummaryTable = (props) => {
                       </TableCell>
                       <TableCell>{item?.date}</TableCell>
                       <TableCell>
-                        <a
+                        <p
+                          className="primary-color"
+                          style={{
+                            cursor: "pointer",
+                            color: "#0d6efd",
+                            textDecoration: "underline",
+                          }}
                           onClick={() =>
                             navigate(`/financialForm/${item?.uniqueId}`)
                           }
-                          className="underlined-link"
+                          // className="underlined-link"
                         >
                           click here
-                        </a>
+                        </p>
                       </TableCell>
                     </TableRow>
                   );

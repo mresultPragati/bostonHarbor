@@ -8,8 +8,6 @@ import {
   Legend,
   ArcElement,
 } from "chart.js";
-import { useRef } from "react";
-
 import { Bar } from "react-chartjs-2";
 
 // Register the required components
@@ -31,15 +29,8 @@ export const BostonBarChart = (props) => {
     responsive: true,
   };
 
-  // const generateUniqueId = (name) => {
-  //   const uniqueId = `${name}${Math.floor(1000 + Math.random() * 9000)}`;
-  //   console.log("Math.random()", Math.random());
-  //   return uniqueId;
-  // };
   return (
     <>
-      {/* <p>{generateId("pragati", 9673846610)}</p> */}
-      {/* <p>{generateUniqueId("pragati")}</p> */}
       {data && data?.datasets && (
         <div
           style={{ width: "90vw", display: "flex", justifyContent: "center" }}

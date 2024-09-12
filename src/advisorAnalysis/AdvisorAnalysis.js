@@ -41,7 +41,7 @@ export const AdvisorAnalysis = () => {
 
         if (result?.status === 200) {
             setShowLoader(false);
-            setAlertMsg({ msg: result?.message, severity: "success" });
+            setAlertMsg({ msg: "Investment Suggestion Generated Successfully", severity: "success" });
             setHtmlResponse(result?.investmentSuggestions);
             setBarChartData(result?.barChartData);
             setPieChartData(result?.pieChartData);

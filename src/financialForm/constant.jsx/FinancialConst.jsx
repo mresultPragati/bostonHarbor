@@ -194,7 +194,8 @@ export const checkModeOfForm = (
   id,
   setFormType,
   setFormData,
-  setGoalFields
+  setGoalFields,
+  setIncomeFields
 ) => {
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
   if (id) {
@@ -230,6 +231,7 @@ export const checkModeOfForm = (
 
     setFormData(mergedObject);
     setGoalFields(result?.goalFields);
+    setIncomeFields(result?.incomeFields);
   } else setFormType(mode.addNew);
 };
 
@@ -247,7 +249,7 @@ export const handleFinancialForm = (obj) => {
     incomeFields,
   } = obj;
 
-  if (formType === mode?.addNew) {
+  if (!id) {
     const summaryArr = [];
     const date = new Date();
     const fullDate = `${date.getDate()}/${

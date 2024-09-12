@@ -17,13 +17,14 @@ import {
   mode,
   resetForm,
 } from "./constant.jsx/FinancialConst";
+import ConfirmationDialog from "../resusedComponents/BostonConfirmation";
 
 export const FinancialForm = () => {
   const [goalFields, setGoalFields] = useState([
     { goal: "", cost: "", when: "" },
   ]);
   const [incomeFields, setIncomeFields] = useState([
-    { goal: "", cost: "", when: "" },
+    { incomeClient: "", sourceIncome: "", amountIncome: "" },
   ]);
   const [formData, setFormData] = useState({});
   const [finalData, setFinalData] = useState({});
@@ -32,6 +33,8 @@ export const FinancialForm = () => {
     msg: "",
     severity: "",
   });
+  const [openDialog, setOpenDialog] = useState(false);
+
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -46,7 +49,14 @@ export const FinancialForm = () => {
   }, []);
 
   useEffect(() => {
-    if (id) checkModeOfForm(id, setFormType, setFormData, setGoalFields);
+    if (id)
+      checkModeOfForm(
+        id,
+        setFormType,
+        setFormData,
+        setGoalFields,
+        setIncomeFields
+      );
     else resetForm(setFormData);
   }, [id]);
 
@@ -64,6 +74,25 @@ export const FinancialForm = () => {
 
     finalDataToSet(obj);
   }, [formData, goalFields, incomeFields]);
+
+  const handleOpen = () => setOpenDialog(true);
+
+  const handleConfirm = () => {
+    let obj = {
+      id: id,
+      formType: formType,
+      setFormType: setFormType,
+      setFinalData: setFinalData,
+      formData: formData,
+      finalData: finalData,
+      setAlertMsg: setAlertMsg,
+      navigate: navigate,
+      goalFields: goalFields,
+      incomeFields: incomeFields,
+    };
+    handleFinancialForm(obj);
+    setOpenDialog(false);
+  };
 
   const handleGoalField = () => {
     console.log("goalFieldsgoalFields", goalFields);
@@ -210,25 +239,37 @@ export const FinancialForm = () => {
           <Button
             variant="contained"
             className="mt-5 mb-5 w-50"
-            onClick={() => {
-              let obj = {
-                id: id,
-                formType: formType,
-                setFormType: setFormType,
-                setFinalData: setFinalData,
-                formData: formData,
-                // setFormData: setFormData,
-                finalData: finalData,
-                setAlertMsg: setAlertMsg,
-                navigate: navigate,
-                goalFields: goalFields,
-                incomeFields: incomeFields,
-              };
-              handleFinancialForm(obj);
-            }}
+            // onClick={() => {
+            // let obj = {
+            //   id: id,
+            //   formType: formType,
+            //   setFormType: setFormType,
+            //   setFinalData: setFinalData,
+            //   formData: formData,
+            //   finalData: finalData,
+            //   setAlertMsg: setAlertMsg,
+            //   navigate: navigate,
+            //   goalFields: goalFields,
+            //   incomeFields: incomeFields,
+            // };
+            // handleFinancialForm(obj);
+            // }}
+
+            onClick={() => handleOpen()}
+            disabled={
+              !formData?.clientName ||
+              !formData?.clientMoNo ||
+              !formData?.clientAge
+            }
           >
             {formType === mode.edit ? "UPDATE FORM" : "SUBMIT FORM"}
           </Button>
+          <ConfirmationDialog
+            open={openDialog}
+            setOpenDialog={setOpenDialog}
+            onConfirm={handleConfirm}
+            message="Are you sure you want to proceed?"
+          />
         </Box>
       </div>
     </div>
