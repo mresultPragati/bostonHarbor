@@ -216,10 +216,10 @@ export const FinancialForm = () => {
             formData={formData}
           />
 
-          <MyLiability
+          {/* <MyLiability
             handleInputChange={handleInputChange}
             formData={formData}
-          />
+          /> */}
           <AnnualIncome
             incomeFields={incomeFields}
             handleIncomeChange={handleIncomeChange}
@@ -264,12 +264,12 @@ export const FinancialForm = () => {
           >
             {formType === mode.edit ? "UPDATE FORM" : "SUBMIT FORM"}
           </Button>
-          <ConfirmationDialog
-            open={openDialog}
-            setOpenDialog={setOpenDialog}
-            onConfirm={handleConfirm}
-            message="Are you sure you want to proceed?"
-          />
+            <ConfirmationDialog
+              open={openDialog}
+              setOpenDialog={setOpenDialog}
+              onConfirm={handleConfirm}
+              message="Are you sure you want to proceed?"
+            />
         </Box>
       </div>
     </div>

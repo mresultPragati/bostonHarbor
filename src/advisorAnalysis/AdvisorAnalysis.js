@@ -4,7 +4,7 @@ import { BostonFileName } from "./AdvisorStyled";
 import BostonLoader from "../resusedComponents/BostonLoader";
 import axios from "axios";
 import { BostonAlertMessage } from "../resusedComponents/BostonAlertMessage";
-import { generateSuggestions } from "../api/apiServiece";
+import { generateSuggestionByClientId, generateSuggestions } from "../api/apiServiece";
 import { AdvisoryUsingFile } from "./AdvisorUsingFile";
 import { AdvisorUsingText } from "./AdvisorUsingText";
 import { BostonBarChart } from "../resusedComponents/BostonBarChart";
@@ -33,13 +33,38 @@ export const AdvisorAnalysis = () => {
     const handleUploadClick = async () => {
         console.log("DATATA", investMentValue, selectedClient, investorPersonalityVal);
 
+if((selectedClient?.uniqueId ||
+    selectedClient?.clientDetail?.clientName) && investorPersonalityVal && investMentValue){
+       setShowLoader(true)
+        const payload={
+            clientId: selectedClient?.uniqueId,
+      clientName: selectedClient?.clientDetail?.clientName,      
+            investmentPersonality: investorPersonalityVal,
+                  }
+        const resp = await generateSuggestionByClientId(payload, "application/json");
+
+        const result = resp?.data
+        console.log("resulttBY IOD", result, resp);
+        if (result?.status === 200) {
+            setShowLoader(false);
+            setAlertMsg({ msg: "Investment Suggestion Generated Successfully", severity: "success" });
+            setHtmlResponse(result?.investmentSuggestions);
+            setBarChartData(result?.barChartData);
+            setPieChartData(result?.pieChartData);
+            setLineChartData(result?.compoundedChartData);
+        } else {
+            setShowLoader(false)
+            setAlertMsg({ msg: result?.message, severity: "error" });
+        }
+    }else{
+
         setShowLoader(true)
         const formData = new FormData();
         formData.append('financialFile', financialFile);
         formData.append('assessmentFile', assessmentFile);
 
         console.log(assessmentFile, financialFile);
-        const resp = await generateSuggestions(formData, "multipart/form-data");
+    const resp = await generateSuggestions(formData, "multipart/form-data");
 
         const result = resp?.data
         console.log("resultt", result, resp);
@@ -55,6 +80,7 @@ export const AdvisorAnalysis = () => {
             setShowLoader(false)
             setAlertMsg({ msg: result?.message, severity: "error" });
         }
+        }
     };
 
 
@@ -64,7 +90,8 @@ export const AdvisorAnalysis = () => {
             {showLoader && <BostonLoader />}
 
             <AdvisorUsingText investorPersonalityVal={investorPersonalityVal}
-                setSelectedClient={setSelectedClient} investMentValue={investMentValue}
+             selectedClient={selectedClient}
+             setSelectedClient={setSelectedClient} investMentValue={investMentValue}
                 setInvestMentValue={setInvestMentValue}
                 setInvestorPersonalityVal={setInvestorPersonalityVal} />
             <div className="d-flex  justify-content-center mt-5 mb-5">

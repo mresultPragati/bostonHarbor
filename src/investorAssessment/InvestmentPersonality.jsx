@@ -10,10 +10,25 @@ import {
   Button,
 } from "@mui/material";
 import { BostonClientSearch } from "../resusedComponents/BostonClientSearch";
+import { investmentPersnalityAssament } from "../api/apiServiece";
+import ConfirmationDialog from "../resusedComponents/BostonConfirmation";
+import { BostonAlertMessage } from "../resusedComponents/BostonAlertMessage";
+import { useNavigate } from "react-router-dom";
+import BostonLoader from "../resusedComponents/BostonLoader";
 
 const InvestmentPersonality = () => {
   const [personalityData, setPersonalityData] = useState({});
   const [selectedClient, setSelectedClient] = useState({});
+  const [openDialog, setOpenDialog] = useState(false);
+  const [alertMsg, setAlertMsg] = useState({
+    msg: "",
+    severity: "",
+  });
+    const [showLoader, setShowLoader] = useState(false);
+    const navigate = useNavigate();
+
+  const handleOpen = () => {
+    setOpenDialog(true)};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,13 +71,44 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
+    // handleOpen()
     e.preventDefault();
+    setShowLoader(true)
     console.log("Form Data Submitted:", personalityData);
+    const payload={
+      client_id: selectedClient?.uniqueId,
+              assessment_data :personalityData
+            }
+    const resp = await investmentPersnalityAssament(payload, "application/json");
+
+  const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
+  console.log("Form Data Submitted: resp RESULT", resp?.data?.investment_personality);
+ if (resp?.status === 200) {
+  setShowLoader(false)        
+  setAlertMsg({ msg: "Investor Assessment Successfully Submitted", severity: "success" });
+
+const clientIndex = clientList.findIndex(item =>  item.uniqueId === resp?.data?.client_id);
+ 
+if (clientIndex !== -1) {
+  clientList[clientIndex].investment_personality = resp?.data?.investment_personality
+  localStorage.setItem('financialForm', JSON.stringify(clientList));
+}
+setTimeout(() => {
+  navigate("/");
+}, 2500);
+  //  setAlertMsg({ msg: "Invesrtor Assessment Completed", severity: "success" });
+        } else {
+          setShowLoader(false);
+            setAlertMsg({ msg: resp.data?.message, severity: "error" });
+        }
   };
 
   return (
     <>
+      <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
+      {showLoader && <BostonLoader />}
+
       <div className="mb-5">
         <Typography className="mb-4" variant="h5" gutterBottom>
           Investment Personality Questions
@@ -386,6 +432,12 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
           <h6 className="mt-5">Please Enter the client Name or client Id</h6>
         )}
       </div>
+      {/* <ConfirmationDialog
+              open={openDialog}
+              setOpenDialog={setOpenDialog}
+              onConfirm={()=>handleSubmit()}
+              message="Are you sure you want to proceed?"
+            /> */}
     </>
   );
 };

@@ -7,3 +7,17 @@ export const generateSuggestions = (payload, contentType) => {
     payload
   );
 };
+
+export const generateSuggestionByClientId = (payload, contentType) => {  
+   return  apiClient(contentType).post(
+    `${baseURL}/personality-assessment`,
+    payload
+  );
+};
+
+export const investmentPersnalityAssament = (payload, contentType) => {  
+   return  apiClient(contentType).post(
+    `${baseURL}/investor-personality-assessment`,
+    payload
+  );
+};

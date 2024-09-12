@@ -36,7 +36,7 @@ export const BostonClientSearch = ({ setSelectedClient, width }) => {
           autoComplete="off"
         />
         <div className="d-flex justify-content-center">
-          {filteredClients.length > 0 && isSuggestionOpen && (
+          {filteredClients?.length > 0 && isSuggestionOpen && (
             <Paper
               className={`w-${width ? width : 100}`}
               style={{
@@ -46,7 +46,7 @@ export const BostonClientSearch = ({ setSelectedClient, width }) => {
               }}
             >
               <List>
-                {filteredClients.map((client) => (
+                {filteredClients?.map((client) => (
                   <ListItem
                     button
                     onClick={() => {
