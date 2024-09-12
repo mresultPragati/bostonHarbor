@@ -10,6 +10,7 @@ import { AdvisorUsingText } from "./AdvisorUsingText";
 import { BostonBarChart } from "../resusedComponents/BostonBarChart";
 import { BostonPieChart } from "../resusedComponents/BostonPieChart";
 import { extractHtmlContent } from "./constants/AdvisorContant";
+import { BostonLineChart } from "../resusedComponents/BostonLineChart";
 
 
 
@@ -18,6 +19,7 @@ export const AdvisorAnalysis = () => {
     const [financialFile, setFinancialFile] = useState(null);
     const [barChartData, setBarChartData] = useState(null);
     const [pieChartData, setPieChartData] = useState(null);
+    const [lineChartData, setLineChartData] = useState(null);
     const [investMentValue, setInvestMentValue] = useState('SuggestInvestments');
     const [investorPersonalityVal, setInvestorPersonalityVal] = useState('');
     const [htmlResponse, setHtmlResponse] = useState('');
@@ -45,6 +47,7 @@ export const AdvisorAnalysis = () => {
             setHtmlResponse(result?.investmentSuggestions);
             setBarChartData(result?.barChartData);
             setPieChartData(result?.pieChartData);
+            setLineChartData(result?.compoundedChartData);
         } else {
             setShowLoader(false)
             setAlertMsg({ msg: result?.message, severity: "error" });
@@ -96,7 +99,7 @@ export const AdvisorAnalysis = () => {
                     style={{ textAlign: "start" }}
                     dangerouslySetInnerHTML={{ __html: extractHtmlContent(htmlResponse, "Investment Allocation:", "Percentage Allocation for Conservative Investments:").remainingHtml }}
                 />
-
+                 <BostonLineChart data={lineChartData}/>
                 {/*  {parse(remainingHtml)} */}
 
             </div>
