@@ -287,10 +287,60 @@ export const checkModeOfForm = (
   setIncomeFields
 ) => {
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
+  console.log("clintLST", clientList);
   if (id) {
     setFormType(mode.edit);
     const result = clientList?.find((item) => item.uniqueId === id);
     console.log("goalFieldsgoalFields", result?.["assetsLiabilities"]);
+
+    const spreadInsuranceCoverage = Object.keys(
+      result?.insuranceCoverage
+    ).reduce((acc, key) => {
+      return {
+        ...acc,
+        ...result?.insuranceCoverage[key], // Spread each nested object
+      };
+    }, {});
+
+    const spreadRetirement = Object.keys(result?.retirementGoal).reduce(
+      (acc, key) => {
+        return {
+          ...acc,
+          ...result?.retirementGoal[key], // Spread each nested object
+        };
+      },
+      {}
+    );
+
+    const spreadAssetLib = Object.keys(result?.assetsLiabilities).reduce(
+      (acc, key) => {
+        return {
+          ...acc,
+          ...result?.assetsLiabilities[key], // Spread each nested object
+        };
+      },
+      {}
+    );
+
+    const spreadMyLib = Object.keys(result?.myLiabilities).reduce(
+      (acc, key) => {
+        return {
+          ...acc,
+          ...result?.myLiabilities[key], // Spread each nested object
+        };
+      },
+      {}
+    );
+
+    const spreadProtectionPlan = Object.keys(result?.protectionPlan).reduce(
+      (acc, key) => {
+        return {
+          ...acc,
+          ...result?.protectionPlan[key], // Spread each nested object
+        };
+      },
+      {}
+    );
 
     const mergedObject = {
       // ...result?.["clientDetail"],
@@ -317,11 +367,13 @@ export const checkModeOfForm = (
       // ...result?.["myLiabilities"],
 
       ...result?.clientDetail,
-      ...result?.insuranceCoverage,
-      ...result?.retirementGoal,
-      ...result?.assetsLiabilities,
-      ...result?.myLiabilities,
-      protectionPlan: result?.protectionPlan,
+      ...spreadInsuranceCoverage,
+      ...spreadRetirement,
+      ...spreadAssetLib,
+      ...spreadMyLib,
+      // ...spreadProtectionPlan,
+      ...result?.protectionPlan,
+      // protectionPlan: result?.protectionPlan,
       goalFields: result?.goalFields,
       incomeFields: result?.incomeFields,
       uniqueId: result?.uniqueId,
@@ -337,9 +389,13 @@ export const checkModeOfForm = (
       // uniqueId: result?.uniqueId,
       // date: result?.date,
     };
-    console.log("mergedObject", result, "merge==>", mergedObject, "sped", {
-      ...result?.retirementGoal,
-    });
+    console.log(
+      "mergedObject clintLST",
+      spreadProtectionPlan,
+      "merge==>",
+      mergedObject,
+      result?.protectionPlan
+    );
 
     setFormData(mergedObject);
     setGoalFields(result?.goalFields);
@@ -375,9 +431,10 @@ export const handleFinancialForm = (obj) => {
     formData,
     goalFields,
     incomeFields,
+    setShowLoader,
   } = obj;
-  console.log("finalldatat", finalData);
 
+  setShowLoader(true);
   if (!id) {
     const summaryArr = [];
     const date = new Date();
@@ -386,16 +443,17 @@ export const handleFinancialForm = (obj) => {
       date.getMonth() + 1
     }/${date.getFullYear()}`; // +1 since months are 0-indexed
 
-    setFinalData({
-      ...finalData,
-      date: fullDate,
-      uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
-    });
+    // setFinalData({
+    //   ...finalData,
+    //   date: fullDate,
+    //   uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
+    // });
 
     setAlertMsg({
       msg: "Data Added Successfully",
       severity: "success",
     });
+    console.log("finalDatafinalData 1", finalData);
 
     setTimeout(() => {
       if (localStorage.getItem("financialForm")) {
@@ -420,6 +478,7 @@ export const handleFinancialForm = (obj) => {
 
       navigate("/");
       setFormType("");
+      setShowLoader(false);
     }, 2500);
   } else {
     let obj = {
@@ -434,14 +493,7 @@ export const handleFinancialForm = (obj) => {
     };
 
     finalDataToSet(obj);
-    // finalDataToSet(
-    //   formData,
-    //   finalData,
-    //   setFinalData,
-    //   formType,
-    //   id,
-    //   "updateBtn"
-    // );
+
     setAlertMsg({
       msg: "Data Updated Successfully",
       severity: "success",
@@ -451,4 +503,5 @@ export const handleFinancialForm = (obj) => {
       setFormType("");
     }, 2500);
   }
+  console.log("finalDatafinalData 2", finalData);
 };

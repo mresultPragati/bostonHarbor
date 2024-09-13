@@ -18,6 +18,8 @@ import {
   resetForm,
 } from "./constant.jsx/FinancialConst";
 import ConfirmationDialog from "../resusedComponents/BostonConfirmation";
+import BostonLoader from "../resusedComponents/BostonLoader";
+import { scrollToTop } from "../resusedComponents/constant/ResusableConst";
 
 export const FinancialForm = () => {
   const [goalFields, setGoalFields] = useState([
@@ -34,6 +36,7 @@ export const FinancialForm = () => {
     severity: "",
   });
   const [openDialog, setOpenDialog] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -60,6 +63,7 @@ export const FinancialForm = () => {
         setIncomeFields
       );
     else resetForm(setFormData);
+    scrollToTop();
   }, [id]);
 
   useEffect(() => {
@@ -91,6 +95,7 @@ export const FinancialForm = () => {
       navigate: navigate,
       goalFields: goalFields,
       incomeFields: incomeFields,
+      setShowLoader: setShowLoader,
     };
     handleFinancialForm(obj);
     setOpenDialog(false);
@@ -163,10 +168,7 @@ export const FinancialForm = () => {
 
       setFormData({
         ...formData,
-        protectionPlan: {
-          ...formData["protectionPlan"],
-          [name]: checked ? checked : false,
-        },
+        [name]: checked ? checked : false,
       });
     } else {
       setFormData({
@@ -179,6 +181,7 @@ export const FinancialForm = () => {
   return (
     <div style={{ marginBottom: "5rem" }}>
       <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
+      {showLoader && <BostonLoader />}
 
       <h2>{formType === mode.edit ? "Edit" : ""} Financial Form</h2>
       <p className="mb-5">
@@ -222,7 +225,7 @@ export const FinancialForm = () => {
             handleInputChange={handleInputChange}
             formData={formData}
           />
-
+          {/* letter we can add or update below section------------------------ */}
           {/* <MyLiability
             handleInputChange={handleInputChange}
             formData={formData}
@@ -246,22 +249,6 @@ export const FinancialForm = () => {
           <Button
             variant="contained"
             className="mt-5 mb-5 w-50"
-            // onClick={() => {
-            // let obj = {
-            //   id: id,
-            //   formType: formType,
-            //   setFormType: setFormType,
-            //   setFinalData: setFinalData,
-            //   formData: formData,
-            //   finalData: finalData,
-            //   setAlertMsg: setAlertMsg,
-            //   navigate: navigate,
-            //   goalFields: goalFields,
-            //   incomeFields: incomeFields,
-            // };
-            // handleFinancialForm(obj);
-            // }}
-
             onClick={() => handleOpen()}
             disabled={
               !formData?.clientName ||
@@ -271,12 +258,12 @@ export const FinancialForm = () => {
           >
             {formType === mode.edit ? "UPDATE FORM" : "SUBMIT FORM"}
           </Button>
-            <ConfirmationDialog
-              open={openDialog}
-              setOpenDialog={setOpenDialog}
-              onConfirm={handleConfirm}
-              message="Are you sure you want to proceed?"
-            />
+          <ConfirmationDialog
+            open={openDialog}
+            setOpenDialog={setOpenDialog}
+            onConfirm={handleConfirm}
+            message="Are you sure you want to proceed?"
+          />
         </Box>
       </div>
     </div>

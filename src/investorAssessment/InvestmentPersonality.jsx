@@ -24,11 +24,13 @@ const InvestmentPersonality = () => {
     msg: "",
     severity: "",
   });
-    const [showLoader, setShowLoader] = useState(false);
-    const navigate = useNavigate();
+  const [showLoader, setShowLoader] = useState(false);
+  const navigate = useNavigate();
 
   const handleOpen = () => {
-    setOpenDialog(true)};
+    setOpenDialog(true);
+    // return true;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -71,37 +73,53 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
     });
   };
 
-  const handleSubmit =async (e) => {
-    // handleOpen()
-    e.preventDefault();
-    setShowLoader(true)
+  const handleConfirm = async () => {
+    setOpenDialog(false);
+    setShowLoader(true);
     console.log("Form Data Submitted:", personalityData);
-    const payload={
+    const payload = {
       client_id: selectedClient?.uniqueId,
-              assessment_data :personalityData
-            }
-    const resp = await investmentPersnalityAssament(payload, "application/json");
+      assessment_data: personalityData,
+    };
+    const resp = await investmentPersnalityAssament(
+      payload,
+      "application/json"
+    );
 
-  const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
-  console.log("Form Data Submitted: resp RESULT", resp?.data?.investment_personality);
- if (resp?.status === 200) {
-  setShowLoader(false)        
-  setAlertMsg({ msg: "Investor Assessment Successfully Submitted", severity: "success" });
+    const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
+    console.log(
+      "Form Data Submitted: resp RESULT",
+      resp?.data?.investment_personality
+    );
+    if (resp?.status === 200) {
+      setShowLoader(false);
+      setAlertMsg({
+        msg: "Investor Assessment Successfully Submitted",
+        severity: "success",
+      });
 
-const clientIndex = clientList.findIndex(item =>  item.uniqueId === resp?.data?.client_id);
- 
-if (clientIndex !== -1) {
-  clientList[clientIndex].investment_personality = resp?.data?.investment_personality
-  localStorage.setItem('financialForm', JSON.stringify(clientList));
-}
-setTimeout(() => {
-  navigate("/");
-}, 2500);
-  //  setAlertMsg({ msg: "Invesrtor Assessment Completed", severity: "success" });
-        } else {
-          setShowLoader(false);
-            setAlertMsg({ msg: resp.data?.message, severity: "error" });
-        }
+      const clientIndex = clientList.findIndex(
+        (item) => item.uniqueId === resp?.data?.client_id
+      );
+
+      if (clientIndex !== -1) {
+        clientList[clientIndex].investment_personality =
+          resp?.data?.investment_personality;
+        localStorage.setItem("financialForm", JSON.stringify(clientList));
+      }
+      setTimeout(() => {
+        navigate("/");
+      }, 2500);
+      //  setAlertMsg({ msg: "Invesrtor Assessment Completed", severity: "success" });
+    } else {
+      setShowLoader(false);
+      setAlertMsg({ msg: resp.data?.message, severity: "error" });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleOpen();
   };
 
   return (
@@ -121,6 +139,7 @@ setTimeout(() => {
             <div className="row">
               <div className="col-sm-1 col-md-1"></div>
               <div className="col-sm-11 col-md-11">
+                {/* <form onSubmit={handleOpen}> */}
                 <form onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-sm-12 col-md-6">
@@ -434,12 +453,12 @@ setTimeout(() => {
           </h6>
         )}
       </div>
-      {/* <ConfirmationDialog
-              open={openDialog}
-              setOpenDialog={setOpenDialog}
-              onConfirm={()=>handleSubmit()}
-              message="Are you sure you want to proceed?"
-            /> */}
+      <ConfirmationDialog
+        open={openDialog}
+        setOpenDialog={setOpenDialog}
+        onConfirm={() => handleConfirm()}
+        message="Are you sure you want to proceed?"
+      />
     </>
   );
 };

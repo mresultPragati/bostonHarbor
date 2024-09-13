@@ -127,6 +127,7 @@ const TopBar = () => {
             {/* ---------------------------Small screen-------------- */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
+                style={{ backgroundColor: "#002f56" }}
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -182,7 +183,12 @@ const TopBar = () => {
                 textDecoration: "none",
               }}
             >
-              BOSTON HARBOR
+              {/* BOSTON HARBOR */}
+              <img
+                height={30}
+                alt="bostonLogo"
+                src={"http://bostonharborwealth.com/img/logo-main-blue.png"}
+              />
             </Typography>
             {/* ---------------------------End Small screen-------------- */}
 

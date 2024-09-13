@@ -15,14 +15,13 @@ import {
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BostonPaginationElement } from "../../resusedComponents/BostonPaginationElement";
+import { useEffect, useState } from "react";
 
 export const ClientSummaryTable = (props) => {
   const { summaryData } = props;
   const location = useLocation();
   const navigate = useNavigate();
-
-  const summaryList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
-  console.log(location, summaryList, "financialForm");
+  console.log("summaryData", summaryData);
 
   return (
     <div className="mt-5">
@@ -52,8 +51,8 @@ export const ClientSummaryTable = (props) => {
             </TableHead>
             {/* {summaryList ? ( */}
             <TableBody>
-              {summaryList &&
-                summaryList?.reverse()?.map((item, index) => {
+              {summaryData &&
+                summaryData?.reverse()?.map((item, index) => {
                   console.log(item);
 
                   // {summaryData.map((item, index) => {
@@ -93,12 +92,14 @@ export const ClientSummaryTable = (props) => {
             )} */}
           </Table>
         </TableContainer>
-        {summaryList && <BostonPaginationElement />}
 
-        {!summaryList && (
+        {(!summaryData || summaryData?.length <= 0) && (
           <div className="mt-5 row">
             <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
           </div>
+        )}
+        {(summaryData || summaryData?.length > 0) && (
+          <BostonPaginationElement />
         )}
       </Box>
     </div>

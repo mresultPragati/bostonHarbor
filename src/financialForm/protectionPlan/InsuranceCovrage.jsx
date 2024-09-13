@@ -3,6 +3,7 @@ import { BostonClientLabel } from "../FinancialStyle";
 
 export const InsuranceCoverage = (props) => {
   const { handleInputChange, formData } = props;
+  console.log("finalDatafinalData 1", formData);
   return (
     <>
       {" "}

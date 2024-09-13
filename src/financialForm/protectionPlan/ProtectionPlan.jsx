@@ -32,8 +32,8 @@ export const ProtectionPlan = (props) => {
           <td className="col-2">
             <Checkbox
               name="checkWill"
-              checked={formData?.protectionPlan?.checkWill || false}
-              //   value={formData?.protectionPlan?.checkWillYes}
+              checked={formData?.checkWill || false}
+              //   value={formData?.checkWillYes}
               onChange={(e) => {
                 handleInputChange(e);
               }}
@@ -44,7 +44,7 @@ export const ProtectionPlan = (props) => {
           {/* <td className="col-2">
             <Checkbox
               name="checkWillNo"
-              value={formData?.protectionPlan?.checkWillNo}
+              value={formData?.checkWillNo}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             No
@@ -58,8 +58,8 @@ export const ProtectionPlan = (props) => {
           <td className="col-2">
             <Checkbox
               name="checkHealthCare"
-              // value={formData?.protectionPlan?.checkHealthCare}
-              checked={formData?.protectionPlan?.checkHealthCare || false}
+              // value={formData?.checkHealthCare}
+              checked={formData?.checkHealthCare || false}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             {/* Yes */}
@@ -67,7 +67,7 @@ export const ProtectionPlan = (props) => {
 
           {/* <td className="col-2">
             <Checkbox
-              value={formData?.protectionPlan?.checkHealthCareNo}
+              value={formData?.checkHealthCareNo}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             No
@@ -81,8 +81,8 @@ export const ProtectionPlan = (props) => {
           <td className="col-2">
             <Checkbox
               name="checkAttorney"
-              // value={formData?.protectionPlan?.checkAttorney}
-              checked={formData?.protectionPlan?.checkAttorney || false}
+              // value={formData?.checkAttorney}
+              checked={formData?.checkAttorney || false}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             {/* Yes */}
@@ -90,7 +90,7 @@ export const ProtectionPlan = (props) => {
 
           {/* <td className="col-2">
             <Checkbox
-              value={formData?.protectionPlan?.checkAttorneyNo}
+              value={formData?.checkAttorneyNo}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             No
@@ -102,8 +102,8 @@ export const ProtectionPlan = (props) => {
           <td className="col-2">
             <Checkbox
               name="checkTrust"
-              // value={formData?.protectionPlan?.checkTrust}
-              checked={formData?.protectionPlan?.checkTrust || false}
+              // value={formData?.checkTrust}
+              checked={formData?.checkTrust || false}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             {/* Yes */}
@@ -111,7 +111,7 @@ export const ProtectionPlan = (props) => {
 
           {/* <td className="col-2">
             <Checkbox
-              value={formData?.protectionPlan?.checkTrustNo}
+              value={formData?.checkTrustNo}
               onChange={(e) => handleInputChange(e)}
             />{" "}
             No
