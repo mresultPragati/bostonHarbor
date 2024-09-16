@@ -63,7 +63,7 @@ export const FinancialForm = () => {
         setIncomeFields
       );
     else resetForm(setFormData);
-    scrollToTop();
+    // scrollToTop();
   }, [id]);
 
   useEffect(() => {

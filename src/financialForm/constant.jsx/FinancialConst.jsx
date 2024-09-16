@@ -261,6 +261,7 @@ export const finalDataToSet = (obj) => {
       if (renderType === "updateBtn") {
         updatedFields[index] = {
           ...finalData,
+          investment_personality:result?.investment_personality?result?.investment_personality:"",
           uniqueId: formData?.uniqueId,
           date: formData?.date,
         };
@@ -269,12 +270,13 @@ export const finalDataToSet = (obj) => {
       else
         updatedFields[index] = {
           ...result,
+          investment_personality:result?.investment_personality?result?.investment_personality:"", 
           uniqueId: formData?.uniqueId,
           date: formData?.date,
         };
 
       localStorage.setItem("financialForm", JSON.stringify(updatedFields));
-      console.log("updatedFields", updatedFields, index);
+      console.log("updatedFields", updatedFields, index,result);
     }
   }
 };
@@ -461,6 +463,7 @@ export const handleFinancialForm = (obj) => {
         // console.log("GET loacl avail", localData);
         localData?.push({
           ...finalData,
+          investment_personality:localData?.investment_personality?localData?.investment_personality:"",
           date: fullDate,
           uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
         });
@@ -468,6 +471,7 @@ export const handleFinancialForm = (obj) => {
       } else {
         summaryArr.push({
           ...finalData,
+          investment_personality:"",
           date: fullDate,
           uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
         });
