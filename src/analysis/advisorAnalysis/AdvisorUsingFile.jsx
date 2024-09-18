@@ -1,6 +1,7 @@
-import { Button } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
 import { BostonFileName } from "./AdvisorStyled";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
 export const AdvisoryUsingFile = (props) => {
   const { assessmentFile, setAssessmentFile, financialFile, setFinancialFile } =
@@ -19,6 +20,11 @@ export const AdvisoryUsingFile = (props) => {
       setFinancialFile(file);
     }
   };
+
+  const handleCancelFile = (setFile) => {
+    setFile("");
+  };
+
   return (
     <>
       <div className="d-flex justify-content-start">
@@ -42,6 +48,16 @@ export const AdvisoryUsingFile = (props) => {
               // multiple
             />
           </Button>
+          {assessmentFile && (
+            <Tooltip arrow title="Delete Uploaded File">
+              <IconButton
+                // color="error"
+                onClick={() => handleCancelFile(setAssessmentFile)}
+              >
+                <CancelOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          )}
           <BostonFileName>{assessmentFile?.name}</BostonFileName>
         </div>
         <div style={{ marginRight: " 1.5rem" }}>
@@ -65,6 +81,16 @@ export const AdvisoryUsingFile = (props) => {
               // multiple
             />
           </Button>
+          {financialFile && (
+            <Tooltip arrow title="Delete Uploaded File">
+              <IconButton
+                // color="error"
+                onClick={() => handleCancelFile(setFinancialFile)}
+              >
+                <CancelOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          )}
           <BostonFileName>{financialFile?.name}</BostonFileName>
         </div>
       </div>

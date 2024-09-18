@@ -63,7 +63,7 @@ export const FinancialForm = () => {
         setIncomeFields
       );
     else resetForm(setFormData);
-    scrollToTop();
+    // scrollToTop();
   }, [id]);
 
   useEffect(() => {
@@ -150,15 +150,6 @@ export const FinancialForm = () => {
     console.log("updatedFields123 income", updatedFields);
 
     setIncomeFields(updatedFields);
-
-    // const newFields = [...incomeFields];
-    // newFields[index].name = event.target.name;
-    // newFields[index].value = event.target.value;
-    // setFormData({
-    //   ...formData,
-    //   annualIncomeData: [...newFields],
-    // });
-    // setIncomeFields(newFields); // Update the state with the new input value
   };
 
   const handleInputChange = (e) => {
@@ -219,19 +210,21 @@ export const FinancialForm = () => {
             handleGoalField={handleGoalField}
             handleGoalChange={handleGoalChange}
             goalFields={goalFields}
+            setGoalFields={setGoalFields}
           />
 
           <AssetAndLiability
             handleInputChange={handleInputChange}
             formData={formData}
           />
-          {/* letter we can add or update below section------------------------ */}
-          {/* <MyLiability
+
+          <MyLiability
             handleInputChange={handleInputChange}
             formData={formData}
-          /> */}
+          />
           <AnnualIncome
             incomeFields={incomeFields}
+            setIncomeFields={setIncomeFields}
             handleIncomeChange={handleIncomeChange}
             handleIncomeField={handleIncomeField}
           />

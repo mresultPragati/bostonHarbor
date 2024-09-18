@@ -1,5 +1,13 @@
-import { List, ListItem, ListItemText, Paper, TextField } from "@mui/material";
-import { useState } from "react";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 
 export const BostonClientSearch = ({ setSelectedClient, width }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -8,8 +16,17 @@ export const BostonClientSearch = ({ setSelectedClient, width }) => {
 
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
 
+  useEffect(() => {
+    if (!searchTerm) {
+      setSelectedClient({});
+      setIsSuggestionOpen(false);
+    }
+  }, [searchTerm]);
+
   const handleSearch = (event) => {
     const { value } = event.target;
+
+    // if (value) {
     setSearchTerm(value);
     setIsSuggestionOpen(true);
     // Filter clients based on name or id
@@ -21,6 +38,11 @@ export const BostonClientSearch = ({ setSelectedClient, width }) => {
         client?.uniqueId?.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredClients(filtered);
+    // }
+    //  else {
+    //   setSelectedClient({});
+    //   // setIsSuggestionOpen(false);
+    // }
   };
 
   return (

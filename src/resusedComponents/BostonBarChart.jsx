@@ -21,10 +21,8 @@ ChartJS.register(
   Legend
 );
 
-// Now you can use Bar and Pie charts in your component
-
 export const BostonBarChart = (props) => {
-  const { data } = props;
+  const { data, width, height, chartWidth } = props;
   const options = {
     responsive: true,
   };
@@ -33,13 +31,17 @@ export const BostonBarChart = (props) => {
     <>
       {data && data?.datasets && (
         <div
-          style={{ width: "90vw", display: "flex", justifyContent: "center" }}
+          style={{
+            width: chartWidth === "none" ? "" : "90vw",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <div
             className="mt-5"
             style={{
-              height: "450px",
-              width: "900px",
+              height: height ? height : "450px",
+              width: width ? width : "900px",
               // display: "flex",
               // justifyContent: "center",
             }}
@@ -51,3 +53,5 @@ export const BostonBarChart = (props) => {
     </>
   );
 };
+
+export default BostonBarChart;
