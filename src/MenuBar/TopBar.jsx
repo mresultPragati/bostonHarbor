@@ -14,43 +14,51 @@ import MenuItem from "@mui/material/MenuItem";
 import ClientSummary from "../dashboard/Summary/ClientSummary";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { navigatorPath } from "./constant/TopBarConst";
+import {
+  navigatorPath,
+  returnCssTopbar,
+  topbarMenu,
+} from "./constant/TopBarConst";
 // import { BostonTopBar } from "./TopBarStyled";
 
 const BostonTopBar = styled.div`
   padding: 8rem 5rem 0 5rem;
 `;
 
-const pages = [
-  { name: "Dashboard", path: navigatorPath?.dashboard },
-  { name: "Financial Form", path: navigatorPath?.financialForm },
-  { name: "Investor Assessment", path: navigatorPath?.InvestmentPersonality },
-  { name: "Advisor Analysis", path: navigatorPath?.advisorAnalysis },
-];
 const settings = ["Profile", "Logout"];
 
 const TopBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [subMenuAnchor, setSubMenuAnchor] = useState(null);
   const locationPath = window?.location?.pathname;
 
   const navigate = useNavigate();
 
-  const handlePageMenu = (path) => {
-    navigate(path);
+  const handlePageMenu = (path, e) => {
+    if (e.ctrlKey || e.metaKey) window.open(path, "_blank");
+    else navigate(path);
+    setSubMenuAnchor(null);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const subMenuHandleOpne = (event) => {
+    setSubMenuAnchor(event.currentTarget);
+  };
+
+  const subMenuHandleClose = () => {
+    setSubMenuAnchor(null);
   };
 
   const handleOpenNavMenu = (event) => {
@@ -98,28 +106,83 @@ const TopBar = () => {
                 display: { xs: "none", md: "flex", justifyContent: "end" },
               }}
             >
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={() => handlePageMenu(page.path)}
-                  sx={{
-                    height: "4rem",
-                    // my: 2,
-                    // color: "#002a4a",
-                    display: "block",
-                    boxShadow:
-                      locationPath === page.path
-                        ? "0 7px 0 -1px #1d7ad7db"
-                        : "",
-                    color:
-                      locationPath === page.path
-                        ? "0 7px 0 0 #1f5b95"
-                        : "#002a4a",
-                    fontSize: locationPath === page.path ? "14px" : "12.5px",
-                  }}
-                >
-                  {page.name}
-                </Button>
+              {topbarMenu.map((page, index) => (
+                <>
+                  <Button
+                    // key={page}
+                    onClick={(e) => {
+                      if (page.subMenu?.length > 0) subMenuHandleOpne(e);
+                      else handlePageMenu(page.path, e);
+                    }}
+                    sx={returnCssTopbar(page, locationPath)}
+                    // {
+                    //   height: "4rem",
+                    //   // my: 2,
+                    //   // color: "#002a4a",
+                    //   display: "block",
+                    //   boxShadow:
+                    //     page?.subMenu && page?.subMenu?.length > 0
+                    //       ? page?.subMenu[index]?.menuPath === locationPath
+                    //         ? "0 7px 0 -1px #1d7ad7db"
+                    //         : ""
+                    //       : locationPath === page.path
+                    //       ? "0 7px 0 -1px #1d7ad7db"
+                    //       : "",
+
+                    //   // page?.subMenu[index]?.menuPath === locationPath
+                    //   //   ? "0 7px 0 -1px #1d7ad7db"
+                    //   //   : ""
+                    //   // : locationPath === page.path
+                    //   // ? "0 7px 0 -1px #1d7ad7db"
+                    //   // : "",
+                    //   color:
+                    //     locationPath === page.path
+                    //       ? "0 7px 0 0 #1f5b95"
+                    //       : "#002a4a",
+                    //   fontSize: locationPath === page.path ? "14px" : "12.5px",
+                    // }
+                  >
+                    {page.name}
+                  </Button>
+                  {page?.subMenu && page?.subMenu?.length > 0 ? (
+                    <>
+                      <Menu
+                        sx={{ mt: "50px", left: "2rem" }}
+                        id="menu-appbar"
+                        anchorEl={subMenuAnchor}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(subMenuAnchor)}
+                        onClose={subMenuHandleClose}
+                      >
+                        {page?.subMenu?.map((item) => (
+                          <MenuItem
+                            key={item}
+                            onClick={(e) => handlePageMenu(item.menuPath, e)}
+                          >
+                            <Typography
+                              sx={{
+                                textAlign: "center",
+                                padding: "2px 3px 2px 3px",
+                              }}
+                            >
+                              {item?.menuItem}
+                            </Typography>
+                          </MenuItem>
+                        ))}
+                      </Menu>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
               ))}
             </Box>
             {/* ---------------------------End Large screen-------------- */}
@@ -153,7 +216,7 @@ const TopBar = () => {
                 onClose={handleCloseNavMenu}
                 sx={{ display: { xs: "block", md: "none" } }}
               >
-                {pages.map((page) => (
+                {topbarMenu.map((page) => (
                   <MenuItem
                     style={{ color: "#002a4a" }}
                     key={page}

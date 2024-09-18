@@ -31,13 +31,13 @@ export const MyLiability = (props) => {
 
         <tr className="row mt-3">
           <BostonClientLabel className="col-6 mr-2">
-            401(k), 403(b), 457
+            Mortgage(s)
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="libBalanceBk"
-              value={formData?.libBalanceBk}
+              name="mortgageBalance"
+              value={formData?.mortgageBalance}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -45,8 +45,8 @@ export const MyLiability = (props) => {
           <td className="col-2">
             <TextField
               variant="standard"
-              name="libInterestRateKb"
-              value={formData?.libInterestRateKb}
+              name="mortgageInterest"
+              value={formData?.mortgageInterest}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -55,8 +55,8 @@ export const MyLiability = (props) => {
           <td className="col-2">
             <TextField
               variant="standard"
-              name="libMonthlyPayKb"
-              value={formData?.libMonthlyPayKb}
+              name="mortgageMonthly"
+              value={formData?.mortgageMonthly}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -65,13 +65,13 @@ export const MyLiability = (props) => {
 
         <tr className="row mt-2">
           <BostonClientLabel className="col-6 mr-2">
-            Traditional, SEP and SIMPLE IRAs
+            Credit Card(s)
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="libBalanceIRAs"
-              value={formData?.libBalanceIRAs}
+              name="creditCardBalance"
+              value={formData?.creditCardBalance}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -79,8 +79,8 @@ export const MyLiability = (props) => {
           <td className="col-2">
             <TextField
               variant="standard"
-              name="libInterestRateIRAs"
-              value={formData?.libInterestRateIRAs}
+              name="creditCardInterest"
+              value={formData?.creditCardInterest}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -89,8 +89,8 @@ export const MyLiability = (props) => {
           <td className="col-2">
             <TextField
               variant="standard"
-              name="libMonthlyPayIRAs"
-              value={formData?.libMonthlyPayIRAs}
+              name="creditCardMonthly"
+              value={formData?.creditCardMonthly}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -99,13 +99,13 @@ export const MyLiability = (props) => {
 
         <tr className="row mt-2">
           <BostonClientLabel className="col-6 mr-2">
-            Roth IRA, Roth 401(k)
+            Other loans &nbsp;<small> (car, education, etc.)</small>
           </BostonClientLabel>
           <td className="col-2">
             <TextField
               variant="standard"
-              name="balanceIRA"
-              value={formData?.balanceIRA}
+              name="otherLoansBalance"
+              value={formData?.otherLoansBalance}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -113,8 +113,8 @@ export const MyLiability = (props) => {
           <td className="col-2">
             <TextField
               variant="standard"
-              name="interestRateIRA"
-              value={formData?.interestRateIRA}
+              name="otherLoansInterest"
+              value={formData?.otherLoansInterest}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />
@@ -123,8 +123,8 @@ export const MyLiability = (props) => {
           <td className="col-2">
             <TextField
               variant="standard"
-              name="monthlyPayIRA"
-              value={formData?.monthlyPayIRA}
+              name="otherLoansMonthly"
+              value={formData?.otherLoansMonthly}
               onChange={(e) => handleInputChange(e)}
               fullWidth
             />

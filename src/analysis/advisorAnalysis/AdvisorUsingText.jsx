@@ -5,8 +5,8 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { BostonClientSearch } from "../resusedComponents/BostonClientSearch";
 import { useEffect } from "react";
+import { BostonClientSearch } from "../../resusedComponents/BostonClientSearch";
 
 export const AdvisorUsingText = (props) => {
   const {
@@ -15,13 +15,13 @@ export const AdvisorUsingText = (props) => {
     setInvestMentValue,
     setInvestorPersonalityVal,
     setSelectedClient,
-    selectedClient
+    selectedClient,
   } = props;
-console.log("selectedClient",selectedClient?.investment_personality);
+  console.log("selectedClient", selectedClient?.investment_personality);
 
-useEffect(()=>{
-setInvestorPersonalityVal(selectedClient?.investment_personality)
-},[selectedClient])
+  useEffect(() => {
+    setInvestorPersonalityVal(selectedClient?.investment_personality);
+  }, [selectedClient]);
 
   const handleInvestmentChange = (event) => {
     setInvestMentValue(event.target.value);
@@ -68,6 +68,7 @@ setInvestorPersonalityVal(selectedClient?.investment_personality)
               Investor Personality
             </InputLabel>
             <Select
+              disabled={!selectedClient?.uniqueId}
               value={investorPersonalityVal}
               onChange={handleInvestorChange}
               placeholder="Investor Personality"

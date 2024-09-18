@@ -9,9 +9,8 @@ import {
   ArcElement,
 } from "chart.js";
 import { Pie } from "react-chartjs-2";
-
-// import { Chart, ArcElement } from 'chart.js';
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { useRef } from "react";
 
 // Register Chart.js components
 // Chart.register(ArcElement, ChartDataLabels);
@@ -29,24 +28,62 @@ ChartJS.register(
 
 // Now you can use Bar and Pie charts in your component
 
-export const BostonPieChart = (props) => {
-  const { data } = props;
-
-  const options = {
-    responsive: true,
+export const BostonPieChart = ({ data, width, height, options }) => {
+  const pieChartOptions = {
     plugins: {
+      responsive: true,
+      // tooltip: {
+      //   callbacks: {
+      //     label: function (tooltipItem) {
+      //       const total = tooltipItem.dataset.data.reduce(
+      //         (acc, curr) => acc + curr
+      //       );
+      //       const value = tooltipItem.raw;
+      //       const percentage = ((value / total) * 100).toFixed(2);
+      //       return `${tooltipItem.label}: ${percentage}%`;
+      //     },
+      //   },
+      // },
+
       datalabels: {
         color: "white", // Color of the labels
-        formatter: (value) => value, // Format the labels to display the raw value
+        formatter: (value, context) => {
+          const total = context.chart._metasets?.[0]?.total;
+          const percentage = ((value / total) * 100).toFixed(2) + "%";
+          return percentage;
+        },
+      },
+
+      label: function (tooltipItem) {
+        const total = tooltipItem.dataset.data.reduce(
+          (acc, curr) => acc + curr
+        );
+        const value = tooltipItem.raw;
+        const percentage = ((value / total) * 100).toFixed(2);
+        return `${tooltipItem.label}: ${percentage}%`;
       },
     },
   };
+  //   responsive: true,
+  //   plugins: {
+  //     datalabels: {
+  //       color: "white", // Color of the labels
+  //       formatter: (value) => `${value} ==`, // Format the labels to display the raw value
+  //     },
+  //   },
+  // };
 
   return (
     <>
       {data && data?.datasets && (
-        <div style={{ height: "450px", width: "450px" }}>
-          <Pie data={data} options={options} />
+        <div
+          style={{
+            height: height ? height : "450px",
+            width: width ? width : "450px",
+          }}
+        >
+          {/* <Pie data={data} options={options ? options : pieChartOptions} /> */}
+          <Pie data={data} options={pieChartOptions} />
         </div>
       )}
     </>
