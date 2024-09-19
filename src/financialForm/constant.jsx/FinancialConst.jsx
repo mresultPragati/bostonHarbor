@@ -1,3 +1,5 @@
+import { saveClientData } from "../../api/apiServiece";
+
 export const mode = {
   edit: "editMode",
   addNew: "addNewMode",
@@ -422,7 +424,7 @@ export const generateUniqueId = (name) => {
   return uniqueId;
 };
 
-export const handleFinancialForm = (obj) => {
+export const handleFinancialForm =async (obj) => {
   const {
     id,
     formType,
@@ -452,30 +454,50 @@ export const handleFinancialForm = (obj) => {
     //   uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
     // });
 
-    setAlertMsg({
-      msg: "Data Added Successfully",
-      severity: "success",
-    });
+setAlertMsg({
+  msg: "Data Added Successfully",
+  severity: "success",
+});
     console.log("finalDatafinalData 1", finalData);
+    let payload={
+      ...finalData, 
+      investment_personality:localData?.investment_personality?localData?.investment_personality:"",
+      date: fullDate,
+      uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
+    }
+const resp = await saveClientData(
+      payload, //  payload
+      "application/json"
+    );
+console.log("RESPONSEE", resp,finalData);
+// if (resp?.status === 200) {
+
+// }
 
     var localData = JSON.parse(localStorage.getItem("financialForm"));
-    setTimeout(() => {
+    setTimeout(async() => {
       if (localStorage.getItem("financialForm")) {
         // console.log("GET loacl avail", localData);
-        localData?.push({
-          ...finalData,
-          investment_personality:localData?.investment_personality?localData?.investment_personality:"",
-          date: fullDate,
-          uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
-        });
+        localData?.push(payload);
+
+        // localData?.push({
+        //   ...finalData,
+        //   investment_personality:localData?.investment_personality?localData?.investment_personality:"",
+        //   date: fullDate,
+        //   uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
+        // });     
+        
         localStorage.setItem("financialForm", JSON.stringify(localData));
+        console.log("localDatalocalData",localData);
       } else {
-        summaryArr.push({
-          ...finalData,
-          investment_personality:"",
-          date: fullDate,
-          uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
-        });
+        summaryArr?.push(payload);
+        
+        // summaryArr.push({
+        //   ...finalData,
+        //   investment_personality:"",
+        //   date: fullDate,
+        //   uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
+        // });
         localStorage.setItem("financialForm", JSON.stringify(summaryArr));
         // console.log("GET loacl avail", localData);
       }

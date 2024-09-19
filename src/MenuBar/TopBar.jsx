@@ -36,7 +36,7 @@ const TopBar = () => {
   const navigate = useNavigate();
 
   const handlePageMenu = (path, e) => {
-    if (e.ctrlKey || e.metaKey) window.open(path, "_blank");
+    if (e?.ctrlKey || e?.metaKey) window.open(path, "_blank");
     else navigate(path);
     setSubMenuAnchor(null);
   };
@@ -220,7 +220,7 @@ const TopBar = () => {
                   <MenuItem
                     style={{ color: "#002a4a" }}
                     key={page}
-                    onClick={() => handlePageMenu(page.path)}
+                    onClick={(e) => handlePageMenu(page.path,e)}
                   >
                     <Typography sx={{ textAlign: "center" }}>
                       {page.name}
