@@ -10,6 +10,7 @@ import { AssetsChart } from './assetsLiabilityChart/AssetsChart';
 import { AssetsLiabilityChart } from './assetsLiabilityChart/AssetsLiabilityCharts';
 import { AdvisorAnalysis } from './analysis/advisorAnalysis/AdvisorAnalysis';
 import { StockAnalysis } from './analysis/stockAnalysis/StockAnalysis';
+import { TaxAnalysis } from './analysis/taxAnalysis/TaxAnalysis';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path={navigatorPath.InvestmentPersonality} element={<InvestmentPersonality />} />
           <Route path={navigatorPath.advisorAnalysis} element={<AdvisorAnalysis />} />
           <Route path={navigatorPath.stockAnalysis} element={<StockAnalysis />} />
+          <Route path={navigatorPath.taxAnalysis} element={<TaxAnalysis />} />
         </Routes>
 
       </div>

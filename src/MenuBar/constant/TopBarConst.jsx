@@ -4,6 +4,7 @@ export const navigatorPath = {
   InvestmentPersonality: "/investmentPersonality",
   advisorAnalysis: "/advisorAnalysis",
   stockAnalysis: "/stockAnalysis",
+  taxAnalysis: "/taxAnalysis",
 };
 
 export const topbarMenu = [
@@ -21,6 +22,10 @@ export const topbarMenu = [
         menuItem: "Stock Analysis",
         menuPath: navigatorPath?.stockAnalysis,
       },
+      // {
+      //   menuItem: "Tax Analysis",
+      //   menuPath: navigatorPath?.taxAnalysis,
+      // },
     ],
   },
   // { name: "Investor Suggestion", path: navigatorPath?.advisorAnalysis },
