@@ -19,7 +19,9 @@ import {
   returnCssTopbar,
   topbarMenu,
 } from "./constant/TopBarConst";
-// import { BostonTopBar } from "./TopBarStyled";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { Collapse, Drawer, List, ListItem, ListItemText } from "@mui/material";
 
 const BostonTopBar = styled.div`
   padding: 8rem 5rem 0 5rem;
@@ -31,14 +33,18 @@ const TopBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [subMenuAnchor, setSubMenuAnchor] = useState(null);
+  const [open, setOpen] = useState(false);
   const locationPath = window?.location?.pathname;
 
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
   const handlePageMenu = (path, e) => {
     if (e?.ctrlKey || e?.metaKey) window.open(path, "_blank");
     else navigate(path);
-    setSubMenuAnchor(null);
+    handleCloseNavMenu();
   };
 
   const handleCloseNavMenu = () => {
@@ -115,32 +121,6 @@ const TopBar = () => {
                       else handlePageMenu(page.path, e);
                     }}
                     sx={returnCssTopbar(page, locationPath)}
-                    // {
-                    //   height: "4rem",
-                    //   // my: 2,
-                    //   // color: "#002a4a",
-                    //   display: "block",
-                    //   boxShadow:
-                    //     page?.subMenu && page?.subMenu?.length > 0
-                    //       ? page?.subMenu[index]?.menuPath === locationPath
-                    //         ? "0 7px 0 -1px #1d7ad7db"
-                    //         : ""
-                    //       : locationPath === page.path
-                    //       ? "0 7px 0 -1px #1d7ad7db"
-                    //       : "",
-
-                    //   // page?.subMenu[index]?.menuPath === locationPath
-                    //   //   ? "0 7px 0 -1px #1d7ad7db"
-                    //   //   : ""
-                    //   // : locationPath === page.path
-                    //   // ? "0 7px 0 -1px #1d7ad7db"
-                    //   // : "",
-                    //   color:
-                    //     locationPath === page.path
-                    //       ? "0 7px 0 0 #1f5b95"
-                    //       : "#002a4a",
-                    //   fontSize: locationPath === page.path ? "14px" : "12.5px",
-                    // }
                   >
                     {page.name}
                   </Button>
@@ -214,18 +194,68 @@ const TopBar = () => {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{ display: { xs: "block", md: "none" } }}
+                sx={{
+                  display: {
+                    xs: "block",
+                    md: "none",
+                  },
+                }}
               >
                 {topbarMenu.map((page) => (
-                  <MenuItem
-                    style={{ color: "#002a4a" }}
-                    key={page}
-                    onClick={(e) => handlePageMenu(page.path,e)}
-                  >
-                    <Typography sx={{ textAlign: "center" }}>
-                      {page.name}
-                    </Typography>
-                  </MenuItem>
+                  <>
+                    {!page?.subMenu ? (
+                      <MenuItem
+                        style={{ color: "#002a4a" }}
+                        key={page}
+                        // onClick={(e) => {
+                        // if (page.subMenu?.length > 0) subMenuHandleOpne(e);
+                        // else
+                        // handlePageMenu(page.path, e);
+                        // }}
+                        onClick={() => {
+                          handlePageMenu(page.path);
+                        }}
+                      >
+                        {page.name}
+                      </MenuItem>
+                    ) : (
+                      <Typography sx={{ textAlign: "center" }}>
+                        <List sx={{ paddingTop: 1 }}>
+                          <ListItem
+                            button
+                            onClick={handleClick}
+                            sx={{ paddingTop: 0 }}
+                          >
+                            <ListItemText
+                              sx={{ color: "#002A4A" }}
+                              primary={page.name}
+                            />
+                            {open ? <ExpandLess /> : <ExpandMore />}
+                          </ListItem>
+
+                          {/* Submenu */}
+                          <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                              {page?.subMenu?.map((item) => (
+                                <ListItem
+                                  button
+                                  onClick={(e) => {
+                                    handlePageMenu(item.menuPath, e);
+                                    setSubMenuAnchor(null);
+                                  }}
+                                >
+                                  <ListItemText
+                                    sx={{ color: "#002A4A" }}
+                                    primary={item?.menuItem}
+                                  />
+                                </ListItem>
+                              ))}
+                            </List>
+                          </Collapse>
+                        </List>
+                      </Typography>
+                    )}
+                  </>
                 ))}
               </Menu>
             </Box>

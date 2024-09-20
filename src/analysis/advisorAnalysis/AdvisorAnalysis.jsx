@@ -83,6 +83,7 @@ export const AdvisorAnalysis = () => {
         setShowLoader(false);
         setAlertMsg({ msg: result?.message, severity: "error" });
       }
+      return;
     } else {
       if (!investorPersonalityVal && Object.keys(selectedClient).length > 0) {
         setAlertMsg({
@@ -129,6 +130,7 @@ export const AdvisorAnalysis = () => {
         setShowLoader(false);
         setAlertMsg({ msg: result?.message, severity: "error" });
       }
+      return;
     } else {
       if (!financialFile)
         setAlertMsg({

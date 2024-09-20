@@ -30,12 +30,12 @@ const companies = [
 export const StockAnalysis = () => {
   return (
     <div style={{ margin: "1rem 8rem" }}>
-      <div className="d-flex">
+      {/* <div className="d-flex">
         <SearchableDropdown label="Select Country" options={country} />
         <p style={{ transform: "translateY(10px)", marginLeft: "10px" }}>
           Time
         </p>
-      </div>
+      </div> */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div className="mt-5">
           <SearchableDropdown
