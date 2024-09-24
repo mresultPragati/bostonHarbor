@@ -103,7 +103,7 @@ export const ClientSummaryTable = (props) => {
                               transform: "translateY(10px)",
                             }}
                             onClick={(e) => {
-                              if (e.ctrlKey || e.metaKey)
+                              if (e?.ctrlKey || e?.metaKey)
                                 window.open(
                                   `/assetsLiabilityDetails/${item?.uniqueId}`,
                                   "_blank"
@@ -128,7 +128,7 @@ export const ClientSummaryTable = (props) => {
                                 textDecoration: "underline",
                               }}
                               onClick={(e) => {
-                                if (e.ctrlKey || e.metaKey)
+                                if (e?.ctrlKey || e?.metaKey)
                                   window.open(
                                     `/financialForm/${item?.uniqueId}`,
                                     "_blank"

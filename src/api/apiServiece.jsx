@@ -21,3 +21,10 @@ export const investmentPersnalityAssament = (payload, contentType) => {
     payload
   );
 };
+
+export const saveClientData = (payload, contentType) => {  
+     return  apiClient(contentType).post(
+    `${baseURL}/submit-client-data`,
+    payload
+  );
+};
