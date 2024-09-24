@@ -11,11 +11,13 @@ import { AssetsLiabilityChart } from './assetsLiabilityChart/AssetsLiabilityChar
 import { AdvisorAnalysis } from './analysis/advisorAnalysis/AdvisorAnalysis';
 import { StockAnalysis } from './analysis/stockAnalysis/StockAnalysis';
 import { TaxAnalysis } from './analysis/taxAnalysis/TaxAnalysis';
+import PieChart3D from './Test';
 
 function App() {
   return (
     <div className="App">
       <TopBar />
+      <PieChart3D />
       <div style={{ padding: "0 3rem" }}>
         <Routes>
           <Route path={navigatorPath.dashboard} element={<Dashboard />} />

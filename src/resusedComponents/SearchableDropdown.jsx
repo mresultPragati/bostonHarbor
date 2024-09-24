@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-const SearchableDropdown = ({ label, width, options }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleChange = (event, newValue) => {
-    setSelectedOption(newValue);
-    // add logic
-  };
-
+const SearchableDropdown = ({ label, width, options, handleChange }) => {
   return (
     <Autocomplete
       disablePortal
