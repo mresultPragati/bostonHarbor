@@ -194,13 +194,6 @@ export const AdvisorAnalysis = () => {
           className="mt-5"
           style={{ textAlign: "start" }}
           dangerouslySetInnerHTML={{
-            __html: htmlResponse
-          }}
-        /> 
-        <div
-          className="mt-5"
-          style={{ textAlign: "start" }}
-          dangerouslySetInnerHTML={{
             __html: extractHtmlContent(
               htmlResponse,
               "Investment Allocation:",
@@ -232,7 +225,7 @@ export const AdvisorAnalysis = () => {
 
         {/* ---------------------------------------------*/}
 
-        {/* <BostonBarChart data={barChartData} /> */}
+        <BostonBarChart data={barChartData} />
         <div
           className="mt-5"
           style={{ textAlign: "start" }}

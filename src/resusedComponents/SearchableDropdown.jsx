@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-const SearchableDropdown = ({ label, width, options,handleChange }) => {
- 
-
+const SearchableDropdown = ({ label, width, options, handleChange }) => {
   return (
     <Autocomplete
       disablePortal
