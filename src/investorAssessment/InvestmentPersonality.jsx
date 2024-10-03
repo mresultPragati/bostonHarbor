@@ -9,7 +9,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { BostonClientSearch } from "../resusedComponents/BostonClientSearch";
+import { BostonSearch } from "../resusedComponents/BostonSearch";
 import { investmentPersnalityAssament } from "../api/apiServiece";
 import ConfirmationDialog from "../resusedComponents/BostonConfirmation";
 import { BostonAlertMessage } from "../resusedComponents/BostonAlertMessage";
@@ -26,6 +26,7 @@ const InvestmentPersonality = () => {
   });
   const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
+  const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
 
   const handleOpen = () => {
     setOpenDialog(true);
@@ -65,7 +66,6 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
     if (name === "question9") {
       question = `What is the time horizon for your investment?`;
     }
-    console.log("QUESS", question);
 
     setPersonalityData({
       ...personalityData,
@@ -132,7 +132,16 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
           Investment Personality Questions
         </Typography>
 
-        <BostonClientSearch setSelectedClient={setSelectedClient} width={50} />
+        <BostonSearch
+          label="Name Of Client"
+          listArray={clientList}
+          filterFields={["clientDetail.clientName", "uniqueId"]}
+          setSelectedObj={setSelectedClient}
+          primaryValue="clientDetail.clientName"
+          secondary={"uniqueId"}
+          secondaryName="ID"
+          width={50}
+        />
 
         {Object.keys(selectedClient).length > 0 ? (
           <div className="mt-5" style={{ textAlign: "start" }}>
