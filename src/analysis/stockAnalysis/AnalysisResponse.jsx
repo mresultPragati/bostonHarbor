@@ -18,7 +18,7 @@ export const AnalysisResponse = ({
         }}
       />
 
-      {topNews?.map((item, index) => {
+      {/* {topNews?.map((item, index) => {
         return (
           <div style={{ textAlign: "start" }}>
             <p>
@@ -29,15 +29,15 @@ export const AnalysisResponse = ({
             <br />
           </div>
         );
-      })}
+      })} */}
 
-      <iframe
+      {/* <iframe
         title="chart"
         src="https://finance.yahoo.com/chart/TSLA"
         width="80%"
         height="400"
         frameborder="0"
-      ></iframe>
+      ></iframe> */}
     </>
   );
 };

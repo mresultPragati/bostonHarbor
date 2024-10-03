@@ -52,8 +52,8 @@ export const StockAnalysis = () => {
     // const [title, link] = newsItem.split(" - ");
     //   return(
     //     {
-    //       title: title.trim(),
-    // link: link.trim(),
+    //       title: title?.trim(),
+    // link: link?.trim(),
     //   }
     //   )
     // })
@@ -72,20 +72,19 @@ export const StockAnalysis = () => {
       // console.log(newsArray, "newsArray");
 
       const news = resp?.data?.news;
-      const entries = news.split(/\n\n/);
+      const entries = news?.split?.(/\n\n/);
 
       let arrList = [];
-      entries.map((item) => {
+      entries?.map?.((item) => {
         // Remove leading number and special characters
-        const cleanedItem = item
-          .replace(/^\d+\.\s*/g, "") // Remove leading number and space
-          .replace(/\\\"/g, "") // Remove backslash and quotation
-          .trim(); // Trim whitespace
+        const cleanedItem = item?.replace(/^\d+\.\s*/g, "") // Remove leading number and space
+          ?.replace(/\\\"/g, "") // Remove backslash and quotation
+          ?.trim(); // Trim whitespace
 
-        const parts = cleanedItem.split(/\n/);
+        const parts = cleanedItem?.split?.(/\n/);
         let arr = {
-          title: parts[0].replace(/ -$/, "").trim(), // Remove trailing hyphen from title
-          link: parts[1].trim(),
+          title: parts[0].replace(/ -$/, "")?.trim(), // Remove trailing hyphen from title
+          link: parts[1]?.trim(),
         };
         arrList?.push(arr);
       });
@@ -127,7 +126,7 @@ export const StockAnalysis = () => {
               label="Stock Market"
               listArray={stockMarket}
               filterFields={["label"]}
-              setSelectedObj={setSelectedCompany}
+              setSelectedObj={setSelectedMarket}
               primaryValue="label"
               secondaryName="Ticker"
               width={100}
@@ -145,7 +144,7 @@ export const StockAnalysis = () => {
               label="Company"
               listArray={stockCompany}
               filterFields={["label", "ticker"]}
-              setSelectedObj={setSelectedMarket}
+              setSelectedObj={setSelectedCompany}
               primaryValue="label"
               secondary={"ticker"}
               secondaryName="Ticker"
