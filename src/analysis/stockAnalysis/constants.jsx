@@ -16,10 +16,10 @@ import {
 export const CompanyDetails = (companyInfo, selectedCompany) => {
   return (
     <>
-      {Object.keys(companyInfo) && Object.keys(companyInfo).length > 0 && (
+      {(companyInfo)?.Company && Object.keys(companyInfo).length > 0 && (
         <>
           <h3 className="mb-4" style={{ textAlign: "start" }}>
-            {selectedCompany?.label}'s Information:
+            {companyInfo?.Company}'s Information:
           </h3>
           <TableContainer component={Paper}>
             <Table>

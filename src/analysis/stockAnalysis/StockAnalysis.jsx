@@ -42,6 +42,7 @@ export const StockAnalysis = () => {
     let payload = {
       ticker: selectedCompany?.ticker,
       query: query,
+      company: selectedCompany.label
     };
     const resp = await generateStockAnalysis(
       payload, //  payload
