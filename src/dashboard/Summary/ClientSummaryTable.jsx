@@ -64,7 +64,9 @@ export const ClientSummaryTable = (props) => {
                         <TableCell>{item?.clientDetail?.clientName}</TableCell>
                         <TableCell>{item?.uniqueId}</TableCell>
                         <TableCell>
-                          {item?.investment_personality || "-"}
+                          {item?.investment_personality === "Unknown"
+                            ? "-"
+                            : item?.investment_personality}
                         </TableCell>
                         <TableCell>{item?.date}</TableCell>
                         <TableCell

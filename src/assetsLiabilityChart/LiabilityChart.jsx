@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { extractKeysAndValues, getMidDarkColor, total } from "./Constant";
 import { BostonPieChart } from "../resusedComponents/BostonPieChart";
+import BostonPieChart3D from "../resusedComponents/Boston3DChart";
 
 export const LiabilityChart = ({ options, chartData }) => {
   return (
@@ -20,12 +21,13 @@ export const LiabilityChart = ({ options, chartData }) => {
         <>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div>
-              <BostonPieChart
+              {/* <BostonPieChart
                 data={chartData}
                 width="390px"
                 height="390px"
                 options={options}
-              />
+              /> */}
+              <BostonPieChart3D chartData={chartData} />
             </div>
             {/* <div> */}
             <TableContainer style={{ marginTop: "5rem", width: "auto" }}>

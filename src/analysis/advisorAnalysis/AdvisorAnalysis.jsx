@@ -1,14 +1,4 @@
-import {
-  Alert,
-  Button,
-  FormControl,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  styled,
-  TextField,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { useState } from "react";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
@@ -16,12 +6,15 @@ import { AdvisoryUsingFile } from "./AdvisorUsingFile";
 import { AdvisorUsingText } from "./AdvisorUsingText";
 import { BostonBarChart } from "../../resusedComponents/BostonBarChart";
 import { BostonPieChart } from "../../resusedComponents/BostonPieChart";
-import { extractHtmlContent } from "../constants/AdvisorContant";
+import { extractHtmlContent, options } from "../constants/AdvisorContant";
 import { BostonLineChart } from "../../resusedComponents/BostonLineChart";
 import {
   generateSuggestionByClientId,
   generateSuggestions,
 } from "../../api/apiServiece";
+import { Container } from "@mui/material";
+import AdvisorAnalysisHtml from "./AdvisorRespHtml";
+import BostonPieChart3D from "../../resusedComponents/Boston3DChart";
 
 export const AdvisorAnalysis = () => {
   const [assessmentFile, setAssessmentFile] = useState(null);
@@ -179,9 +172,12 @@ export const AdvisorAnalysis = () => {
       <Button
         className="mt-5"
         variant="contained"
-        // disabled={(!assessmentFile || !financialFile) &&
-        //     (!selectedClient?.uniqueId ||
-        //         !selectedClient?.clientDetail?.clientName || !investMentValue)}
+        disabled={
+          (!assessmentFile || !financialFile) &&
+          (!selectedClient?.uniqueId ||
+            !selectedClient?.clientDetail?.clientName ||
+            !investMentValue)
+        }
         onClick={() => handleUploadClick()}
       >
         Generate Investment Suggestion
@@ -189,7 +185,31 @@ export const AdvisorAnalysis = () => {
 
       {/* -----------------------------Investment Suggestion---------------------- */}
 
-      <div className="mt-5 mb-5" style={{ textAlign: "start" }}>
+      <div className="row">
+        <div className="col-2"></div>
+        <div className="col-5" style={{ flex: 1, padding: "2rem 0 0 2rem" }}>
+          {pieChartData?.datasets?.length > 0 && (
+            <BostonPieChart3D chartData={pieChartData} />
+          )}
+          {/* <BostonPieChart data={pieChartData} /> */}
+        </div>
+      </div>
+
+      <Container
+        // maxWidth="md"
+        style={{ margin: "20px", textAlign: "start" }}
+      >
+        {/* <Paper elevation={3} style={{ padding: "20px" }}> */}
+        {/* {htmlResponse && (htmlResponse, options)}{" "} */}
+        {htmlResponse && <AdvisorAnalysisHtml htmlString={htmlResponse} />}
+
+        {/* </Paper> */}
+      </Container>
+
+      <BostonBarChart data={barChartData} />
+      <BostonLineChart data={lineChartData} />
+
+      {/* <div className="mt-5 mb-5" style={{ textAlign: "start" }}>
         <div
           className="mt-5"
           style={{ textAlign: "start" }}
@@ -204,7 +224,6 @@ export const AdvisorAnalysis = () => {
 
         <div className="row">
           <div className="col-7">
-            {/* <div style={{ display: "block", flex: 2, }}> */}
             <div
               className="mt-5"
               style={{ textAlign: "start" }}
@@ -216,14 +235,11 @@ export const AdvisorAnalysis = () => {
                 ).extracted,
               }}
             />
-            {/* {parse(extracted)} */}
           </div>
           <div className="col-5" style={{ flex: 1, padding: "6rem 0 0 2rem" }}>
             <BostonPieChart data={pieChartData} />
           </div>
         </div>
-
-        {/* ---------------------------------------------*/}
 
         <BostonBarChart data={barChartData} />
         <div
@@ -238,8 +254,7 @@ export const AdvisorAnalysis = () => {
           }}
         />
         <BostonLineChart data={lineChartData} />
-        {/*  {parse(remainingHtml)} */}
-      </div>
+      </div> */}
     </>
   );
 };
