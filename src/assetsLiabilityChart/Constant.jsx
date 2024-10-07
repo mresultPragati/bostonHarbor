@@ -8,9 +8,9 @@ export const total = (chartData) => {
 
 export const getMidDarkColor = () => {
   // Generate random RGB values within the mid-dark range (0-150)
-  const r = Math.floor(Math.random() * 185); // 0 to 150
-  const g = Math.floor(Math.random() * 185); // 0 to 150
-  const b = Math.floor(Math.random() * 185); // 0 to 150
+  const r = Math.floor(Math.random() * 250);
+  const g = Math.floor(Math.random() * 250);
+  const b = Math.floor(Math.random() * 250);
 
   return `rgb(${r}, ${g}, ${b})`;
 };

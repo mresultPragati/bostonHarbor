@@ -93,52 +93,9 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts3D from "highcharts/highcharts-3d";
 
-// Initialize the 3D module
 Highcharts3D(Highcharts);
 
 const PieChart3D = () => {
-  // const options = {
-  // chart: {
-  // type: "pie",
-  // // backgroundColor: "#fff",
-  // options3d: {
-  // enabled: true,
-  // alpha: 45,
-  // beta: 0,
-  // },
-  // },
-  // title: {
-  // text: "3D Pie Chart Example",
-  // },
-  // plotOptions: {
-  // pie: {
-  // // innerSize: 100,
-  // depth: 45,
-  // dataLabels: {
-  // enabled: true,
-  // format: "{point.name}: {point.percentage:.1f} %",
-  // },
-  // states: {
-  // hover: {
-  // brightness: 0.5, // Increase brightness on hover
-  // },
-  // },
-
-  // },
-  // },
-  // series: [
-  // {
-  // name: "Share",
-  // data: [
-  // ["Category A", 45],
-  // ["Category B", 26],
-  // ["Category C", 12],
-  // ["Category D", 17],
-  // ],
-  // },
-  // ],
-  // };
-
   const options = {
     chart: {
       type: "pie",
@@ -162,10 +119,7 @@ const PieChart3D = () => {
             const total = this.series.data.reduce(
               (sum, point) => sum + point.y,
               0
-            ); // Calculate total
-            console.log("totaltotal data", this.series.data);
-            console.log("totaltotal", total);
-
+            );
             const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
             return `${this.point.name}: ${percentage}`; // Return formatted label
           },
@@ -173,30 +127,10 @@ const PieChart3D = () => {
             const total = this.series.data.reduce(
               (sum, point) => sum + point.y,
               0
-            ); // Calculate total
-            console.log("totaltotal data", this.series.data);
-            console.log("totaltotal", total);
-
+            );
             const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
             return `${this.point.name}: ${percentage}`; // Return formatted label
           },
-
-          // formatter: function () {
-          //   const total = this.series.data.reduce(
-          //     (sum, point) => sum + point.y,
-          //     0
-          //   ); // Calculate total
-          //   const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
-
-          //   // Use Highcharts.numberFormat to disable the thousands separator
-          //   const valueWithoutSeparator = Highcharts.numberFormat(
-          //     this.y,
-          //     0,
-          //     ".",
-          //     ""
-          //   ); // No thousands separator
-          //   return `${this.point.name}: ${percentage} (${valueWithoutSeparator})`; // Return formatted label
-          // },
         },
         states: {
           hover: {

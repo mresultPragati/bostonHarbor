@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { extractKeysAndValues, getMidDarkColor, total } from "./Constant";
 import { BostonPieChart } from "../resusedComponents/BostonPieChart";
+import BostonPieChart3D from "../resusedComponents/Boston3DChart";
 
 export const AssetsChart = ({
   chartData,
@@ -78,22 +79,24 @@ export const AssetsChart = ({
             {/* </div> */}
             <div className="mt-3">
               {smallValueChartData?.datasets?.[0]?.data?.length > 0 && (
-                <BostonPieChart
-                  data={smallValueChartData}
-                  width="450px"
-                  height="450px"
-                  options={options}
-                />
+                // <BostonPieChart
+                //   data={smallValueChartData}
+                //   width="450px"
+                //   height="450px"
+                //   options={options}
+                // />
+                <BostonPieChart3D chartData={smallValueChartData} />
               )}
 
               <div className="mt-3">
                 {largeValueChartData?.datasets?.[0]?.data?.length > 0 && (
-                  <BostonPieChart
-                    data={largeValueChartData}
-                    width="450px"
-                    height="450px"
-                    options={options}
-                  />
+                  // <BostonPieChart
+                  //   data={largeValueChartData}
+                  //   width="450px"
+                  //   height="450px"
+                  //   options={options}
+                  // />
+                  <BostonPieChart3D chartData={largeValueChartData} />
                 )}
                 {/* <BostonPieChart
             data={chartData}
