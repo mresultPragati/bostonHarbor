@@ -64,7 +64,7 @@ const AdvisorAnalysisHtml = ({ htmlString }) => {
       <Table sx={financialInfoStyleMapping.table}>
         <TableHead>
           <TableRow sx={financialInfoStyleMapping.tr}>
-            <TableCell sx={financialInfoStyleMapping.th}>Data</TableCell>
+            <TableCell sx={financialInfoStyleMapping.th}>Category</TableCell>
             <TableCell sx={financialInfoStyleMapping.th}>Value</TableCell>
           </TableRow>
         </TableHead>
