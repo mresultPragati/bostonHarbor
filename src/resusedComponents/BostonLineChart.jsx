@@ -10,7 +10,7 @@ import {
   Legend,
   PointElement,
 } from "chart.js";
- 
+
 // Register the components
 ChartJS.register(
   LineElement,
@@ -22,10 +22,10 @@ ChartJS.register(
   PointElement
 );
 
-export const BostonLineChart=(props)=>{
-    const{data}=props;
+export const BostonLineChart = (props) => {
+  const { data } = props;
 
-const options = {
+  const options = {
     responsive: true,
     plugins: {
       data: true,
@@ -37,11 +37,12 @@ const options = {
     },
   };
 
-console.log("DATAA",data);
-    return(
-        <>
-         {data && data?.datasets && (
+  console.log("DATAA", data);
+  return (
+    <>
+      {data && data?.datasets && (
         <div
+          className="mb-5"
           style={{ width: "90vw", display: "flex", justifyContent: "center" }}
         >
           <div
@@ -53,10 +54,10 @@ console.log("DATAA",data);
               // justifyContent: "center",
             }}
           >
-        <Line data={data} options={options}/>
-        </div>
+            <Line data={data} options={options} />
+          </div>
         </div>
       )}
-        </>
-    )
-}
+    </>
+  );
+};

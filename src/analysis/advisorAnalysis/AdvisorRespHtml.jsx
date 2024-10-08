@@ -5,15 +5,18 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper,
 } from "@mui/material";
 import { financialInfoStyleMapping } from "../constants/AdvisorContant";
 
-// Function to apply styles to strong elements
+// Function to clean up and apply styles to strong elements
 const applyStrongStyles = (htmlString) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, "text/html");
+  // Remove <td> and <p> tags and their closing counterparts
+  const cleanedHtml = htmlString?.replace(/<\/?(td|p)>/gi, "").trim();
 
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(cleanedHtml, "text/html");
+
+  // Apply styles to <strong> elements
   const strongTags = doc.querySelectorAll("strong");
   strongTags.forEach((strong) => {
     strong.style.fontWeight = financialInfoStyleMapping.strong.fontWeight;
@@ -37,21 +40,64 @@ const AdvisorAnalysisHtml = ({ htmlString }) => {
   const renderTableFromHTML = (html) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
+
     const rows = Array.from(doc.querySelectorAll("tbody tr"));
+    const header = rows[0]; // First row for the header (Category, Value)
 
-    return rows.map((row, index) => {
-      const columns = Array.from(row.querySelectorAll("td"));
+    // Extracting column headings dynamically and filtering out empty headers
+    const columnHeaders = Array.from(header.querySelectorAll("td"))
+      .map((col) => col.innerText.trim())
+      .filter((headerText) => headerText !== "");
 
-      return (
-        <tr key={index} style={financialInfoStyleMapping.tr}>
-          {columns.map((col, colIndex) => (
-            <td key={colIndex} style={financialInfoStyleMapping.td}>
-              {col.innerText === "---" ? "" : col.innerText || col.textContent}
-            </td>
-          ))}
-        </tr>
-      );
+    console.log("headerText initail", columnHeaders);
+    // Replace "---" at the 1st and 2nd indices with "Category" and "Value"
+    columnHeaders.forEach((headerText, index) => {
+      if (headerText === "---") {
+        if (index === 0) {
+          columnHeaders[index] = "Category"; // Replace first "---" with "Category"
+        } else if (index === 1) {
+          columnHeaders[index] = "Value"; // Replace second "---" with "Value"
+        }
+      }
     });
+
+    console.log("headerText", columnHeaders);
+
+    // The remaining rows for data
+    const dataRows = rows.slice(1);
+
+    return (
+      <>
+        <TableHead>
+          <TableRow style={financialInfoStyleMapping.tr}>
+            {columnHeaders.map((headerText, index) => (
+              <TableCell key={index} style={financialInfoStyleMapping.th}>
+                {headerText}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {dataRows.map((row, rowIndex) => {
+            const columns = Array.from(row.querySelectorAll("td"));
+            return (
+              <TableRow key={rowIndex} style={financialInfoStyleMapping.tr}>
+                {columns.map((col, colIndex) => (
+                  <TableCell
+                    key={colIndex}
+                    style={financialInfoStyleMapping.td}
+                  >
+                    {col.innerText === "---"
+                      ? ""
+                      : col.innerText || col.textContent}
+                  </TableCell>
+                ))}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </>
+    );
   };
 
   return (
@@ -60,15 +106,8 @@ const AdvisorAnalysisHtml = ({ htmlString }) => {
         Client's Financial Information:
       </h2>
 
-      {/* <Paper sx={{ overflowX: "auto" }}> */}
       <Table sx={financialInfoStyleMapping.table}>
-        <TableHead>
-          <TableRow sx={financialInfoStyleMapping.tr}>
-            <TableCell sx={financialInfoStyleMapping.th}>Category</TableCell>
-            <TableCell sx={financialInfoStyleMapping.th}>Value</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableFromHTML(financialInfoHTML)}</TableBody>
+        {renderTableFromHTML(financialInfoHTML)}
       </Table>
 
       <div>
