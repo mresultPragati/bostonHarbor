@@ -19,6 +19,7 @@ export const StockAnalysis = () => {
   const [query, setQuery] = useState("");
   const [companyInfo, setCompanyInfo] = useState({});
   const [topNews, setTopNews] = useState([]);
+  const [graphUrl, setGraphUrl] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
   const [stockOption, setStockOption] = useState("");
   const [alertMsg, setAlertMsg] = useState({
@@ -42,7 +43,7 @@ export const StockAnalysis = () => {
     let payload = {
       ticker: selectedCompany?.ticker,
       query: query,
-      company: selectedCompany.label
+      company: selectedCompany.label,
     };
     const resp = await generateStockAnalysis(
       payload, //  payload
@@ -78,24 +79,29 @@ export const StockAnalysis = () => {
       let arrList = [];
       entries?.map?.((item) => {
         // Remove leading number and special characters
-        const cleanedItem = item?.replace(/^\d+\.\s*/g, "") // Remove leading number and space
+        const cleanedItem = item
+          ?.replace(/^\d+\.\s*/g, "") // Remove leading number and space
           ?.replace(/\\\"/g, "") // Remove backslash and quotation
           ?.trim(); // Trim whitespace
 
-        const parts = cleanedItem?.split?.(/\n/);
+        // Split by " -" which separates the title from the link
+        const parts = cleanedItem?.split?.(/\s-\s*/); // Split by ' - ' (space, hyphen, space)
         let arr = {
-          title: parts[0].replace(/ -$/, "")?.trim(), // Remove trailing hyphen from title
-          link: parts[1]?.trim(),
+          title: parts[0]?.trim(), // Trim any extra whitespace from the title
+          link: parts[1]?.trim(), // Trim any extra whitespace from the link
         };
         arrList?.push(arr);
       });
+
       setTopNews(arrList);
+
       // setNewsEntries(arrList);
       console.log("arrList", arrList);
 
       // setTopNews(resp?.data?.news);
       setHtmlResponse(resp?.data?.analysis);
       setCompanyInfo(resp?.data?.data);
+      setGraphUrl(resp?.data?.graph_url);
     } else {
       setShowLoader(false);
       setAlertMsg({ msg: resp.data?.message, severity: "error" });
@@ -181,6 +187,7 @@ export const StockAnalysis = () => {
         selectedCompany={selectedCompany}
         htmlResponse={htmlResponse}
         topNews={topNews}
+        graphUrl={graphUrl}
       />
     </div>
   );

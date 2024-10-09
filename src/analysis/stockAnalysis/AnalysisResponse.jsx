@@ -5,6 +5,7 @@ export const AnalysisResponse = ({
   selectedCompany,
   htmlResponse,
   topNews,
+  graphUrl,
 }) => {
   return (
     <>
@@ -17,23 +18,31 @@ export const AnalysisResponse = ({
           __html: htmlResponse,
         }}
       />
-
-      {/* {topNews?.map((item, index) => {
-        return (
-          <div style={{ textAlign: "start" }}>
-            <p>
-              {index + 1}. {item?.title}
-            </p>
-            <a href={item?.link}>{item?.link}</a>
-            <br />
-            <br />
-          </div>
-        );
-      })} */}
+      {topNews?.length > 0 && (
+        <>
+          <h3 style={{ textAlign: "start" }} className="mt-5 mb-3">
+            Top News
+          </h3>
+          {topNews?.map((item, index) => {
+            return (
+              <div style={{ textAlign: "start", margin: 0 }}>
+                <p>
+                  {index + 1}. {item?.title}:
+                </p>
+                <a href={item?.link} rel="noreferrer" target="_blank">
+                  {item?.link}
+                </a>
+                <br />
+                <br />
+              </div>
+            );
+          })}
+        </>
+      )}
 
       {/* <iframe
         title="chart"
-        src="https://finance.yahoo.com/chart/TSLA"
+        src={graphUrl}
         width="80%"
         height="400"
         frameborder="0"

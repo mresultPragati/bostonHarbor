@@ -49,6 +49,7 @@ const TopBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    setSubMenuAnchor(null);
   };
 
   const handleOpenUserMenu = (event) => {
