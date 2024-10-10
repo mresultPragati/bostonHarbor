@@ -108,6 +108,73 @@ const TopBar = () => {
               {/* BOSTON HARBOR */}
             </Typography>
             <Box
+              // sx={{
+              //   flexGrow: 1,
+              //   display: { xs: "none", md: "flex" },
+              //   justifyContent: "space-evenly", // Ensure items are spaced out evenly
+              //   alignItems: "center", // Align items vertically in the center
+              //   paddingRight: "1rem", // Add some padding to the right (optional)
+              // }}
+
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex", justifyContent: "end" },
+              }}
+            >
+              {topbarMenu.map((page, index) => (
+                <React.Fragment key={index}>
+                  <Button
+                    size="small"
+                    style={{
+                      paddingRight: "1rem",
+                      // width: "min-content",
+                      textAlign: "left",
+                      fontSize: "12px",
+                    }}
+                    onClick={(e) => {
+                      if (page.subMenu?.length > 0) subMenuHandleOpne(e);
+                      else handlePageMenu(page.path, e);
+                    }}
+                    sx={returnCssTopbar(page, locationPath)}
+                  >
+                    {page.name}
+                  </Button>
+
+                  {page?.subMenu?.length > 0 && (
+                    <Menu
+                      sx={{ mt: "46px", marginLeft: "2.5rem" }}
+                      id="menu-appbar"
+                      anchorEl={subMenuAnchor}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(subMenuAnchor)}
+                      onClose={subMenuHandleClose}
+                    >
+                      {page?.subMenu?.map((item) => (
+                        <MenuItem
+                          key={item.menuPath}
+                          onClick={(e) => handlePageMenu(item.menuPath, e)}
+                        >
+                          <Typography
+                            sx={{ textAlign: "center", padding: "4px 8px" }}
+                          >
+                            {item?.menuItem}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  )}
+                </React.Fragment>
+              ))}
+            </Box>
+            {/* <Box
               sx={{
                 flexGrow: 1,
                 display: { xs: "none", md: "flex", justifyContent: "end" },
@@ -116,6 +183,7 @@ const TopBar = () => {
               {topbarMenu.map((page, index) => (
                 <>
                   <Button
+                    size="small"
                     // key={page}
                     onClick={(e) => {
                       if (page.subMenu?.length > 0) subMenuHandleOpne(e);
@@ -165,7 +233,7 @@ const TopBar = () => {
                   )}
                 </>
               ))}
-            </Box>
+            </Box> */}
             {/* ---------------------------End Large screen-------------- */}
 
             {/* ---------------------------Small screen-------------- */}

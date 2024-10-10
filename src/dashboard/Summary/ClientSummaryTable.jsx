@@ -117,7 +117,7 @@ export const ClientSummaryTable = (props) => {
                             }}
                             // className="underlined-link"
                           >
-                            show chart
+                            portfolio
                           </p>
 
                           <div className="edit-icon-container">

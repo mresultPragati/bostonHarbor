@@ -74,7 +74,7 @@ export const BostonSearch = ({
 
   return (
     <>
-      <div>
+      <div className="mb-5">
         <TextField
           variant="standard"
           label={label}
