@@ -69,9 +69,9 @@ const InvestmentAllocation = () => {
       <TransactionForm
         formData={formData}
         setFormData={setFormData}
-        setInvestmentList={setInvestmentList}
+        // setInvestmentList={setInvestmentList}
         // handleFormSubmit={handleFormSubmit}
-        editingIndex={editingIndex}
+        // editingIndex={editingIndex}
       />
       {investmentList?.length > 0 && (
         <>
@@ -98,9 +98,9 @@ const InvestmentAllocation = () => {
                   <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
                     Date
                   </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
+                  {/* <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
                     Actions
-                  </BostonTableHead>
+                  </BostonTableHead> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -114,7 +114,7 @@ const InvestmentAllocation = () => {
                       ${row.transactionAmount}
                     </TableCell>
                     <TableCell align="center">{row.date}</TableCell>
-                    <TableCell align="center">
+                    {/* <TableCell align="center">
                       <IconButton
                         color="primary"
                         onClick={() => handleEdit(index)}
@@ -127,7 +127,7 @@ const InvestmentAllocation = () => {
                       >
                         <DeleteIcon />
                       </IconButton>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>

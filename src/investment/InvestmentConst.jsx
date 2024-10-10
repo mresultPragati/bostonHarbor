@@ -1,8 +1,9 @@
 export const investmentForm = {
   assetClass: "",
   name: "",
-  units: "",
+  units: 0,
   pricePerUnit: 0,
-  transactionAmount: "",
+  //   transactionAmount: "",
   date: "",
+  market: "",
 };

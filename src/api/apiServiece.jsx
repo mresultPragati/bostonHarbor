@@ -29,3 +29,7 @@ export const saveClientData = (payload, contentType) => {
 export const generateStockAnalysis = (payload, contentType) => {
   return apiClient(contentType).post(`${baseURL}/analyze_stock`, payload);
 };
+
+export const placeOrder = (payload, contentType) => {
+  return apiClient(contentType).post(`${baseURL}/order_placed`, payload);
+};

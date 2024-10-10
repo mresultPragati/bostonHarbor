@@ -130,6 +130,8 @@ export const ClientSummaryTable = (props) => {
                                 textDecoration: "underline",
                               }}
                               onClick={(e) => {
+                                console.log("EDIT", item);
+
                                 if (e?.ctrlKey || e?.metaKey)
                                   window.open(
                                     `/financialForm/${item?.uniqueId}`,

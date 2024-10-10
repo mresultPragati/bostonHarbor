@@ -130,6 +130,7 @@ export const finalDataToSet = (obj) => {
     renderType,
   } = obj;
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
+  console.log("formData", formData);
 
   var clientDetail = {
     clientName: formData?.clientName || "",
@@ -289,6 +290,7 @@ export const finalDataToSet = (obj) => {
     incomeFields: incomeFields || [],
     assetsDatasets: assetsDatasets || [],
     liabilityDatasets: liabilityDatasets || [],
+    investmentAmount: formData.investmentAmount || "",
   });
 
   if (formType === mode.edit) {
@@ -299,7 +301,9 @@ export const finalDataToSet = (obj) => {
       if (renderType === "updateBtn") {
         updatedFields[index] = {
           ...finalData,
-          investment_personality:result?.investment_personality?result?.investment_personality:"",
+          investment_personality: result?.investment_personality
+            ? result?.investment_personality
+            : "",
           uniqueId: formData?.uniqueId,
           date: formData?.date,
         };
@@ -308,13 +312,15 @@ export const finalDataToSet = (obj) => {
       else
         updatedFields[index] = {
           ...result,
-          investment_personality:result?.investment_personality?result?.investment_personality:"", 
+          investment_personality: result?.investment_personality
+            ? result?.investment_personality
+            : "",
           uniqueId: formData?.uniqueId,
           date: formData?.date,
         };
 
       localStorage.setItem("financialForm", JSON.stringify(updatedFields));
-      console.log("updatedFields", updatedFields, index,result);
+      console.log("updatedFields", updatedFields, index, result);
     }
   }
 };
@@ -393,6 +399,7 @@ export const checkModeOfForm = (
       incomeFields: result?.incomeFields,
       uniqueId: result?.uniqueId,
       date: result?.date,
+      investmentAmount: result?.investmentAmount,
     };
     console.log(
       "mergedObject clintLST",
@@ -424,7 +431,7 @@ export const generateUniqueId = (name) => {
   return uniqueId;
 };
 
-export const handleFinancialForm =async (obj) => {
+export const handleFinancialForm = async (obj) => {
   const {
     id,
     formType,
@@ -440,6 +447,8 @@ export const handleFinancialForm =async (obj) => {
   } = obj;
 
   setShowLoader(true);
+  console.log("finalData", finalData);
+
   if (!id) {
     const summaryArr = [];
     const date = new Date();
@@ -454,28 +463,30 @@ export const handleFinancialForm =async (obj) => {
     //   uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
     // });
 
-setAlertMsg({
-  msg: "Data Added Successfully",
-  severity: "success",
-});
+    setAlertMsg({
+      msg: "Data Added Successfully",
+      severity: "success",
+    });
     console.log("finalDatafinalData 1", finalData);
-    let payload={
-      ...finalData, 
-      investment_personality:localData?.investment_personality?localData?.investment_personality:"",
+    let payload = {
+      ...finalData,
+      investment_personality: localData?.investment_personality
+        ? localData?.investment_personality
+        : "",
       date: fullDate,
       uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
-    }
-const resp = await saveClientData(
+    };
+    const resp = await saveClientData(
       payload, //  payload
       "application/json"
     );
-console.log("RESPONSEE", resp,finalData);
-// if (resp?.status === 200) {
+    console.log("RESPONSEE", resp, finalData);
+    // if (resp?.status === 200) {
 
-// }
+    // }
 
     var localData = JSON.parse(localStorage.getItem("financialForm"));
-    setTimeout(async() => {
+    setTimeout(async () => {
       if (localStorage.getItem("financialForm")) {
         // console.log("GET loacl avail", localData);
         localData?.push(payload);
@@ -485,13 +496,13 @@ console.log("RESPONSEE", resp,finalData);
         //   investment_personality:localData?.investment_personality?localData?.investment_personality:"",
         //   date: fullDate,
         //   uniqueId: generateUniqueId(finalData?.clientDetail?.clientName),
-        // });     
-        
+        // });
+
         localStorage.setItem("financialForm", JSON.stringify(localData));
-        console.log("localDatalocalData",localData);
+        console.log("localDatalocalData", localData);
       } else {
         summaryArr?.push(payload);
-        
+
         // summaryArr.push({
         //   ...finalData,
         //   investment_personality:"",

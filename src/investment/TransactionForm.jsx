@@ -14,17 +14,26 @@ import {
 } from "@mui/material";
 import { BostonSearch } from "../resusedComponents/BostonSearch";
 import { investmentForm } from "./InvestmentConst";
-import { markets } from "../analysis/stockAnalysis/constants";
+import {
+  assets,
+  companies,
+  markets,
+} from "../analysis/stockAnalysis/constants";
+import { placeOrder } from "../api/apiServiece";
+import { BostonAlertMessage } from "../resusedComponents/BostonAlertMessage";
 
-const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
-  // const [formData, setFormData] = useState({
-  //   assetClass: "",
-  //   name: "",
-  //   transactionType: "buy", // Default to Buy
-  //   unit: "",
-  //   transactionAmount: "",
-  // });
+const TransactionForm = ({ formData, setFormData }) => {
+  const [alertMsg, setAlertMsg] = useState({
+    msg: "",
+    severity: "",
+  });
   const [selectedClient, setSelectedClient] = useState({});
+  const [stockMarket, setStockMarket] = useState(markets);
+  const [stockCompany, setStockCompany] = useState(companies);
+  const [assetClasses, setAssetClasses] = useState(assets);
+  const [selectedMarket, setSelectedMarket] = useState({});
+  const [selectedAssetClass, setSelectedAssetClass] = useState({});
+  const [selectedCompany, setSelectedCompany] = useState({});
 
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
 
@@ -36,19 +45,39 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const currentDate = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
-    const updatedFormData = [{ ...formData, date: currentDate }];
+    const updatedFormData = {
+      ...formData,
+      date: currentDate,
+      transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
+      name: selectedCompany.ticker,
+      market: selectedMarket.label,
+    };
     console.log(updatedFormData, "formDataformData");
-
-    setInvestmentList(updatedFormData);
-    setFormData(investmentForm);
+    const payload = {
+      order_data: updatedFormData,
+      client_name: selectedClient.clientDetail.clientName,
+      client_id: selectedClient.uniqueId,
+      funds: selectedClient.investmentAmount,
+    };
+    const resp = await placeOrder(payload, "application/json");
+    if (resp.status === 200) {
+      setAlertMsg({
+        msg: "Order place successfully",
+        severity: "success",
+      });
+    }
+    console.log("selectedClient", payload);
+    setTimeout(() => {
+      setFormData(investmentForm);
+    }, 1000);
   };
-  console.log("selectedClient", selectedClient);
 
   return (
     <>
+      <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
       <BostonSearch
         label="Name Of Client"
         listArray={clientList}
@@ -62,9 +91,10 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
       {selectedClient?.uniqueId && (
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid item md={1} />
+            <Grid item xs={12} md={4}>
               <FormControl fullWidth margin="normal">
-                <InputLabel>Market</InputLabel>
+                {/* <InputLabel>Market</InputLabel>
                 <Select
                   variant="standard"
                   name="market"
@@ -79,12 +109,22 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
                       </MenuItem>
                     );
                   })}
-                </Select>
+                </Select> */}
+                <BostonSearch
+                  label="Market"
+                  listArray={stockMarket}
+                  filterFields={["label"]}
+                  setSelectedObj={setSelectedMarket}
+                  primaryValue="label"
+                  secondaryName="Ticker"
+                  width={100}
+                />
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item md={1} />
+            <Grid item xs={12} md={4}>
               <FormControl fullWidth margin="normal">
-                <InputLabel>Asset Class</InputLabel>
+                {/* <InputLabel>Asset Class</InputLabel>
                 <Select
                   variant="standard"
                   name="assetClass"
@@ -96,15 +136,24 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
                   <MenuItem value="bonds">Bonds</MenuItem>
                   <MenuItem value="real-estate">Real Estate</MenuItem>
                   <MenuItem value="commodities">Commodities</MenuItem>
-                </Select>
+                </Select> */}
+                <BostonSearch
+                  label="Asset Class"
+                  listArray={assetClasses}
+                  filterFields={["label"]}
+                  setSelectedObj={setSelectedAssetClass}
+                  primaryValue="label"
+                  width={100}
+                />
               </FormControl>
             </Grid>
           </Grid>
 
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid item md={1} />
+            <Grid item xs={12} md={4}>
               <FormControl fullWidth margin="normal">
-                <InputLabel>Name</InputLabel>
+                {/* <InputLabel>Name</InputLabel>
                 <Select
                   variant="standard"
                   name="name"
@@ -115,17 +164,28 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
                   <MenuItem value="apple">Apple</MenuItem>
                   <MenuItem value="google">Google</MenuItem>
                   <MenuItem value="tesla">Tesla</MenuItem>
-                </Select>
+                </Select> */}
+                <BostonSearch
+                  label="Name"
+                  listArray={stockCompany}
+                  filterFields={["label", "ticker"]}
+                  setSelectedObj={setSelectedCompany}
+                  primaryValue="label"
+                  secondary={"ticker"}
+                  secondaryName="Ticker"
+                  width={100}
+                />
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item md={1} />
+            <Grid item xs={12} md={2}>
               <div style={{ display: "flex" }}>
                 <FormControl component="fieldset" margin="normal">
                   <FormLabel
                     sx={{ textAlign: "start" }}
                     id="demo-row-radio-buttons-group-label"
                   >
-                    Buy/Sell
+                    Buy/Sale
                   </FormLabel>
                   <RadioGroup
                     row
@@ -142,16 +202,31 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
                     <FormControlLabel
                       value="sell"
                       control={<Radio />}
-                      label="Sell"
+                      label="Sale"
                     />
                   </RadioGroup>
                 </FormControl>
               </div>
             </Grid>
+
+            <Grid item xs={12} md={2}>
+              <TextField
+                variant="standard"
+                label="Price Per Unit"
+                name="pricePerUnit"
+                value={formData.pricePerUnit}
+                // onChange={handleChange}
+                type="number"
+                fullWidth
+                margin="normal"
+                disabled
+              />
+            </Grid>
           </Grid>
 
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid item md={1} />
+            <Grid item xs={12} md={4}>
               <TextField
                 variant="standard"
                 label="Unit"
@@ -163,17 +238,19 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
                 margin="normal"
               />
             </Grid>
-
-            <Grid item xs={12} md={6}>
+            <Grid item md={1} />
+            <Grid item xs={12} md={4}>
               <TextField
                 variant="standard"
                 label="Transaction Amount"
                 name="transactionAmount"
-                value={formData.transactionAmount}
-                onChange={handleChange}
+                value={Number(formData.units) * Number(formData.pricePerUnit)}
+                // value={formData.transactionAmount}
+                // onChange={handleChange}
                 type="number"
                 fullWidth
                 margin="normal"
+                disabled
               />
             </Grid>
           </Grid>
@@ -185,7 +262,7 @@ const TransactionForm = ({ setInvestmentList, formData, setFormData }) => {
             color="primary"
             fullWidth
           >
-            Invest
+            Order
           </Button>
         </form>
       )}

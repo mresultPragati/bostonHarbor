@@ -16,7 +16,7 @@ import {
 export const CompanyDetails = (companyInfo, selectedCompany) => {
   return (
     <>
-      {(companyInfo)?.Company && Object.keys(companyInfo).length > 0 && (
+      {companyInfo?.Company && Object.keys(companyInfo).length > 0 && (
         <>
           <h3 className="mb-4" style={{ textAlign: "start" }}>
             {companyInfo?.Company}'s Information:
@@ -199,6 +199,13 @@ export const markets = [
   { label: "Dow Jones" },
   { label: "NASDAQ" },
   { label: "S&P 500" },
+];
+
+export const assets = [
+  { label: "Stocks" },
+  { label: "Bonds" },
+  { label: "Real Estate" },
+  { label: "Commodities" },
 ];
 
 export const companies = [

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { RetirementGoalForm } from "./retirementGoal/RetirementGoalForm";
 import { OtherMajorGoal } from "./majorGoal/MajorGoal";
 import { AssetAndLiability } from "./assetLiability/AssetAndLiability";
@@ -84,6 +84,8 @@ export const FinancialForm = () => {
   const handleOpen = () => setOpenDialog(true);
 
   const handleConfirm = () => {
+    console.log("handleInputChange", formData);
+
     let obj = {
       id: id,
       formType: formType,
@@ -154,6 +156,7 @@ export const FinancialForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
+
     if (e.target?.type === "checkbox") {
       console.log("protectionPlan", checked, name, checked);
 
@@ -228,6 +231,21 @@ export const FinancialForm = () => {
             handleIncomeChange={handleIncomeChange}
             handleIncomeField={handleIncomeField}
           />
+          <>
+            <h5 className="mt-5" style={{ lineHeight: "2px" }}>
+              FUND
+            </h5>
+
+            <TextField
+              variant="standard"
+              label="Investment Amount"
+              name="investmentAmount"
+              value={formData?.investmentAmount}
+              onChange={(e) => handleInputChange(e)}
+              fullWidth
+              required
+            />
+          </>
 
           <ProtectionPlan
             handleInputChange={handleInputChange}
