@@ -37,7 +37,9 @@ const TransactionForm = ({ formData, setFormData }) => {
 
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
 
-  useEffect(() => {}, [selectedCompany]);
+  useEffect(() => {
+    showPriceOfUnit();
+  }, [selectedCompany]);
 
   const showPriceOfUnit = async () => {
     const payload = {
