@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MenuItem,
   FormControl,
@@ -19,7 +19,7 @@ import {
   companies,
   markets,
 } from "../analysis/stockAnalysis/constants";
-import { placeOrder } from "../api/apiServiece";
+import { getPriceOfUnit, placeOrder } from "../api/apiServiece";
 import { BostonAlertMessage } from "../resusedComponents/BostonAlertMessage";
 
 const TransactionForm = ({ formData, setFormData }) => {
@@ -36,6 +36,21 @@ const TransactionForm = ({ formData, setFormData }) => {
   const [selectedCompany, setSelectedCompany] = useState({});
 
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
+
+  useEffect(() => {}, [selectedCompany]);
+
+  const showPriceOfUnit = async () => {
+    const payload = {
+      ticker: selectedCompany.ticker,
+    };
+    const resp = await getPriceOfUnit(payload, "application/json");
+    if (resp.status === 200) {
+      setFormData({
+        ...formData,
+        pricePerUnit: resp.current_stock_price,
+      });
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

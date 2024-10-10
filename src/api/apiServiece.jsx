@@ -33,3 +33,7 @@ export const generateStockAnalysis = (payload, contentType) => {
 export const placeOrder = (payload, contentType) => {
   return apiClient(contentType).post(`${baseURL}/order_placed`, payload);
 };
+
+export const getPriceOfUnit = (payload, contentType) => {
+  return apiClient(contentType).post(`${baseURL}/current_stock_price`, payload);
+};
