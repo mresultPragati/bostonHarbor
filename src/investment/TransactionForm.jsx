@@ -49,7 +49,7 @@ const TransactionForm = ({ formData, setFormData }) => {
     if (resp.status === 200) {
       setFormData({
         ...formData,
-        pricePerUnit: resp.current_stock_price,
+        pricePerUnit: resp.current_price,
       });
     }
   };
