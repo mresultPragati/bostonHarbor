@@ -63,6 +63,9 @@ export const PortfolioDetails = () => {
       <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
         Portfolio Details
       </Typography>
+      <div className="d-flex justify-content-end mb-4">
+        <Button variant="contained"> Portfolio Analysis</Button>
+      </div>
       <TableContainer>
         <Table>
           <TableHead>
@@ -78,7 +81,7 @@ export const PortfolioDetails = () => {
               {/* <BoldCell>Investment Gain or (Loss) %</BoldCell> */}
               <BoldCell>Investment Gain or (Loss) $</BoldCell>
               <BoldCell>Estimated Annual Income</BoldCell>
-              <BoldCell></BoldCell>
+              {/* <BoldCell></BoldCell> */}
               {/* <BoldCell>Generate AI</BoldCell> */}
             </TableRow>
           </TableHead>
@@ -102,9 +105,9 @@ export const PortfolioDetails = () => {
                   {row.gainOrLossValue} ({row.gainOrLossPercent})
                 </TableCell>
                 <TableCell>{row.estimatedIncome}</TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Button>Suggestion</Button>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

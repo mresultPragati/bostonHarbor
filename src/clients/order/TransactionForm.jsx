@@ -186,7 +186,11 @@ const TransactionForm = ({ formData, setFormData }) => {
           </Grid2>
           <Grid2 item size={{ md: 1 }} />
           <Grid2 item size={{ xs: 12, md: 2 }}>
-            <FormControl component="fieldset" margin="normal">
+            <FormControl
+              style={{ textAlign: "start" }}
+              component="fieldset"
+              margin="normal"
+            >
               <FormLabel sx={{ textAlign: "start" }} id="buy-sell-label">
                 Buy/Sell
               </FormLabel>
