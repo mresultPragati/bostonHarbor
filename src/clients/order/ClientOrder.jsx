@@ -16,82 +16,67 @@ import TransactionForm from "./TransactionForm";
 import { investmentForm } from "./OrderConst";
 import { useLocation, useParams } from "react-router-dom";
 import { navigatorPath } from "../../MenuBar/constant/TopBarConst";
+import ClientOrderList from "./ClientOrderList";
+import {
+  getClientOrderList,
+  getPriceOfUnit,
+  placeOrder,
+} from "../../api/apiServiece";
+import {
+  assets,
+  companies,
+  markets,
+} from "../../analysis/stockAnalysis/constants";
 
 const ClientOrder = () => {
   const [investmentList, setInvestmentList] = useState([]);
   const [formData, setFormData] = useState(investmentForm);
+  const [alertMsg, setAlertMsg] = useState({
+    msg: "",
+    severity: "",
+  });
+  // const [selectedClient, setSelectedClient] = useState({});
+  const [stockMarket, setStockMarket] = useState(markets);
+  const [stockCompany, setStockCompany] = useState(companies);
+  const [assetClasses, setAssetClasses] = useState(assets);
+  const [selectedMarket, setSelectedMarket] = useState(null);
+  const [selectedAssetClass, setSelectedAssetClass] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [showLoader, setShowLoader] = useState(false);
+  const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
+
+  useEffect(() => {
+    getInvestmentList();
+  }, []);
+
+  const getInvestmentList = () => {
+    const resp = getClientOrderList({ client_id: selectedClient?.uniqueId });
+    if (resp.status === 200) {
+      // setInvestmentList()
+    }
+  };
 
   return (
     <div className="mb-5 mt-5">
       <TransactionForm
         formData={formData}
         setFormData={setFormData}
-        // setInvestmentList={setInvestmentList}
-        // handleFormSubmit={handleFormSubmit}
-        // editingIndex={editingIndex}
+        selectedAssetClass={selectedAssetClass}
+        selectedCompany={selectedCompany}
+        showLoader={showLoader}
+        alertMsg={alertMsg}
+        setAlertMsg={setAlertMsg}
+        stockMarket={stockMarket}
+        setSelectedMarket={setSelectedMarket}
+        assetClasses={assetClasses}
+        setSelectedAssetClass={setSelectedAssetClass}
+        stockCompany={stockCompany}
+        setSelectedCompany={setSelectedCompany}
+        selectedClient={selectedClient}
+        selectedMarket={selectedMarket}
+        setShowLoader={setShowLoader}
       />
-      {investmentList?.length > 0 && (
-        <>
-          <h3 className="mb-5">Investment Summary</h3>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="transaction table">
-              <TableHead>
-                <TableRow>
-                  <BostonTableHead sx={{ fontWeight: "bold" }}>
-                    Asset Class
-                  </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }}>
-                    Name
-                  </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Units
-                  </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Price per Unit
-                  </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Transaction Amount
-                  </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Date
-                  </BostonTableHead>
-                  {/* <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Actions
-                  </BostonTableHead> */}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {investmentList?.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.assetClass}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell align="center">{row.units}</TableCell>
-                    <TableCell align="center">${row.pricePerUnit} </TableCell>
-                    <TableCell align="center">
-                      ${row.transactionAmount}
-                    </TableCell>
-                    <TableCell align="center">{row.date}</TableCell>
-                    {/* <TableCell align="center">
-                      <IconButton
-                        color="primary"
-                        onClick={() => handleEdit(index)}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => handleDelete(index)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell> */}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
-      )}
+      <ClientOrderList investmentList={investmentList} />
     </div>
   );
 };

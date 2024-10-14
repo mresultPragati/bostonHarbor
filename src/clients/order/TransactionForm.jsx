@@ -24,30 +24,34 @@ import { getPriceOfUnit, placeOrder } from "../../api/apiServiece";
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 
-const TransactionForm = ({ formData, setFormData }) => {
-  const [alertMsg, setAlertMsg] = useState({
-    msg: "",
-    severity: "",
-  });
-  // const [selectedClient, setSelectedClient] = useState({});
-  const [stockMarket, setStockMarket] = useState(markets);
-  const [stockCompany, setStockCompany] = useState(companies);
-  const [assetClasses, setAssetClasses] = useState(assets);
-  const [selectedMarket, setSelectedMarket] = useState({});
-  const [selectedAssetClass, setSelectedAssetClass] = useState({});
-  const [selectedCompany, setSelectedCompany] = useState({});
-  const [showLoader, setShowLoader] = useState(false);
-
-  const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
+const TransactionForm = (props) => {
+  const {
+    formData,
+    selectedCompany,
+    selectedAssetClass,
+    showLoader,
+    alertMsg,
+    setAlertMsg,
+    stockMarket,
+    setSelectedMarket,
+    assetClasses,
+    setSelectedAssetClass,
+    stockCompany,
+    setSelectedCompany,
+    selectedMarket,
+    setFormData,
+    selectedClient,
+    setShowLoader,
+  } = props;
 
   useEffect(() => {
-    if (selectedCompany.ticker) showPriceOfUnit();
+    if (selectedCompany?.ticker) showPriceOfUnit();
   }, [selectedCompany]);
 
   const showPriceOfUnit = async () => {
     setShowLoader(true);
     const payload = {
-      ticker: selectedCompany.ticker,
+      ticker: selectedCompany?.ticker,
     };
     const resp = await getPriceOfUnit(payload, "application/json");
     console.log("respresp", resp);
@@ -84,12 +88,12 @@ const TransactionForm = ({ formData, setFormData }) => {
       // ...formData,
       date: currentDate,
       transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
-      name: selectedCompany.ticker,
+      name: selectedCompany?.ticker,
       market: selectedMarket.label,
       assetClass: selectedMarket.label,
       buy_or_sell: formData.transactionType,
       unit_price: formData.pricePerUnit,
-      units: formData.units,
+      units: Number(formData.units),
       // price: Number(formData.units) * Number(formData.pricePerUnit),
     };
     console.log(selectedClient, updatedFormData, "formDataformData");
@@ -105,18 +109,20 @@ const TransactionForm = ({ formData, setFormData }) => {
         msg: "Order placed successfully",
         severity: "success",
       });
+      // setTimeout(() => {
+      //   setFormData(investmentForm);
+      //   setSelectedCompany("");
+      //   setSelectedMarket("");
+      //   setSelectedAssetClass("");
+      // }, 1000);
     }
-    console.log("selectedClient", payload);
-    setTimeout(() => {
-      setFormData(investmentForm);
-    }, 1000);
   };
+  console.log("selectedClient", selectedAssetClass);
 
-  // Check if any required field is empty
   const isSubmitDisabled =
     // !selectedMarket?.label ||
     !selectedAssetClass?.label ||
-    !selectedCompany?.ticker ||
+    !selectedCompany?.label ||
     !formData?.transactionType ||
     !formData?.units ||
     !formData?.pricePerUnit;
@@ -126,17 +132,7 @@ const TransactionForm = ({ formData, setFormData }) => {
     <>
       {showLoader && <BostonLoader />}
       <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
-      {/* <BostonSearch
-        label="Name Of Client"
-        listArray={clientList}
-        filterFields={["clientDetail.clientName", "uniqueId"]}
-        setSelectedObj={setSelectedClient}
-        primaryValue="clientDetail.clientName"
-        secondary={"uniqueId"}
-        secondaryName="ID"
-        width={50}
-      /> */}
-      {/* {selectedClient?.uniqueId && ( */}
+
       <form onSubmit={handleSubmit}>
         <Grid2 container spacing={2} alignItems="center">
           <Grid2 item size={{ md: 1 }} />
@@ -185,12 +181,8 @@ const TransactionForm = ({ formData, setFormData }) => {
             </FormControl>
           </Grid2>
           <Grid2 item size={{ md: 1 }} />
-          <Grid2 item size={{ xs: 12, md: 2 }}>
-            <FormControl
-              style={{ textAlign: "start" }}
-              component="fieldset"
-              margin="normal"
-            >
+          <Grid2 item size={{ xs: 12, md: 2 }} style={{ textAlign: "start" }}>
+            <FormControl component="fieldset" margin="normal">
               <FormLabel sx={{ textAlign: "start" }} id="buy-sell-label">
                 Buy/Sell
               </FormLabel>

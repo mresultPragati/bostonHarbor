@@ -37,3 +37,7 @@ export const placeOrder = (payload, contentType) => {
 export const getPriceOfUnit = (payload, contentType) => {
   return apiClient(contentType).post(`${baseURL}/current_stock_price`, payload);
 };
+
+export const getClientOrderList = (payload, contentType) => {
+  return apiClient(contentType).post(`${baseURL}/show_order_list`, payload);
+};
