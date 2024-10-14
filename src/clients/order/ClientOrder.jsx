@@ -7,40 +7,17 @@ import {
   TableHead,
   TableRow,
   Paper,
+  IconButton,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { BostonTableHead } from "./OrderStyled";
 import TransactionForm from "./TransactionForm";
-import { investmentForm } from "./InvestmentConst";
-import { BostonTableHead } from "../order/OrderStyled";
+import { investmentForm } from "./OrderConst";
+import { useLocation, useParams } from "react-router-dom";
+import { navigatorPath } from "../../MenuBar/constant/TopBarConst";
 
-// Sample data
-// const initialRows = [
-//   {
-//     assetClass: "Stocks",
-//     name: "Apple",
-//     units: 10,
-//     pricePerUnit: 150,
-//     transactionAmount: 1500,
-//     date: "2024-10-09",
-//   },
-//   {
-//     assetClass: "Bonds",
-//     name: "Government Bond",
-//     units: 20,
-//     pricePerUnit: 200,
-//     transactionAmount: 4000,
-//     date: "2024-10-01",
-//   },
-//   {
-//     assetClass: "Real Estate",
-//     name: "Property X",
-//     units: 1,
-//     pricePerUnit: 300000,
-//     transactionAmount: 300000,
-//     date: "2024-09-25",
-//   },
-// ];
-
-const InvestmentAllocation = () => {
+const ClientOrder = () => {
   const [investmentList, setInvestmentList] = useState([]);
   const [formData, setFormData] = useState(investmentForm);
 
@@ -119,4 +96,4 @@ const InvestmentAllocation = () => {
   );
 };
 
-export default InvestmentAllocation;
+export default ClientOrder;

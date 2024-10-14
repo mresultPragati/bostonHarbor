@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 
 export const AssetsLiabilityChart = () => {
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
-  const [smallValueChartData, setSmallValueChartData] = useState({});
-  const [largeValueChartData, setLargeValueChartData] = useState({});
+  const [firstPartAssetsData, setFirstPartAssestData] = useState({});
+  const [secondPartAssetsData, setLargeValueChartData] = useState({});
   const [assetsChartData, setAssetsChartData] = useState({});
   const [liabilityChartData, setLiabilityChartData] = useState({});
   const { id } = useParams();
@@ -16,7 +16,8 @@ export const AssetsLiabilityChart = () => {
     // --------------------------------------------------------------------------------------
     const result = clientList?.find((item) => item.uniqueId === id);
     setLiabilityChartData(extractKeysAndValues(result?.liabilityDatasets));
-    const values = result?.assetsDatasets?.datasets?.[0]?.data;
+
+    // const values = result?.assetsDatasets?.datasets?.[0]?.data;
     var backgroundColor = [];
 
     for (
@@ -28,48 +29,48 @@ export const AssetsLiabilityChart = () => {
     }
 
     // Step 1: Sort the array to find the median
-    const sortedValues = [...values].sort((a, b) => a - b);
+    // const sortedValues = [...values].sort((a, b) => a - b);
 
     // Step 2: Find the median
-    let median;
-    const midIndex = Math.floor(sortedValues.length / 2);
+    // let median;
+    // const midIndex = Math.floor(sortedValues.length / 2);
 
-    if (sortedValues.length % 2 === 0) {
-      median = (sortedValues[midIndex - 1] + sortedValues[midIndex]) / 2;
-    } else {
-      median = sortedValues[midIndex];
-    }
+    // if (sortedValues.length % 2 === 0) {
+    //   median = (sortedValues[midIndex - 1] + sortedValues[midIndex]) / 2;
+    // } else {
+    //   median = sortedValues[midIndex];
+    // }
 
-    let smallDataValues = [];
-    let smallLabelValues = [];
+    // let smallDataValues = [];
+    // let smallLabelValues = [];
 
-    values?.filter((item, index) => {
-      if (item <= median) {
-        smallDataValues?.push(item);
-        smallLabelValues?.push(result?.assetsDatasets?.labels[index]);
-      }
-    });
+    // values?.filter((item, index) => {
+    //   if (item <= median) {
+    //     smallDataValues?.push(item);
+    //     smallLabelValues?.push(result?.assetsDatasets?.labels[index]);
+    //   }
+    // });
 
-    let largeDataValues = [];
-    let largeLabelValues = [];
+    // let largeDataValues = [];
+    // let largeLabelValues = [];
 
-    values?.filter((item, index) => {
-      if (item > median) {
-        largeDataValues?.push(item);
-        largeLabelValues?.push(result?.assetsDatasets?.labels[index]);
-      }
-    });
+    // values?.filter((item, index) => {
+    //   if (item > median) {
+    //     largeDataValues?.push(item);
+    //     largeLabelValues?.push(result?.assetsDatasets?.labels[index]);
+    //   }
+    // });
 
-    var testArr = extractKeysAndValues(result?.assetsDatasets);
-    console.log("testArr", testArr);
+    var assetsList = extractKeysAndValues(result?.assetsDatasets);
+    console.log("assetsList", assetsList);
 
-    const smallValueData = {
-      labels: testArr?.labels?.slice(0, 5),
+    const firstPartOfAssetCHart = {
+      labels: assetsList?.labels?.slice(0, 5),
       // labels: smallLabelValues,
       datasets: [
         {
           label: "Assets",
-          data: testArr?.datasets[0]?.data?.slice(0, 5),
+          data: assetsList?.datasets[0]?.data?.slice(0, 5),
           // data: smallDataValues,
           backgroundColor: backgroundColor?.slice(0, 5),
           borderWidth: 1,
@@ -77,37 +78,34 @@ export const AssetsLiabilityChart = () => {
       ],
     };
 
-    const largeValueData = {
-      labels: testArr?.labels?.slice(5, testArr?.labels?.length),
+    const secondPartOfAssets = {
+      labels: assetsList?.labels?.slice(5, assetsList?.labels?.length),
       // labels: largeLabelValues,
       datasets: [
         {
           label: "Assets",
-          data: testArr?.datasets[0]?.data?.slice(
+          data: assetsList?.datasets[0]?.data?.slice(
             5,
-            testArr?.datasets[0]?.data?.length
+            assetsList?.datasets[0]?.data?.length
           ),
           // data: largeDataValues,
-          backgroundColor: backgroundColor?.slice(5, testArr?.labels?.length),
+          backgroundColor: backgroundColor?.slice(
+            5,
+            assetsList?.labels?.length
+          ),
           borderWidth: 1,
         },
       ],
     };
-    console.log("assetsLiabilities mylib smallValueData", smallValueData);
 
     var chartObj = {
-      smallValueData: smallValueData,
-      largeValueData: largeValueData,
+      firstPartOfAssetCHart: firstPartOfAssetCHart,
+      secondPartOfAssets: secondPartOfAssets,
     };
 
-    setSmallValueChartData(chartObj?.smallValueData);
-    setLargeValueChartData(chartObj?.largeValueData);
+    setFirstPartAssestData(chartObj?.firstPartOfAssetCHart);
+    setLargeValueChartData(chartObj?.secondPartOfAssets);
     setAssetsChartData(extractKeysAndValues(result?.assetsDatasets));
-
-    // ---------------------------All data-----------------
-    // setChartData(extractKeysAndValues(result?.assetsDatasets));
-    // ------If user want to see other field info uncomment below line-------
-    // setChartData(result?.assetsDatasets);
   }, [id]);
 
   const options = {
@@ -126,25 +124,19 @@ export const AssetsLiabilityChart = () => {
       },
     },
   };
-  console.log(
-    "smallValueChartData",
-    smallValueChartData?.datasets?.[0]?.data?.length > 0 ||
-      largeValueChartData?.datasets?.[0]?.data?.length > 0 ||
-      liabilityChartData?.datasets?.[0]?.data?.length > 0
-  );
 
   return (
-    <div className="mb-5">
+    <div className="mb-5 mt-5">
       <h2>Assets And Liability Breakdown</h2>
-      {smallValueChartData?.datasets?.[0]?.data?.length > 0 ||
-      largeValueChartData?.datasets?.[0]?.data?.length > 0 ||
+      {firstPartAssetsData?.datasets?.[0]?.data?.length > 0 ||
+      secondPartAssetsData?.datasets?.[0]?.data?.length > 0 ||
       liabilityChartData?.datasets?.[0]?.data?.length > 0 ? (
         <>
           <AssetsChart
             options={options}
             chartData={assetsChartData}
-            smallValueChartData={smallValueChartData}
-            largeValueChartData={largeValueChartData}
+            firstPartAssetsData={firstPartAssetsData}
+            secondPartAssetsData={secondPartAssetsData}
           />
           <LiabilityChart options={options} chartData={liabilityChartData} />
         </>

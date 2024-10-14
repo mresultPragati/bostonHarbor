@@ -191,7 +191,11 @@ const PieChart3D = () => {
   };
   return (
     <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <HighchartsReact
+        style={{ width: "600px", height: "auto" }}
+        highcharts={Highcharts}
+        options={options}
+      />
     </div>
   );
 };

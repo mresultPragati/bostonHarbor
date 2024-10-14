@@ -11,16 +11,16 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { BostonPaginationElement } from "../../resusedComponents/BostonPaginationElement";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
+import { navigatorPath } from "../../MenuBar/constant/TopBarConst";
 
 export const ClientSummaryTable = (props) => {
-  const { summaryData } = props;
+  const { summaryData, setIsSubMenuOpen } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const navigate = useNavigate();
-  console.log("summaryData", summaryData);
 
   return (
     <div className="mt-5">
@@ -34,15 +34,19 @@ export const ClientSummaryTable = (props) => {
           <Table aria-labelledby="tableTitle">
             <TableHead>
               <TableRow>
-                <TableCell style={{ fontWeight: "bold" }}>Sr.No. </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Sr.No.{" "}
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
                   Client Name{" "}
                 </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>Client Id</TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Client Id
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
                   Investor Type
                 </TableCell>
-                <TableCell style={{ fontWeight: "bold" }}>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
                   Registration Date
                 </TableCell>
                 <TableCell align="center" style={{ fontWeight: "bold" }}>
@@ -60,16 +64,22 @@ export const ClientSummaryTable = (props) => {
                     // {summaryData.map((item, index) => {
                     return (
                       <TableRow hover>
-                        <TableCell>{page * rowsPerPage + index + 1}</TableCell>
-                        <TableCell>{item?.clientDetail?.clientName}</TableCell>
-                        <TableCell>{item?.uniqueId}</TableCell>
-                        <TableCell>
-                          {item?.investment_personality === "Unknown"
+                        <TableCell align="center">
+                          {page * rowsPerPage + index + 1}
+                        </TableCell>
+                        <TableCell align="center">
+                          {item?.clientDetail?.clientName}
+                        </TableCell>
+                        <TableCell align="center">{item?.uniqueId}</TableCell>
+                        <TableCell align="center">
+                          {item?.investment_personality === "Unknown" ||
+                          !item?.investment_personality
                             ? "-"
                             : item?.investment_personality}
                         </TableCell>
-                        <TableCell>{item?.date}</TableCell>
+                        <TableCell align="center">{item?.date}</TableCell>
                         <TableCell
+                          align="center"
                           style={{
                             display: "flex",
                             justifyContent: "space-evenly",
@@ -105,14 +115,21 @@ export const ClientSummaryTable = (props) => {
                               transform: "translateY(10px)",
                             }}
                             onClick={(e) => {
+                              localStorage.setItem(
+                                "clients",
+                                JSON.stringify(item)
+                              );
+                              // setIsSubMenuOpen(true);
                               if (e?.ctrlKey || e?.metaKey)
                                 window.open(
-                                  `/assetsLiabilityDetails/${item?.uniqueId}`,
+                                  `${navigatorPath.summary}/${item.uniqueId}`,
+                                  // `/assetsLiabilityDetails`,
                                   "_blank"
                                 );
                               else
                                 navigate(
-                                  `/assetsLiabilityDetails/${item?.uniqueId}`
+                                  `${navigatorPath.summary}/${item.uniqueId}`
+                                  // `/assetsLiabilityDetails/${item?.uniqueId}`
                                 );
                             }}
                             // className="underlined-link"

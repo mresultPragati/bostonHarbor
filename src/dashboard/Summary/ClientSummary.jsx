@@ -4,21 +4,6 @@ import { TextField } from "@mui/material";
 import { ClientSummaryTable } from "./ClientSummaryTable";
 import { useEffect, useState } from "react";
 
-const summaryData = [
-  {
-    cName: "Test XYZ",
-    MobileNo: "8822114450",
-    investorType: "-",
-    RegDate: "2/8/2024",
-  },
-  {
-    cName: "Test2 ABC",
-    MobileNo: "8822114450",
-    investorType: "-",
-    RegDate: "9/7/2024",
-  },
-];
-
 const ClientSummary = () => {
   const [summaryDataList, setSummaryDataList] = useState([]);
   const [originalList, setOriginalList] = useState([]);
@@ -49,7 +34,15 @@ const ClientSummary = () => {
 
   return (
     <SummaryContainer>
-      <div className="d-flex justify-content-end" component="main">
+      <div
+        className="d-flex justify-content-end"
+        component="main"
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "2rem",
+        }}
+      >
         <TextField size="small" placeholder="Search" onChange={handleSearch} />
       </div>
       <ClientSummaryTable summaryData={summaryDataList} />

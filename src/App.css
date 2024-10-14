@@ -45,12 +45,10 @@
   margin-bottom: 0 !important;
 }
 
-/* Initially hide the edit icon */
 .edit-icon-container {
   visibility: hidden;
 }
 
-/* Show the edit icon when hovering over the table row */
 .MuiTableRow-hover:hover .edit-icon-container {
   visibility: visible;
 }

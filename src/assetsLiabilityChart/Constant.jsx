@@ -33,13 +33,33 @@ export const extractKeysAndValues = (arr) => {
     backgroundColor?.push(getMidDarkColor());
   }
 
-  const data = {
-    labels: labelsArray,
+  const labels = arr.labels;
+  const data = arr.datasets[0].data;
+
+  const sortedDataWithLabels = labels.map((label, index) => ({
+    label,
+    data: parseFloat(data[index]),
+  }));
+
+  sortedDataWithLabels.sort((a, b) => b.data - a.data);
+
+  const sortedLabels = sortedDataWithLabels.map((item) => item.label);
+  const sortedData = sortedDataWithLabels.map((item) => item.data);
+
+  arr.labels = sortedLabels;
+  arr.datasets[0].data = sortedData;
+
+  console.log("Sorted Assets Data:", arr);
+  console.log("Sorted Labels:", sortedLabels);
+  console.log("Sorted Data:", sortedData);
+
+  const assetsData = {
+    labels: sortedLabels,
     //   datasets: valueArray,
     datasets: [
       {
         label: "Assets",
-        data: valueArray,
+        data: sortedData,
         backgroundColor: backgroundColor,
         // backgroundColor: "rgba(55, 170, 241, 0.2)",
         // borderColor: "#0979f1",
@@ -48,5 +68,5 @@ export const extractKeysAndValues = (arr) => {
     ],
   };
 
-  return data;
+  return assetsData;
 };

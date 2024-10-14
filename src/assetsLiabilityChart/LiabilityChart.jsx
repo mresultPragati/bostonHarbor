@@ -15,7 +15,9 @@ import BostonPieChart3D from "../resusedComponents/Boston3DChart";
 export const LiabilityChart = ({ options, chartData }) => {
   return (
     <>
-      <h3 className="mt-5">{"My Liability"}</h3>
+      <h3 style={{ textAlign: "start" }} className="mt-5">
+        {"My Liability"}:
+      </h3>
       {chartData?.datasets?.[0]?.data &&
       chartData?.datasets?.[0]?.data?.length > 0 ? (
         <>

@@ -50,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "typescript": "^5.5.4"
   }
 }
