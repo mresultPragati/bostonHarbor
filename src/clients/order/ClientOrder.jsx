@@ -52,9 +52,12 @@ const ClientOrder = () => {
 
   const getInvestmentList = async () => {
     setShowLoader(true);
-    const resp = await getClientOrderList({
+    let payload={
       client_id: selectedClient?.uniqueId,
-    });
+    }
+    const resp = await getClientOrderList(payload,
+      'application/json'
+    );
     console.log("respp", resp);
     if (resp.status === 200) {
       setShowLoader(false);

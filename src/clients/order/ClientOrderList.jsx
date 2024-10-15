@@ -49,7 +49,7 @@ const ClientOrderList = ({ investmentList }) => {
                     <TableCell>{row.AssetClass}</TableCell>
                     <TableCell>{row.Name}</TableCell>
                     <TableCell align="center">{row.Units}</TableCell>
-                    <TableCell align="center">${row.Unit_Price} </TableCell>
+                    <TableCell align="center">${row.UnitPrice} </TableCell>
                     <TableCell align="center">
                       ${row.TransactionAmount}
                     </TableCell>
