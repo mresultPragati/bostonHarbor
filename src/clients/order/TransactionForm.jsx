@@ -143,7 +143,7 @@ const TransactionForm = (props) => {
 
   return (
     <>
-      {showLoader && <BostonLoader />}
+      {/* {showLoader && <BostonLoader />} */}
       <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
 
       <form onSubmit={handleSubmit}>

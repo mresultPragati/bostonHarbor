@@ -46,14 +46,14 @@ const ClientOrderList = ({ investmentList }) => {
               <TableBody>
                 {investmentList?.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.assetClass}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell align="center">{row.units}</TableCell>
-                    <TableCell align="center">${row.pricePerUnit} </TableCell>
+                    <TableCell>{row.AssetClass}</TableCell>
+                    <TableCell>{row.Name}</TableCell>
+                    <TableCell align="center">{row.Units}</TableCell>
+                    <TableCell align="center">${row.Unit_Price} </TableCell>
                     <TableCell align="center">
-                      ${row.transactionAmount}
+                      ${row.TransactionAmount}
                     </TableCell>
-                    <TableCell align="center">{row.date}</TableCell>
+                    <TableCell align="center">{row.Date}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

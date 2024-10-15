@@ -63,9 +63,8 @@ export const PortfolioDetails = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "green" }}>
-        <PortfolioOverview />
-      </div>
+      <PortfolioOverview />
+
       <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
         Portfolio Details
       </Typography>

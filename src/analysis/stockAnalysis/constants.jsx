@@ -206,6 +206,8 @@ export const assets = [
   { label: "Bonds" },
   { label: "Real Estate" },
   { label: "Commodities" },
+  { label: "Mutual Funds" },
+  { label: "ETFS" },
 ];
 
 export const companies = [

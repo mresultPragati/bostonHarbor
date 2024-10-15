@@ -27,6 +27,7 @@ import {
   companies,
   markets,
 } from "../../analysis/stockAnalysis/constants";
+import BostonLoader from "../../resusedComponents/BostonLoader";
 
 const ClientOrder = () => {
   const [investmentList, setInvestmentList] = useState([]);
@@ -45,19 +46,25 @@ const ClientOrder = () => {
   const [showLoader, setShowLoader] = useState(false);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
-  // useEffect(() => {
-  //   getInvestmentList();
-  // }, []);
+  useEffect(() => {
+    getInvestmentList();
+  }, []);
 
-  const getInvestmentList = () => {
-    const resp = getClientOrderList({ client_id: selectedClient?.uniqueId });
+  const getInvestmentList = async () => {
+    setShowLoader(true);
+    const resp = await getClientOrderList({
+      client_id: selectedClient?.uniqueId,
+    });
+    console.log("respp", resp);
     if (resp.status === 200) {
-      // setInvestmentList()
+      setShowLoader(false);
+      setInvestmentList(resp?.data?.transaction_data);
     }
   };
 
   return (
     <div className="mb-5 mt-5">
+      {showLoader && <BostonLoader />}
       <TransactionForm
         formData={formData}
         setFormData={setFormData}

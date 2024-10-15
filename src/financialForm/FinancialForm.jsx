@@ -233,7 +233,7 @@ export const FinancialForm = () => {
           />
           <>
             <h5 className="mt-5" style={{ lineHeight: "2px" }}>
-              FUND
+              FUNDS
             </h5>
 
             <TextField
@@ -263,8 +263,9 @@ export const FinancialForm = () => {
             onClick={() => handleOpen()}
             disabled={
               !formData?.clientName ||
-              !formData?.clientMoNo ||
-              !formData?.clientAge
+              // !formData?.clientMoNo ||
+              // !formData?.clientAge ||
+              !formData?.investmentAmount
             }
           >
             {formType === mode.edit ? "UPDATE FORM" : "SUBMIT FORM"}

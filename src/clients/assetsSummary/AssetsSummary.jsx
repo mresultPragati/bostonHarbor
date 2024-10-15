@@ -76,7 +76,10 @@ const AssetsSummary = ({ formData, setFormData }) => {
             Funds Available:
           </Typography>
           <Typography variant="body1" sx={{ color: "#333" }}>
-            ${Number(clients?.investmentAmount) - Number(getTotalBalance())}
+            $
+            {clients?.investmentAmount
+              ? Number(clients?.investmentAmount) - Number(getTotalBalance())
+              : "Please invest funds"}
           </Typography>
           {/* </Box> */}
 
