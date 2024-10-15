@@ -25,6 +25,8 @@ const CurrencyCell = styled(TableCell)(({ theme }) => ({
 export const PortfolioDetails = () => {
   const data = [
     {
+      assetClass: "Stocks",
+      name: "Tesla",
       description: "Raymond James Bank",
       symbol: "06367TW63",
       quantity: "159",
@@ -36,9 +38,12 @@ export const PortfolioDetails = () => {
       amountInvestedTotal: "$1736",
       gainOrLossPercent: "55.82%",
       gainOrLossValue: "$9,695",
+      timeHeld: "2 Days",
       estimatedIncome: "$750",
     },
     {
+      assetClass: "Bonds",
+      name: "Apple",
       description: "CABOT MICROELECTRONICS CORPORATION",
       symbol: "CCMP",
       quantity: "200.000",
@@ -50,6 +55,7 @@ export const PortfolioDetails = () => {
       amountInvestedTotal: "$12,677.00",
       gainOrLossPercent: "68.01%",
       gainOrLossValue: "$8,621.00",
+      timeHeld: "2 Days",
       estimatedIncome: "$160.00",
     },
     // Add more rows as needed
@@ -71,26 +77,29 @@ export const PortfolioDetails = () => {
           <TableHead>
             <TableRow>
               <BoldCell>Sr. No.</BoldCell>
+              <BoldCell>Asset Class</BoldCell>
+              <BoldCell>Name</BoldCell>
               <BoldCell>Quantity</BoldCell>
-              {/* <BoldCell>Delayed Price</BoldCell> */}
+              <BoldCell>Delayed Price</BoldCell>
               <BoldCell>Current Value</BoldCell>
               <BoldCell>Daily Price Change</BoldCell>
               <BoldCell>Daily Value Change</BoldCell>
               <BoldCell>Amount Invested / Unit</BoldCell>
-              {/* <BoldCell>Amount Invested (†)</BoldCell> */}
-              {/* <BoldCell>Investment Gain or (Loss) %</BoldCell> */}
+              <BoldCell>Amount Invested </BoldCell>
+              <BoldCell>Investment Gain or (Loss) %</BoldCell>
               <BoldCell>Investment Gain or (Loss) $</BoldCell>
-              <BoldCell>Estimated Annual Income</BoldCell>
-              {/* <BoldCell></BoldCell> */}
-              {/* <BoldCell>Generate AI</BoldCell> */}
+              {/* <BoldCell>Estimated Annual Income</BoldCell> */}
+              <BoldCell>Time Held</BoldCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
+                <TableCell>{row.assetClass}</TableCell>
+                <TableCell>{row.name}</TableCell>
                 <TableCell>{row.quantity}</TableCell>
-                {/* <TableCell>{row.delayedPrice}</TableCell> */}
+                <TableCell>{row.delayedPrice}</TableCell>
                 <TableCell>{row.currentValue}</TableCell>
                 <CurrencyCell isNegative={row.dailyPriceChange.startsWith("-")}>
                   {row.dailyPriceChange}
@@ -98,16 +107,12 @@ export const PortfolioDetails = () => {
                 <CurrencyCell isNegative={row.dailyValueChange.startsWith("-")}>
                   {row.dailyValueChange}
                 </CurrencyCell>
-                {/* <TableCell>{row.amountInvested}</TableCell> */}
+                <TableCell>{row.amountInvested}</TableCell>
                 <TableCell>{row.amountInvestedTotal}</TableCell>
-                {/* <TableCell>{row.gainOrLossPercent}</TableCell> */}
-                <TableCell>
-                  {row.gainOrLossValue} ({row.gainOrLossPercent})
-                </TableCell>
-                <TableCell>{row.estimatedIncome}</TableCell>
-                {/* <TableCell>
-                  <Button>Suggestion</Button>
-                </TableCell> */}
+                <TableCell>{row.gainOrLossPercent}</TableCell>
+                <TableCell>{row.gainOrLossValue}</TableCell>
+                {/* <TableCell>{row.estimatedIncome}</TableCell> */}
+                <TableCell>{row.timeHeld}</TableCell>
               </TableRow>
             ))}
           </TableBody>

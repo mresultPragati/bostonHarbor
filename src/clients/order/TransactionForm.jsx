@@ -83,14 +83,27 @@ const TransactionForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentDate = new Date().toISOString().split("T")[0];
+    const currentDate = new Date();
+    // Format the date and time
+    const formattedDateTime = currentDate.toLocaleString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false, // 12-hour clock (true), 24-hour clock (false)
+    });
+
     const updatedFormData = {
       // ...formData,
-      date: currentDate,
+      date: formattedDateTime,
+      // date: currentDate,
       transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
-      name: selectedCompany?.ticker,
+      name: selectedCompany?.label,
+      symbol: selectedCompany?.ticker,
       market: selectedMarket.label,
-      assetClass: selectedMarket.label,
+      assetClass: selectedAssetClass.label,
       buy_or_sell: formData.transactionType,
       unit_price: formData.pricePerUnit,
       units: Number(formData.units),
@@ -109,12 +122,12 @@ const TransactionForm = (props) => {
         msg: "Order placed successfully",
         severity: "success",
       });
-      // setTimeout(() => {
-      //   setFormData(investmentForm);
-      //   setSelectedCompany("");
-      //   setSelectedMarket("");
-      //   setSelectedAssetClass("");
-      // }, 1000);
+      setTimeout(() => {
+        setFormData(investmentForm);
+        setSelectedCompany({});
+        setSelectedMarket({});
+        setSelectedAssetClass({});
+      }, 1000);
     }
   };
   console.log("selectedClient", selectedAssetClass);

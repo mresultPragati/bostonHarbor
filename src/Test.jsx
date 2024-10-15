@@ -202,6 +202,57 @@ const PieChart3D = () => {
 
 export default PieChart3D;
 
+// ------------------------------price (change/ms)------------------------------/
+
+// import React, { useState, useEffect } from "react";
+// import { Typography } from "@mui/material";
+
+// const StockPriceChange = () => {
+//   const [priceChange, setPriceChange] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   // Function to fetch the stock price change from the API
+//   const fetchStockPriceChange = async () => {
+//     try {
+//       const response = await fetch("http://127.0.0.1:5000/change_daily_price");
+//       const data = await response.json();
+//       setPriceChange(data.changeInMilliseconds); // assuming API response has this field
+//       setLoading(false);
+//     } catch (error) {
+//       console.error("Error fetching stock price change:", error);
+//       setLoading(false);
+//     }
+//   };
+
+//   // useEffect to call the API on component mount and set up interval for polling
+//   useEffect(() => {
+//     fetchStockPriceChange(); // Initial fetch when component mounts
+
+//     // Set interval to fetch the stock price change every 5 seconds
+//     const interval = setInterval(fetchStockPriceChange, 5000); // Polling every 5 seconds
+
+//     // Cleanup the interval on component unmount
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   return (
+//     <div>
+//       <Typography variant="h5" sx={{ textAlign: "center", margin: "2rem 0" }}>
+//         Stock Price Change
+//       </Typography>
+//       {loading ? (
+//         <Typography>Loading...</Typography>
+//       ) : (
+//         <Typography variant="h6">
+//           Change in milliseconds: {priceChange}
+//         </Typography>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default StockPriceChange;
+
 // ---------------------------------------------------
 
 // import React from "react";

@@ -45,9 +45,9 @@ const ClientOrder = () => {
   const [showLoader, setShowLoader] = useState(false);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
-  useEffect(() => {
-    getInvestmentList();
-  }, []);
+  // useEffect(() => {
+  //   getInvestmentList();
+  // }, []);
 
   const getInvestmentList = () => {
     const resp = getClientOrderList({ client_id: selectedClient?.uniqueId });
