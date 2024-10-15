@@ -41,3 +41,7 @@ export const getPriceOfUnit = (payload, contentType) => {
 export const getClientOrderList = (payload, contentType) => {
   return apiClient(contentType).post(`${baseURL}/show_order_list`, payload);
 };
+
+export const getDividendYield = (payload, contentType) => {
+  return apiClient(contentType).post(`${baseURL}/dividend_yield`, payload);
+};
