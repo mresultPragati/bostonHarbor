@@ -42,6 +42,7 @@ const TransactionForm = (props) => {
     setFormData,
     selectedClient,
     setShowLoader,
+    getInvestmentList
   } = props;
 
   useEffect(() => {
@@ -122,6 +123,7 @@ const TransactionForm = (props) => {
         msg: "Order placed successfully",
         severity: "success",
       });
+      getInvestmentList();
       setTimeout(() => {
         setFormData(investmentForm);
         setSelectedCompany({});

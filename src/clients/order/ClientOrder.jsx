@@ -85,6 +85,7 @@ const ClientOrder = () => {
         selectedClient={selectedClient}
         selectedMarket={selectedMarket}
         setShowLoader={setShowLoader}
+        getInvestmentList={getInvestmentList}
       />
       <ClientOrderList investmentList={investmentList} />
     </div>
