@@ -10,7 +10,12 @@ export const DividendForm = ({ selectedOwnership, formData, setFormData }) => {
             <TextField
               label="Investment Amount"
               value={formData?.investmentAmount}
-              onChange={(e) => setFormData(e.target.value)}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  investmentAmount: e.target.value,
+                })
+              }
               fullWidth
               margin="normal"
               variant="standard"

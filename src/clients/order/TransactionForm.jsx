@@ -150,36 +150,57 @@ const TransactionForm = (props) => {
         DividendYield: formData?.dividendYield,
       };
     }
-    const resp = await placeOrder(payload, "application/json");
-    if (resp.status === 200) {
-      setAlertMsg({
-        msg: "Order placed successfully",
-        severity: "success",
-      });
-      setTimeout(() => {
-        setFormData(investmentForm);
-        setSelectedCompany({});
-        setSelectedMarket({});
-        setSelectedAssetClass({});
-      }, 1000);
-    }
+    console.log("formDataformData", formData);
+
+    // const resp = await placeOrder(payload, "application/json");
+    // if (resp.status === 200) {
+    //   setAlertMsg({
+    //     msg: "Order placed successfully",
+    //     severity: "success",
+    //   });
+    //   setTimeout(() => {
+    //     setFormData(investmentForm);
+    //     setSelectedCompany({});
+    //     setSelectedMarket({});
+    //     setSelectedAssetClass({});
+    //   }, 1000);
+    // }
   };
   console.log("selectedAssetClass?.isChangeUI", selectedAssetClass?.isChangeUI);
 
   const isSubmitDisabled = () => {
-    if (selectedAssetClass?.isChangeUI) {
-      return !selectedAssetClass?.label || !selectedCompany?.label || !formData;
-      // return false;
-    } else
-      return (
-        // !selectedMarket?.label ||
-        !selectedAssetClass?.label ||
-        !selectedCompany?.label ||
-        !formData?.transactionType ||
-        !formData?.units ||
-        !formData?.pricePerUnit
-      );
-    console.log("itemitem,", selectedAssetClass, selectedCompany);
+    switch (selectedOwnership?.type) {
+      case ownershipType?.reit || ownershipType?.commercial:
+        return (
+          !formData.investmentAmount ||
+          !selectedAssetClass?.label ||
+          selectedOwnership?.label ||
+          !selectedCompany?.label
+        );
+
+      default:
+        return (
+          // !selectedMarket?.label ||
+          !selectedAssetClass?.label ||
+          !selectedCompany?.label ||
+          !formData?.transactionType ||
+          !formData?.units ||
+          !formData?.pricePerUnit
+        );
+    }
+
+    // if (selectedAssetClass?.isChangeUI) {
+    //   // return false;
+    // } else
+    //   return (
+    //     // !selectedMarket?.label ||
+    //     !selectedAssetClass?.label ||
+    //     !selectedCompany?.label ||
+    //     !formData?.transactionType ||
+    //     !formData?.units ||
+    //     !formData?.pricePerUnit
+    //   );
+    // console.log("itemitem,", selectedAssetClass, selectedCompany);
   };
 
   return (
