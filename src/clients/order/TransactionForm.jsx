@@ -143,14 +143,22 @@ const TransactionForm = (props) => {
       };
     } else {
       payload = {
+        order_data: {
+          ownership: selectedOwnership?.label,
+          assetClass: selectedAssetClass.label,
+          date: formattedDateTime,
+          name: selectedCompany?.label,
+          investmentAmount: Number(formData?.investmentAmount),
+          dividendYield: formData?.dividendYield,
+        },
         client_name: selectedClient?.clientDetail?.clientName,
         client_id: selectedClient.uniqueId,
-        AssetClass: selectedAssetClass.label,
-        ownership: selectedOwnership?.label,
-        Date: formattedDateTime,
-        Name: selectedCompany?.label,
-        InvestmentAmount: Number(formData?.investmentAmount),
-        DividendYield: formData?.dividendYield,
+        // AssetClass: selectedAssetClass.label,
+        // ownership: selectedOwnership?.label,
+        // Date: formattedDateTime,
+        // Name: selectedCompany?.label,
+        // InvestmentAmount: Number(formData?.investmentAmount),
+        // DividendYield: formData?.dividendYield,
       };
     }
     const resp = await placeOrder(payload, "application/json");
