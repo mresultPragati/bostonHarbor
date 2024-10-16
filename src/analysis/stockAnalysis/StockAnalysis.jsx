@@ -6,7 +6,7 @@ import { generateStockAnalysis } from "../../api/apiServiece";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import { BostonSearch } from "../../resusedComponents/BostonSearch";
-import { companies, CompanyDetails, markets } from "./constants";
+import { companies, markets } from "./constants";
 import { AnalysisResponse } from "./AnalysisResponse";
 import { StockSelection } from "./StockSelection";
 
