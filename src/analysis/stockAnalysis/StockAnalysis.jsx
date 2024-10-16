@@ -26,6 +26,8 @@ export const StockAnalysis = () => {
     msg: "",
     severity: "",
   });
+  const [marketSearch, setMarketSearch] = useState("");
+  const [stockSearch, setStockSearch] = useState("");
 
   //   const newsString = `"1. Jamie Dimon cosigns Elon Musk's plans to slash federal spending: 'We really need to do it' -
   // https://qz.com/jamie-dimon-elon-musk-doge-federal-spending-trump-tesla-1851656899\n\n2.
@@ -131,6 +133,8 @@ export const StockAnalysis = () => {
           /> */}
             <BostonSearch
               label="Stock Market"
+              searchTerm={marketSearch}
+              setSearchTerm={setMarketSearch}
               listArray={stockMarket}
               filterFields={["label"]}
               setSelectedObj={setSelectedMarket}
@@ -149,6 +153,8 @@ export const StockAnalysis = () => {
           /> */}
             <BostonSearch
               label="Company"
+              searchTerm={stockSearch}
+              setSearchTerm={setStockSearch}
               listArray={stockCompany}
               filterFields={["label", "ticker"]}
               setSelectedObj={setSelectedCompany}

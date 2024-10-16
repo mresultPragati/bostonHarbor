@@ -7,15 +7,20 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
 } from "@mui/material";
 import { BostonTableHead } from "./OrderStyled";
 
 const ClientOrderList = ({ investmentList }) => {
+  console.log("investmentList", investmentList);
+
   return (
     <div className="mb-5 mt-5">
-      {investmentList?.length > 0 && (
+      <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
+        Order History
+      </Typography>
+      {investmentList?.length > 0 ? (
         <>
-          <h3 className="mb-5">Investment Summary</h3>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="transaction table">
               <TableHead>
@@ -25,6 +30,9 @@ const ClientOrderList = ({ investmentList }) => {
                   </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }}>
                     Name
+                  </BostonTableHead>
+                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
+                    Buy/Sell
                   </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
                     Units
@@ -48,6 +56,7 @@ const ClientOrderList = ({ investmentList }) => {
                   <TableRow key={index}>
                     <TableCell>{row.AssetClass}</TableCell>
                     <TableCell>{row.Name}</TableCell>
+                    <TableCell align="center">{row.buy_or_sell}</TableCell>
                     <TableCell align="center">{row.Units}</TableCell>
                     <TableCell align="center">${row.UnitPrice} </TableCell>
                     <TableCell align="center">
@@ -60,6 +69,10 @@ const ClientOrderList = ({ investmentList }) => {
             </Table>
           </TableContainer>
         </>
+      ) : (
+        <div className="mt-5 row">
+          <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
+        </div>
       )}
     </div>
   );

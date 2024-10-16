@@ -25,6 +25,8 @@ const InvestmentPersonality = () => {
     severity: "",
   });
   const [showLoader, setShowLoader] = useState(false);
+  const [clientSearch, setClientSearch] = useState("");
+
   const navigate = useNavigate();
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
 
@@ -134,6 +136,8 @@ You always bet ₹2,000 on Tails Winner of last 8 turns You lost ₹8,000 in the
 
         <BostonSearch
           label="Name Of Client"
+          searchTerm={clientSearch}
+          setSearchTerm={setClientSearch}
           listArray={clientList}
           filterFields={["clientDetail.clientName", "uniqueId"]}
           setSelectedObj={setSelectedClient}

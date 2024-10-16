@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Table,
@@ -22,44 +22,45 @@ const CurrencyCell = styled(TableCell)(({ theme }) => ({
     props.isNegative ? theme.palette.error.main : theme.palette.success.main,
 }));
 
+const data = [
+  {
+    assetClass: "Stocks",
+    name: "Tesla",
+    description: "Raymond James Bank",
+    symbol: "06367TW63",
+    quantity: "159",
+    delayedPrice: "$1.00",
+    currentValue: "$159",
+    dailyPriceChange: "$0.00",
+    dailyValueChange: "$0.00",
+    amountInvested: "$0.48",
+    amountInvestedTotal: "$1736",
+    gainOrLossPercent: "55.82%",
+    gainOrLossValue: "$9,695",
+    timeHeld: "2 Days",
+    estimatedIncome: "$750",
+  },
+  {
+    assetClass: "Bonds",
+    name: "Apple",
+    description: "CABOT MICROELECTRONICS CORPORATION",
+    symbol: "CCMP",
+    quantity: "200.000",
+    delayedPrice: "$106.49",
+    currentValue: "$21,298.00",
+    dailyPriceChange: "-$1.06",
+    dailyValueChange: "-$212.00",
+    amountInvested: "$63.39",
+    amountInvestedTotal: "$12,677.00",
+    gainOrLossPercent: "68.01%",
+    gainOrLossValue: "$8,621.00",
+    timeHeld: "2 Days",
+    estimatedIncome: "$160.00",
+  },
+  // Add more rows as needed
+];
 export const PortfolioDetails = () => {
-  const data = [
-    {
-      assetClass: "Stocks",
-      name: "Tesla",
-      description: "Raymond James Bank",
-      symbol: "06367TW63",
-      quantity: "159",
-      delayedPrice: "$1.00",
-      currentValue: "$159",
-      dailyPriceChange: "$0.00",
-      dailyValueChange: "$0.00",
-      amountInvested: "$0.48",
-      amountInvestedTotal: "$1736",
-      gainOrLossPercent: "55.82%",
-      gainOrLossValue: "$9,695",
-      timeHeld: "2 Days",
-      estimatedIncome: "$750",
-    },
-    {
-      assetClass: "Bonds",
-      name: "Apple",
-      description: "CABOT MICROELECTRONICS CORPORATION",
-      symbol: "CCMP",
-      quantity: "200.000",
-      delayedPrice: "$106.49",
-      currentValue: "$21,298.00",
-      dailyPriceChange: "-$1.06",
-      dailyValueChange: "-$212.00",
-      amountInvested: "$63.39",
-      amountInvestedTotal: "$12,677.00",
-      gainOrLossPercent: "68.01%",
-      gainOrLossValue: "$8,621.00",
-      timeHeld: "2 Days",
-      estimatedIncome: "$160.00",
-    },
-    // Add more rows as needed
-  ];
+  const [portfolioList, setPortfolioList] = useState(data);
 
   return (
     <>
@@ -78,6 +79,7 @@ export const PortfolioDetails = () => {
               <BoldCell>Sr. No.</BoldCell>
               <BoldCell>Asset Class</BoldCell>
               <BoldCell>Name</BoldCell>
+              <BoldCell>Symbol</BoldCell>
               <BoldCell>Quantity</BoldCell>
               <BoldCell>Delayed Price</BoldCell>
               <BoldCell>Current Value</BoldCell>
@@ -92,11 +94,12 @@ export const PortfolioDetails = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row, index) => (
+            {portfolioList.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.assetClass}</TableCell>
                 <TableCell>{row.name}</TableCell>
+                <TableCell>{row.symbol}</TableCell>
                 <TableCell>{row.quantity}</TableCell>
                 <TableCell>{row.delayedPrice}</TableCell>
                 <TableCell>{row.currentValue}</TableCell>

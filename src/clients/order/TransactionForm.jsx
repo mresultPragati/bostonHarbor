@@ -58,6 +58,41 @@ const TransactionForm = (props) => {
     selectedOwnership,
   } = props;
 
+  const [assetSearch, setAssetSearch] = useState("");
+  const [nameSearch, setNameSearch] = useState("");
+  const [ownershipSearch, setOwnershipSearch] = useState("");
+  const [marketSearch, setMarketSearch] = useState("");
+
+  useEffect(() => {
+    if (assetSearch) {
+      setTimeout(() => {
+        setFormData(investmentForm);
+        // setSelectedCompany({});
+        // setSelectedMarket({});
+        // setSelectedAssetClass({});
+        setNameSearch("");
+        setOwnershipSearch("");
+        setMarketSearch("");
+      }, 500);
+      // return;
+    }
+  }, [assetSearch]);
+
+  useEffect(() => {
+    if (ownershipSearch) {
+      setTimeout(() => {
+        setFormData({ ...formData, dividendYield: 0 });
+        // setSelectedCompany({});
+        // setSelectedMarket({});
+        // setSelectedAssetClass({});
+        setNameSearch("");
+        // setAssetSearch("");
+        // setMarketSearch("");
+      }, 500);
+      // return;
+    }
+  }, [ownershipSearch]);
+
   useEffect(() => {
     if (selectedCompany?.ticker) getValueOfTicker();
   }, [selectedCompany]);
@@ -173,6 +208,12 @@ const TransactionForm = (props) => {
         setSelectedCompany({});
         setSelectedMarket({});
         setSelectedAssetClass({});
+        setSelectedOwnership({});
+        setSelectedAssetClass({});
+        setNameSearch("");
+        setOwnershipSearch("");
+        setMarketSearch("");
+        setAssetSearch("");
       }, 1000);
     }
   };
@@ -232,6 +273,8 @@ const TransactionForm = (props) => {
           <Grid2 item size={{ xs: 12, md: 4 }}>
             <FormControl fullWidth margin="normal">
               <BostonSearch
+                searchTerm={assetSearch}
+                setSearchTerm={setAssetSearch}
                 label="Asset Class"
                 listArray={assetClasses}
                 filterFields={["label"]}
@@ -247,6 +290,8 @@ const TransactionForm = (props) => {
               <>
                 <FormControl fullWidth margin="normal">
                   <BostonSearch
+                    searchTerm={ownershipSearch}
+                    setSearchTerm={setOwnershipSearch}
                     label="Ownership"
                     listArray={ownership}
                     filterFields={["label"]}
@@ -260,6 +305,8 @@ const TransactionForm = (props) => {
             ) : (
               <FormControl fullWidth margin="normal">
                 <BostonSearch
+                  searchTerm={marketSearch}
+                  setSearchTerm={setMarketSearch}
                   label="Market"
                   listArray={stockMarket}
                   filterFields={["label"]}
@@ -277,6 +324,8 @@ const TransactionForm = (props) => {
           <Grid2 item size={{ xs: 12, md: 4 }}>
             <FormControl fullWidth margin="normal">
               <BostonSearch
+                searchTerm={nameSearch}
+                setSearchTerm={setNameSearch}
                 label="Name"
                 listArray={
                   selectedOwnership?.type === ownershipType?.reit
@@ -287,7 +336,9 @@ const TransactionForm = (props) => {
                     ? crowdfundedList
                     : selectedOwnership?.type === ownershipType?.direct
                     ? directList
-                    : stockCompany
+                    : !selectedAssetClass?.isChangeUI
+                    ? stockCompany
+                    : []
                 }
                 filterFields={["label", "ticker"]}
                 setSelectedObj={setSelectedCompany}

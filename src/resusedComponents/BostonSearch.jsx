@@ -18,8 +18,10 @@ export const BostonSearch = ({
   primaryValue,
   secondary,
   secondaryName,
+  searchTerm,
+  setSearchTerm,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const [filteredList, setFilteredList] = useState([]);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
 
@@ -27,11 +29,13 @@ export const BostonSearch = ({
     if (!searchTerm) {
       setSelectedObj({});
       setIsSuggestionOpen(false);
+      return;
     }
   }, [searchTerm]);
 
   const handleSearch = (event) => {
     const { value } = event.target;
+    console.log("label", label);
 
     setSearchTerm(value);
     setIsSuggestionOpen(true);

@@ -5,7 +5,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BostonSearch } from "../../resusedComponents/BostonSearch";
 
 export const AdvisorUsingText = (props) => {
@@ -18,6 +18,8 @@ export const AdvisorUsingText = (props) => {
     selectedClient,
   } = props;
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
+
+  const [clientSearch, setClientSearch] = useState("");
 
   useEffect(() => {
     setInvestorPersonalityVal(selectedClient?.investment_personality);
@@ -57,6 +59,8 @@ export const AdvisorUsingText = (props) => {
           {/* <TextField variant="standard" fullWidth label="Client Name" /> */}
           <BostonSearch
             label="Name Of Client"
+            searchTerm={clientSearch}
+            setSearchTerm={setClientSearch}
             listArray={clientList}
             filterFields={["clientDetail.clientName", "uniqueId"]}
             setSelectedObj={setSelectedClient}

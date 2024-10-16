@@ -18,7 +18,7 @@ const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
     <>
       <Box sx={{ width: "100%", overflow: "hidden" }}>
         <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
-          Order History
+          Investment Summary
         </Typography>
         <Grid2 container spacing={3}>
           <Grid2 size={{ xs: 12, md: 5 }}>
