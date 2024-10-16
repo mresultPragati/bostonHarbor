@@ -53,6 +53,7 @@ const TransactionForm = (props) => {
     setFormData,
     selectedClient,
     setShowLoader,
+    getInvestmentList,
     setSelectedOwnership,
     selectedOwnership,
   } = props;
@@ -150,21 +151,20 @@ const TransactionForm = (props) => {
         DividendYield: formData?.dividendYield,
       };
     }
-    console.log("formDataformData", formData);
-
-    // const resp = await placeOrder(payload, "application/json");
-    // if (resp.status === 200) {
-    //   setAlertMsg({
-    //     msg: "Order placed successfully",
-    //     severity: "success",
-    //   });
-    //   setTimeout(() => {
-    //     setFormData(investmentForm);
-    //     setSelectedCompany({});
-    //     setSelectedMarket({});
-    //     setSelectedAssetClass({});
-    //   }, 1000);
-    // }
+    const resp = await placeOrder(payload, "application/json");
+    if (resp.status === 200) {
+      setAlertMsg({
+        msg: "Order placed successfully",
+        severity: "success",
+      });
+      getInvestmentList();
+      setTimeout(() => {
+        setFormData(investmentForm);
+        setSelectedCompany({});
+        setSelectedMarket({});
+        setSelectedAssetClass({});
+      }, 1000);
+    }
   };
   console.log("selectedAssetClass?.isChangeUI", selectedAssetClass?.isChangeUI);
 

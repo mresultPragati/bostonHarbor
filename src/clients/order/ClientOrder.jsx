@@ -48,7 +48,7 @@ const ClientOrder = () => {
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
   useEffect(() => {
-    // getInvestmentList();
+    getInvestmentList();
   }, []);
 
   const getInvestmentList = async () => {
@@ -84,6 +84,7 @@ const ClientOrder = () => {
         selectedClient={selectedClient}
         selectedMarket={selectedMarket}
         setShowLoader={setShowLoader}
+        getInvestmentList={getInvestmentList}
         setSelectedOwnership={setSelectedOwnership}
         selectedOwnership={selectedOwnership}
       />
