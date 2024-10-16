@@ -25,9 +25,16 @@ export const DividendForm = ({ selectedOwnership, formData, setFormData }) => {
           <Grid2 item size={{ md: 1 }} />
           <Grid2 item size={{ xs: 12, md: 4 }}>
             <TextField
+              sx={{
+                "& .Mui-disabled": {
+                  WebkitTextFillColor: "black",
+                },
+              }}
               label="Dividend Yield (%)"
-              value={formData.dividendYield}
+              //   defaultValue={0}
+              value={formData.dividendYield?.toFixed(2)}
               // onChange={(e) => setDividendYield(e.target.value)}
+
               fullWidth
               margin="normal"
               variant="standard"

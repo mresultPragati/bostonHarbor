@@ -6,4 +6,5 @@ export const investmentForm = {
   //   transactionAmount: "",
   date: "",
   market: "",
+  dividendYield: 0,
 };

@@ -147,7 +147,7 @@ const TransactionForm = (props) => {
         ownership: selectedOwnership?.label,
         Date: formattedDateTime,
         Name: selectedCompany?.label,
-        InvestmentAmount: formData?.investmentAmount,
+        InvestmentAmount: Number(formData?.investmentAmount),
         DividendYield: formData?.dividendYield,
       };
     }
@@ -330,7 +330,7 @@ const TransactionForm = (props) => {
                   }}
                   label="Price Per Unit"
                   name="pricePerUnit"
-                  value={formData.pricePerUnit}
+                  value={formData.pricePerUnit?.toFixed(2)}
                   type="number"
                   fullWidth
                   margin="normal"
@@ -374,7 +374,9 @@ const TransactionForm = (props) => {
                 }}
                 label="Transaction Amount"
                 name="transactionAmount"
-                value={Number(formData.units) * Number(formData.pricePerUnit)}
+                value={(
+                  Number(formData.units) * Number(formData.pricePerUnit)
+                ).toFixed(2)}
                 type="number"
                 fullWidth
                 margin="normal"
@@ -401,8 +403,8 @@ const TransactionForm = (props) => {
           variant="contained"
           color="primary"
           fullWidth
-          // disabled={false}
-          disabled={isSubmitDisabled()} // Disable the button if any field is empty
+          disabled={false}
+          // disabled={isSubmitDisabled()} // Disable the button if any field is empty
         >
           Order
         </Button>
