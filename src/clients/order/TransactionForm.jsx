@@ -121,9 +121,7 @@ const TransactionForm = (props) => {
     });
 
     const updatedFormData = {
-      // ...formData,
       date: formattedDateTime,
-      // date: currentDate,
       transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
       name: selectedCompany?.label,
       symbol: selectedCompany?.ticker,
@@ -132,15 +130,26 @@ const TransactionForm = (props) => {
       buy_or_sell: formData.transactionType,
       unit_price: formData.pricePerUnit,
       units: Number(formData.units),
-      // price: Number(formData.units) * Number(formData.pricePerUnit),
     };
     console.log(selectedClient, updatedFormData, "formDataformData");
-    const payload = {
-      order_data: updatedFormData,
-      client_name: selectedClient?.clientDetail?.clientName,
-      client_id: selectedClient.uniqueId,
-      funds: selectedClient.investmentAmount,
-    };
+    var payload;
+    if (!selectedAssetClass?.isChangeUI) {
+      payload = {
+        order_data: updatedFormData,
+        client_name: selectedClient?.clientDetail?.clientName,
+        client_id: selectedClient.uniqueId,
+        funds: selectedClient.investmentAmount,
+      };
+    } else {
+      payload = {
+        AssetClass: selectedAssetClass.label,
+        ownership: selectedOwnership?.label,
+        Date: formattedDateTime,
+        Name: selectedCompany?.label,
+        InvestmentAmount: formData?.investmentAmount,
+        DividendYield: formData?.dividendYield,
+      };
+    }
     const resp = await placeOrder(payload, "application/json");
     if (resp.status === 200) {
       setAlertMsg({

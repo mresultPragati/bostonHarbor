@@ -25,10 +25,10 @@ export const ownership = [
     label: "Commercial Real Estate (Triple Net Lease)",
     type: ownershipType?.commercial,
   },
-  {
-    label: "Crowdfunded Real Estate Investments",
-    type: ownershipType?.crowdfund,
-  },
+  // {
+  //   label: "Crowdfunded Real Estate Investments",
+  //   type: ownershipType?.crowdfund,
+  // },
 ];
 
 export const reitList = [
