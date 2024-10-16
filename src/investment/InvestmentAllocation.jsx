@@ -46,13 +46,13 @@ const InvestmentAllocation = () => {
 
   return (
     <div className="mb-5 mt-5">
-      <TransactionForm
+      {/* <TransactionForm
         formData={formData}
         setFormData={setFormData}
         // setInvestmentList={setInvestmentList}
         // handleFormSubmit={handleFormSubmit}
         // editingIndex={editingIndex}
-      />
+      /> */}
       {investmentList?.length > 0 && (
         <>
           <h3 className="mb-5">Investment Summary</h3>

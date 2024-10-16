@@ -9,13 +9,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
-// position: fixed;
-// /* border: solid 1px; */
-// /* z-index: 1000000; */
-// box-shadow: 2px -1px 10px -4px;
-// width: 16rem;
-// }
-
 export const BostonSearch = ({
   setSelectedObj,
   width,

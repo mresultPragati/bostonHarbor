@@ -3,6 +3,7 @@ export const investmentForm = {
   name: "",
   units: 0,
   pricePerUnit: 0,
+  transactionType: "buy",
   //   transactionAmount: "",
   date: "",
   market: "",

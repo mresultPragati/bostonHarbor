@@ -143,6 +143,8 @@ const TransactionForm = (props) => {
       };
     } else {
       payload = {
+        client_name: selectedClient?.clientDetail?.clientName,
+        client_id: selectedClient.uniqueId,
         AssetClass: selectedAssetClass.label,
         ownership: selectedOwnership?.label,
         Date: formattedDateTime,
@@ -170,11 +172,19 @@ const TransactionForm = (props) => {
 
   const isSubmitDisabled = () => {
     switch (selectedOwnership?.type) {
-      case ownershipType?.reit || ownershipType?.commercial:
+      case ownershipType?.reit:
         return (
           !formData.investmentAmount ||
           !selectedAssetClass?.label ||
-          selectedOwnership?.label ||
+          !selectedOwnership?.label ||
+          !selectedCompany?.label
+        );
+
+      case ownershipType?.commercial:
+        return (
+          !formData.investmentAmount ||
+          !selectedAssetClass?.label ||
+          !selectedOwnership?.label ||
           !selectedCompany?.label
         );
 
@@ -184,8 +194,8 @@ const TransactionForm = (props) => {
           !selectedAssetClass?.label ||
           !selectedCompany?.label ||
           !formData?.transactionType ||
-          !formData?.units ||
-          !formData?.pricePerUnit
+          !formData?.units
+          // || !formData?.pricePerUnit
         );
     }
 
@@ -403,8 +413,8 @@ const TransactionForm = (props) => {
           variant="contained"
           color="primary"
           fullWidth
-          disabled={false}
-          // disabled={isSubmitDisabled()} // Disable the button if any field is empty
+          // disabled={false}
+          disabled={isSubmitDisabled()} // Disable the button if any field is empty
         >
           Order
         </Button>

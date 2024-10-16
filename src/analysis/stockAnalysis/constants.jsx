@@ -42,7 +42,7 @@ export const commercialList = [
   { label: "Prologis", ticker: "PLD" },
   { label: "Simon Property Group", ticker: "SPG" },
   { label: "Equinix", ticker: "EQIX" },
-  { label: "Vornado Realty Trust", ticker: "VNO" },
+  // { label: "Vornado Realty Trust", ticker: "VNO" },
 ];
 
 export const crowdfundedList = [
