@@ -5,7 +5,7 @@ const apiClient = (contentType) => {
     // Later read this URL from an environment variable
     // baseURL: process.env.REACT_APP_API_REDIRECT,
     headers: {
-      "Content-Type": contentType ? contentType : "",
+      "Content-Type": contentType ? contentType : "application/json",
     },
   });
 };

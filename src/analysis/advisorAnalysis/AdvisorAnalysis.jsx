@@ -158,10 +158,15 @@ export const AdvisorAnalysis = () => {
         setInvestMentValue={setInvestMentValue}
         setInvestorPersonalityVal={setInvestorPersonalityVal}
       />
-      <div className="d-flex  justify-content-center mt-5 mb-5">
+      {/* <div className="d-flex  justify-content-center mt-5 mb-5">
         <hr style={{ width: "30%" }} />
         <h6 className="m-1 d-flex">OR</h6>
         <hr style={{ width: "30%" }} />
+      </div> */}
+      <div className="d-flex  justify-content-center  mb-5">
+        <div style={{ flex: 1, borderBottom: "1px solid black" }} />
+        <span style={{ margin: "0 10px -10px" }}>OR</span>
+        <div style={{ flex: 1, borderBottom: "1px solid black" }} />
       </div>
       <AdvisoryUsingFile
         assessmentFile={assessmentFile}

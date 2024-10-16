@@ -42,6 +42,7 @@ const ClientOrder = () => {
   const [assetClasses, setAssetClasses] = useState(assets);
   const [selectedMarket, setSelectedMarket] = useState(null);
   const [selectedAssetClass, setSelectedAssetClass] = useState(null);
+  const [selectedOwnership, setSelectedOwnership] = useState(null);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [showLoader, setShowLoader] = useState(false);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
@@ -51,13 +52,11 @@ const ClientOrder = () => {
   }, []);
 
   const getInvestmentList = async () => {
-    setShowLoader(true);
-    let payload={
+    let payload = {
       client_id: selectedClient?.uniqueId,
-    }
-    const resp = await getClientOrderList(payload,
-      'application/json'
-    );
+    };
+    setShowLoader(true);
+    const resp = await getClientOrderList(payload, "application/json");
     console.log("respp", resp);
     if (resp.status === 200) {
       setShowLoader(false);
@@ -86,6 +85,8 @@ const ClientOrder = () => {
         selectedMarket={selectedMarket}
         setShowLoader={setShowLoader}
         getInvestmentList={getInvestmentList}
+        setSelectedOwnership={setSelectedOwnership}
+        selectedOwnership={selectedOwnership}
       />
       <ClientOrderList investmentList={investmentList} />
     </div>
