@@ -401,8 +401,8 @@ const TransactionForm = (props) => {
           variant="contained"
           color="primary"
           fullWidth
-          disabled={false}
-          // disabled={isSubmitDisabled()} // Disable the button if any field is empty
+          // disabled={false}
+          disabled={isSubmitDisabled()} // Disable the button if any field is empty
         >
           Order
         </Button>
