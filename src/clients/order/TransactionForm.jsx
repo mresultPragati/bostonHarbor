@@ -33,7 +33,7 @@ import {
 } from "../../api/apiServiece";
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import BostonLoader from "../../resusedComponents/BostonLoader";
-import { OwnershipOrder } from "./OwnershipOrder";
+import { OwnershipOrder } from "./orderOwnership/OwnershipOrder";
 
 const TransactionForm = (props) => {
   const {
@@ -58,7 +58,7 @@ const TransactionForm = (props) => {
   } = props;
 
   useEffect(() => {
-    getValueOfTicker();
+    if (selectedCompany?.ticker) getValueOfTicker();
   }, [selectedCompany]);
 
   const getValueOfTicker = async () => {
@@ -155,16 +155,23 @@ const TransactionForm = (props) => {
       }, 1000);
     }
   };
-  console.log("selectedClient", selectedAssetClass);
+  console.log("selectedAssetClass?.isChangeUI", selectedAssetClass?.isChangeUI);
 
-  const isSubmitDisabled =
-    // !selectedMarket?.label ||
-    !selectedAssetClass?.label ||
-    !selectedCompany?.label ||
-    !formData?.transactionType ||
-    !formData?.units ||
-    !formData?.pricePerUnit;
-  console.log("itemitem,", selectedAssetClass, selectedCompany);
+  const isSubmitDisabled = () => {
+    if (selectedAssetClass?.isChangeUI) {
+      return !selectedAssetClass?.label || !selectedCompany?.label || !formData;
+      // return false;
+    } else
+      return (
+        // !selectedMarket?.label ||
+        !selectedAssetClass?.label ||
+        !selectedCompany?.label ||
+        !formData?.transactionType ||
+        !formData?.units ||
+        !formData?.pricePerUnit
+      );
+    console.log("itemitem,", selectedAssetClass, selectedCompany);
+  };
 
   return (
     <>
@@ -243,70 +250,68 @@ const TransactionForm = (props) => {
               />
             </FormControl>
           </Grid2>
-          <Grid2 item size={{ md: 1 }} />
-          <Grid2 item size={{ xs: 12, md: 2 }} style={{ textAlign: "start" }}>
-            {selectedAssetClass?.isChangeUI ? (
-              <OwnershipOrder selectedOwnership={selectedOwnership} />
-            ) : (
-              <FormControl component="fieldset" margin="normal">
-                <FormLabel sx={{ textAlign: "start" }} id="buy-sell-label">
-                  Buy/Sell
-                </FormLabel>
-                <RadioGroup
-                  row
-                  name="transactionType"
-                  aria-labelledby="buy-sell-label"
-                  value={formData.transactionType}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value="buy"
-                    control={<Radio />}
-                    label="Buy"
-                  />
-                  <FormControlLabel
-                    value="sell"
-                    control={<Radio />}
-                    label="Sell"
-                  />
-                </RadioGroup>
-              </FormControl>
-            )}
-          </Grid2>
 
-          {selectedAssetClass?.isChangeUI ? (
-            <></>
-          ) : (
-            <Grid2 item size={{ xs: 12, md: 2 }}>
-              <TextField
-                sx={{
-                  "& .Mui-disabled": {
-                    WebkitTextFillColor: "black",
-                  },
-                }}
-                variant="standard"
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                  },
-                }}
-                label="Price Per Unit"
-                name="pricePerUnit"
-                value={formData.pricePerUnit}
-                type="number"
-                fullWidth
-                margin="normal"
-                disabled
-              />
-            </Grid2>
+          <Grid2 item size={{ md: 1 }} />
+          {!selectedAssetClass?.isChangeUI && (
+            <>
+              <Grid2
+                item
+                size={{ xs: 12, md: 2 }}
+                style={{ textAlign: "start" }}
+              >
+                <FormControl component="fieldset" margin="normal">
+                  <FormLabel sx={{ textAlign: "start" }} id="buy-sell-label">
+                    Buy/Sell
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    name="transactionType"
+                    aria-labelledby="buy-sell-label"
+                    value={formData.transactionType}
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel
+                      value="buy"
+                      control={<Radio />}
+                      label="Buy"
+                    />
+                    <FormControlLabel
+                      value="sell"
+                      control={<Radio />}
+                      label="Sell"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid2>
+              <Grid2 item size={{ xs: 12, md: 2 }}>
+                <TextField
+                  sx={{
+                    "& .Mui-disabled": {
+                      WebkitTextFillColor: "black",
+                    },
+                  }}
+                  variant="standard"
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
+                    },
+                  }}
+                  label="Price Per Unit"
+                  name="pricePerUnit"
+                  value={formData.pricePerUnit}
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  disabled
+                />
+              </Grid2>
+            </>
           )}
         </Grid2>
 
-        {selectedAssetClass?.isChangeUI ? (
-          <></>
-        ) : (
+        {!selectedAssetClass?.isChangeUI && (
           <Grid2 container spacing={2} alignItems="center">
             <Grid2 item size={{ md: 1 }} />
             <Grid2 item size={{ xs: 12, md: 4 }}>
@@ -349,6 +354,16 @@ const TransactionForm = (props) => {
           </Grid2>
         )}
 
+        {selectedAssetClass?.isChangeUI && (
+          <>
+            <OwnershipOrder
+              selectedOwnership={selectedOwnership}
+              formData={formData}
+              setFormData={setFormData}
+            />
+          </>
+        )}
+
         <Button
           className="mt-5 mb-5"
           sx={{ width: "auto" }}
@@ -356,7 +371,8 @@ const TransactionForm = (props) => {
           variant="contained"
           color="primary"
           fullWidth
-          disabled={isSubmitDisabled} // Disable the button if any field is empty
+          disabled={false}
+          // disabled={isSubmitDisabled()} // Disable the button if any field is empty
         >
           Order
         </Button>

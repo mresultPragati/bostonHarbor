@@ -1,4 +1,4 @@
-import { CompanyDetails } from "./constants";
+import { CompanyDetails } from "./CompanyDeatils";
 
 export const AnalysisResponse = ({
   companyInfo,
@@ -9,7 +9,10 @@ export const AnalysisResponse = ({
 }) => {
   return (
     <>
-      {CompanyDetails(companyInfo, selectedCompany)}
+      <CompanyDetails
+        companyInfo={companyInfo}
+        selectedCompany={selectedCompany}
+      />
 
       <div
         className="mt-5"
