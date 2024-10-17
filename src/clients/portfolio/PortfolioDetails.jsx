@@ -64,23 +64,25 @@ const data = [
 export const PortfolioDetails = () => {
   const [portfolioList, setPortfolioList] = useState([]);
   const [portfolioPrice, setPortfolioPrice] = useState([]);
-  const selectedClient = JSON?.parse?.(
-    localStorage?.getItem?.("selectedClient")
-  );
+  const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
   useEffect(() => {
+    portfolioAllDetails();
+  });
+
+  const portfolioAllDetails = async () => {
     let payload = {
       client_id: selectedClient?.uniqueId,
       curr_date: USTimezone(),
     };
-    const resp = getPortfolioList(payload);
-    console.log("RESPPP", resp);
+    console.log("RESPPP", selectedClient);
+    const resp = await getPortfolioList(payload);
 
     if (resp.status === 200) {
       setPortfolioList(resp?.data?.portfolio_data);
       setPortfolioPrice(resp?.data);
     }
-  });
+  };
 
   return (
     <>
