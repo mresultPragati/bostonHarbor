@@ -54,7 +54,11 @@ const AssetsSummary = ({ formData, setFormData }) => {
     console.log("respp", resp);
     if (resp.status === 200) {
       setShowLoader(false);
-      setInvestmentList(resp?.data?.transaction_data);
+      let filtereList = resp?.data?.transaction_data?.filter(
+        (item) =>
+          (item?.assetClass).toLowerCase() !== "Real Estate".toLowerCase()
+      );
+      setInvestmentList(filtereList);
     }
   };
 
@@ -64,10 +68,10 @@ const AssetsSummary = ({ formData, setFormData }) => {
 
     // Loop through each transaction to extract asset name and transaction amount
     investmentList?.forEach((item) => {
-      const { assetNames, transactionAmount } = item;
+      const { name, transactionAmount } = item;
 
       // Push the values into respective arrays
-      assetLabels.push(assetNames);
+      assetLabels.push(name);
       transactionAmountsData.push(transactionAmount);
     });
 
@@ -93,7 +97,8 @@ const AssetsSummary = ({ formData, setFormData }) => {
 
   const getTotalBalance = () => {
     return investmentList?.reduce(
-      (total, item) => total + item.transactionAmount,
+      (total, item) =>
+        item.assetClass !== "Real Estate" && total + item.transactionAmount,
       0
     );
   };
@@ -128,10 +133,10 @@ const AssetsSummary = ({ formData, setFormData }) => {
           </Typography>
           <Typography variant="body1" sx={{ color: "#333" }}>
             {selectedClient?.investmentAmount
-              ? `$${
+              ? `$${(
                   Number(selectedClient?.investmentAmount) -
                   Number(getTotalBalance())
-                }`
+                ).toFixed(2)}`
               : "Please invest funds"}
           </Typography>
         </Box>

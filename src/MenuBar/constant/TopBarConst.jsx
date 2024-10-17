@@ -7,9 +7,9 @@ export const navigatorPath = {
   taxAnalysis: "/taxAnalysis",
   transaction: "/transaction",
   assetsLiabilityDetails: "/assetsLiabilityDetails",
-  orders: "/client/orders",
-  summary: "/client/summary",
-  portfolio: "/client/portfolio",
+  orders: "/client/orders", // Include dynamic segmen
+  summary: "/client/summary", // Include dynamic segmen
+  portfolio: "/client/portfolio", // Include dynamic segment :id
 };
 
 export const topbarMenu = [

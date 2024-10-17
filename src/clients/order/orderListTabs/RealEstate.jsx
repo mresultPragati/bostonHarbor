@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { BostonTableHead } from "../OrderStyled";
 
-export const RealEstate = ({ investmentList }) => {
+export const RealEstate = ({ realEstateList }) => {
   return (
     <>
-      {investmentList?.length > 0 ? (
+      {realEstateList?.length > 0 ? (
         <>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="transaction table">
@@ -25,17 +25,17 @@ export const RealEstate = ({ investmentList }) => {
                   <BostonTableHead sx={{ fontWeight: "bold" }}>
                     Name
                   </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
+                  {/* <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
                     Buy/Sell
+                  </BostonTableHead> */}
+                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
+                    Ownership
                   </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Units
+                    Yield
                   </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Price per Unit
-                  </BostonTableHead>
-                  <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
-                    Transaction Amount
+                    Investment Amount
                   </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }} align="center">
                     Date
@@ -46,15 +46,14 @@ export const RealEstate = ({ investmentList }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {investmentList?.map((row, index) => (
+                {realEstateList?.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell>{row.assetClass}</TableCell>
                     <TableCell>{row.name}</TableCell>
-                    <TableCell align="center">{row.Action}</TableCell>
-                    <TableCell align="center">{row.Units}</TableCell>
-                    <TableCell align="center">${row.UnitPrice} </TableCell>
+                    <TableCell align="center">{row.ownership}</TableCell>
+                    <TableCell align="center">{row.DividendYield}</TableCell>
                     <TableCell align="center">
-                      ${row.transactionAmount.toFixed(2)}
+                      ${row.InvestmentAmount?.toFixed(2)}
                     </TableCell>
                     <TableCell align="center">{row.date}</TableCell>
                   </TableRow>

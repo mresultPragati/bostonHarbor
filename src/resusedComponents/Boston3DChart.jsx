@@ -9,7 +9,7 @@ const transformDataToHighchartsFormat = (data) => {
   const { labels, datasets } = data;
 
   return datasets[0].data.map((value, index) => ({
-    name: labels[index],
+    name: labels?.[index],
     y: value,
     color: datasets[0].backgroundColor[index],
   }));

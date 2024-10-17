@@ -49,3 +49,10 @@ export const getDividendYield = (payload, contentType) => {
 export const getPortfolioList = (payload, contentType = "application/json") => {
   return apiClient(contentType).post(`${baseURL}/portfolio`, payload);
 };
+
+export const genPortfolioAnalysis = (
+  payload,
+  contentType = "application/json"
+) => {
+  return apiClient(contentType).post(`${baseURL}/analyze_portfolio`, payload);
+};

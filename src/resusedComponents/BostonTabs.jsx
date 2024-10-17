@@ -13,6 +13,7 @@ const BostonTabs = ({ children, tabList }) => {
     <div>
       <AppBar position="static" color="transparent" elevation={0}>
         <Tabs
+          className="mb-3"
           value={value}
           onChange={handleChange}
           aria-label="styled tabs example"

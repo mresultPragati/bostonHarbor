@@ -1,3 +1,5 @@
+import { isEmpty } from "../resusedComponents/constant/ResusableConst";
+
 export const total = (chartData) => {
   return chartData?.datasets?.[0]?.data?.reduce(
     (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
@@ -15,58 +17,60 @@ export const getMidDarkColor = () => {
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-export const extractKeysAndValues = (arr) => {
+export const extractKeysAndValues = (obj) => {
   const labelsArray = [];
   const valueArray = [];
 
   //   ----------------------------OLD-------------------------
-  arr?.datasets?.[0]?.data?.map((item, index) => {
-    if (item) {
-      labelsArray?.push(arr?.labels[index]);
-      valueArray?.push(Number(item));
+  if (isEmpty(obj)) {
+    obj?.datasets?.[0]?.data?.map((item, index) => {
+      if (item) {
+        labelsArray?.push(obj?.labels[index]);
+        valueArray?.push(Number(item));
+      }
+    });
+
+    var backgroundColor = [];
+
+    for (let i = 0; i <= obj?.datasets?.[0]?.data?.length; i++) {
+      backgroundColor?.push(getMidDarkColor());
     }
-  });
 
-  var backgroundColor = [];
+    const labels = obj?.labels;
+    const data = obj?.datasets[0].data;
 
-  for (let i = 0; i <= arr?.datasets?.[0]?.data?.length; i++) {
-    backgroundColor?.push(getMidDarkColor());
+    const sortedDataWithLabels = labels?.map((label, index) => ({
+      label,
+      data: parseFloat(data[index]),
+    }));
+
+    sortedDataWithLabels?.sort((a, b) => b.data - a.data);
+
+    const sortedLabels = sortedDataWithLabels?.map((item) => item.label);
+    const sortedData = sortedDataWithLabels?.map((item) => item.data);
+
+    obj.labels = sortedLabels;
+    obj.datasets[0].data = sortedData;
+
+    console.log("Sorted Assets Data:", obj);
+    console.log("Sorted Labels:", sortedLabels);
+    console.log("Sorted Data:", sortedData);
+
+    const assetsData = {
+      labels: sortedLabels,
+      //   datasets: valueArray,
+      datasets: [
+        {
+          label: "Assets",
+          data: sortedData,
+          backgroundColor: backgroundColor,
+          // backgroundColor: "rgba(55, 170, 241, 0.2)",
+          // borderColor: "#0979f1",
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    return assetsData;
   }
-
-  const labels = arr.labels;
-  const data = arr.datasets[0].data;
-
-  const sortedDataWithLabels = labels.map((label, index) => ({
-    label,
-    data: parseFloat(data[index]),
-  }));
-
-  sortedDataWithLabels.sort((a, b) => b.data - a.data);
-
-  const sortedLabels = sortedDataWithLabels.map((item) => item.label);
-  const sortedData = sortedDataWithLabels.map((item) => item.data);
-
-  arr.labels = sortedLabels;
-  arr.datasets[0].data = sortedData;
-
-  console.log("Sorted Assets Data:", arr);
-  console.log("Sorted Labels:", sortedLabels);
-  console.log("Sorted Data:", sortedData);
-
-  const assetsData = {
-    labels: sortedLabels,
-    //   datasets: valueArray,
-    datasets: [
-      {
-        label: "Assets",
-        data: sortedData,
-        backgroundColor: backgroundColor,
-        // backgroundColor: "rgba(55, 170, 241, 0.2)",
-        // borderColor: "#0979f1",
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  return assetsData;
 };

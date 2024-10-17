@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Typography } from "@mui/material";
+import { Box, TableCell, Typography } from "@mui/material";
 
 export const StickyBox = styled(Box)(({ theme }) => ({
   position: "sticky", // Sticky positioning
@@ -53,6 +53,16 @@ export const ValueBox = styled(Box)(({ theme }) => ({
   textAlign: "center",
   // border: `1px solid ${theme.palette.divider}`,
 }));
+
+// Custom styles
+
+export const BoldCell = styled(TableCell)`
+  font-weight: bold !important;
+`;
+
+export const CurrencyCell = styled(TableCell)`
+  color: ${({ isNegative }) => (isNegative ? "red" : "green")} !important;
+`;
 
 // export const AmountText = styled(Typography)`
 //   //   color: theme.palette.success.main,

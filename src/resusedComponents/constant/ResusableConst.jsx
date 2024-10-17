@@ -87,3 +87,5 @@ export const USTimezone = () => {
   const formattedDateTime = currentDate.toLocaleString("en-US", options);
   return formattedDateTime;
 };
+
+export const isEmpty = (obj) => JSON.stringify(obj) === "{}";
