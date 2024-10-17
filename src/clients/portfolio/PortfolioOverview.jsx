@@ -9,6 +9,7 @@ import {
   ValueText,
   VerticalDivider,
 } from "./PortfolioStyled";
+import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
 
 export const PortfolioOverview = ({ portfolioPrice }) => {
   return (
@@ -41,7 +42,7 @@ export const PortfolioOverview = ({ portfolioPrice }) => {
                 ${portfolioPrice?.portfolio_current_value}
               </Typography>
               <Typography variant="caption" sx={{ color: "#999292" }}>
-                Priced as of 09/12/2018 10:39 AM ET
+                Priced as of {USTimezone()} ET
               </Typography>
             </ValueBox>
           </Grid2>
