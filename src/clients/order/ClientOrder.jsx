@@ -31,6 +31,7 @@ import BostonLoader from "../../resusedComponents/BostonLoader";
 
 const ClientOrder = () => {
   const [investmentList, setInvestmentList] = useState([]);
+  const [realEstateList, setRealEstateList] = useState([]);
   const [formData, setFormData] = useState(investmentForm);
   const [alertMsg, setAlertMsg] = useState({
     msg: "",
@@ -46,6 +47,7 @@ const ClientOrder = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [showLoader, setShowLoader] = useState(false);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
+  const { id } = useParams();
 
   useEffect(() => {
     getInvestmentList();
@@ -53,14 +55,25 @@ const ClientOrder = () => {
 
   const getInvestmentList = async () => {
     let payload = {
-      client_id: selectedClient?.uniqueId,
+      client_id: id,
     };
     setShowLoader(true);
     const resp = await getClientOrderList(payload, "application/json");
     console.log("respp", resp);
     if (resp.status === 200) {
       setShowLoader(false);
-      setInvestmentList(resp?.data?.transaction_data);
+
+      let filteredInvestmentList = resp?.data?.transaction_data?.filter(
+        (item) =>
+          (item?.assetClass).toLowerCase() !== "Real Estate".toLowerCase()
+      );
+
+      let filteredRealEstateList = resp?.data?.transaction_data?.filter(
+        (item) =>
+          (item?.assetClass).toLowerCase() === "Real Estate".toLowerCase()
+      );
+      setInvestmentList(filteredInvestmentList);
+      setRealEstateList(filteredRealEstateList);
     }
   };
 
@@ -88,7 +101,10 @@ const ClientOrder = () => {
         setSelectedOwnership={setSelectedOwnership}
         selectedOwnership={selectedOwnership}
       />
-      <ClientOrderList investmentList={investmentList} />
+      <ClientOrderList
+        investmentList={investmentList}
+        realEstateList={realEstateList}
+      />
     </div>
   );
 };

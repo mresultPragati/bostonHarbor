@@ -5,6 +5,7 @@ import AssetsDetails from "./AssetsDetails";
 import { getClientOrderList } from "../../api/apiServiece";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { getMidDarkColor } from "../../assetsLiabilityChart/Constant";
+import { useParams } from "react-router-dom";
 
 const chartData = {
   labels: ["Bons", "Stock", "Real Estate", "Commodities"],
@@ -35,9 +36,9 @@ const AssetsSummary = ({ formData, setFormData }) => {
   const [investmentList, setInvestmentList] = useState([]);
   const [orderChartData, setOrderChartData] = useState([]);
 
-  const selectedClient = JSON?.parse?.(
-    localStorage?.getItem?.("selectedClient")
-  );
+  const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
+  const { uniqueId } = useParams();
+  console.log("selectedClient", selectedClient);
 
   useEffect(() => {
     getInvestmentList();
@@ -46,7 +47,7 @@ const AssetsSummary = ({ formData, setFormData }) => {
 
   const getInvestmentList = async () => {
     let payload = {
-      client_id: selectedClient?.uniqueId,
+      client_id: uniqueId,
     };
     setShowLoader(true);
     const resp = await getClientOrderList(payload, "application/json");
@@ -91,7 +92,10 @@ const AssetsSummary = ({ formData, setFormData }) => {
   };
 
   const getTotalBalance = () => {
-    return investmentList?.reduce((total, item) => total + item.balance, 0);
+    return investmentList?.reduce(
+      (total, item) => total + item.transactionAmount,
+      0
+    );
   };
 
   return (

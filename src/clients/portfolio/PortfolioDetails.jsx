@@ -13,6 +13,7 @@ import { styled } from "@mui/system";
 import PortfolioOverview from "./PortfolioOverview";
 import { getPortfolioList } from "../../api/apiServiece";
 import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
+import { useParams } from "react-router-dom";
 
 // Custom styles
 const BoldCell = styled(TableCell)({
@@ -65,6 +66,7 @@ export const PortfolioDetails = () => {
   const [portfolioList, setPortfolioList] = useState([]);
   const [portfolioPrice, setPortfolioPrice] = useState([]);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
+  const { uniqueId } = useParams();
 
   useEffect(() => {
     portfolioAllDetails();
@@ -72,10 +74,10 @@ export const PortfolioDetails = () => {
 
   const portfolioAllDetails = async () => {
     let payload = {
-      client_id: selectedClient?.uniqueId,
+      client_id: uniqueId,
       curr_date: USTimezone(),
     };
-    console.log("RESPPP", selectedClient);
+    console.log("RESPPP", uniqueId);
     const resp = await getPortfolioList(payload);
 
     if (resp.status === 200) {
