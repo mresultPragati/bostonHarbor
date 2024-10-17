@@ -16,6 +16,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { BoldCell, CurrencyCell } from "./PortfolioStyled";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { calculateDaysFromNow, openInNewTab } from "./PortfolioConstant";
+import PortfolioHtml from "./PortfolioHtml";
 
 export const PortfolioDetails = () => {
   const [portfolioList, setPortfolioList] = useState([]);
@@ -68,7 +69,7 @@ export const PortfolioDetails = () => {
     if (resp.status === 200) {
       setShowLoader(false);
       setPortfolioHtmlResp(resp?.data?.suggestion);
-      openInNewTab(resp?.data?.suggestion);
+      // openInNewTab(resp?.data?.suggestion);
     }
   };
 
@@ -98,6 +99,7 @@ export const PortfolioDetails = () => {
               Portfolio Analysis
             </Button>
           </div>
+          <PortfolioHtml htmlContent={portfolioHtmlResp} />
           {/* <div
             className="mt-5"
             style={{ textAlign: "start" }}
