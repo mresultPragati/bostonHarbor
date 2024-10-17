@@ -70,7 +70,7 @@ export const PortfolioDetails = () => {
 
   useEffect(() => {
     portfolioAllDetails();
-  });
+  }, []);
 
   const portfolioAllDetails = async () => {
     let payload = {
