@@ -73,8 +73,10 @@ export const PortfolioDetails = () => {
   }, []);
 
   const portfolioAllDetails = async () => {
+    console.log("uniqueId", uniqueId);
+
     let payload = {
-      client_id: uniqueId,
+      client_id: uniqueId ? uniqueId : selectedClient?.uniqueId,
       curr_date: USTimezone(),
     };
     console.log("RESPPP", uniqueId);

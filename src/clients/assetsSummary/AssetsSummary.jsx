@@ -47,7 +47,7 @@ const AssetsSummary = ({ formData, setFormData }) => {
 
   const getInvestmentList = async () => {
     let payload = {
-      client_id: uniqueId,
+      client_id: uniqueId ? uniqueId : selectedClient?.uniqueId,
     };
     setShowLoader(true);
     const resp = await getClientOrderList(payload, "application/json");
