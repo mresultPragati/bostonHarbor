@@ -34,6 +34,7 @@ import {
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { OwnershipOrder } from "./orderOwnership/OwnershipOrder";
+import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
 
 const TransactionForm = (props) => {
   const {
@@ -144,20 +145,9 @@ const TransactionForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentDate = new Date();
-    // Format the date and time
-    const formattedDateTime = currentDate.toLocaleString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false, // 12-hour clock (true), 24-hour clock (false)
-    });
 
     const updatedFormData = {
-      date: formattedDateTime,
+      date: USTimezone(),
       transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
       name: selectedCompany?.label,
       symbol: selectedCompany?.ticker,
@@ -181,7 +171,7 @@ const TransactionForm = (props) => {
         order_data: {
           ownership: selectedOwnership?.label,
           assetClass: selectedAssetClass.label,
-          date: formattedDateTime,
+          date: USTimezone(),
           name: selectedCompany?.label,
           investmentAmount: Number(formData?.investmentAmount),
           dividendYield: formData?.dividendYield,

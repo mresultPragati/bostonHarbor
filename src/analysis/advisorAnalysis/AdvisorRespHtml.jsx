@@ -18,7 +18,7 @@ const applyStrongStyles = (htmlString) => {
 
   // Apply styles to <strong> elements
   const strongTags = doc.querySelectorAll("strong");
-  strongTags.forEach((strong) => {
+  strongTags?.forEach((strong) => {
     strong.style.fontWeight = financialInfoStyleMapping.strong.fontWeight;
     strong.style.color = financialInfoStyleMapping.strong.color;
     strong.style.fontSize = financialInfoStyleMapping.strong.fontSize;
@@ -51,7 +51,7 @@ const AdvisorAnalysisHtml = ({ htmlString }) => {
 
     console.log("headerText initail", columnHeaders);
     // Replace "---" at the 1st and 2nd indices with "Category" and "Value"
-    columnHeaders.forEach((headerText, index) => {
+    columnHeaders?.forEach((headerText, index) => {
       if (headerText === "---") {
         if (index === 0) {
           columnHeaders[index] = "Category"; // Replace first "---" with "Category"

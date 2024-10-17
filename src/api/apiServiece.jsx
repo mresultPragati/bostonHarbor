@@ -45,3 +45,7 @@ export const getClientOrderList = (payload, contentType) => {
 export const getDividendYield = (payload, contentType) => {
   return apiClient(contentType).post(`${baseURL}/dividend_yield`, payload);
 };
+
+export const getPortfolioList = (payload, contentType = "application/json") => {
+  return apiClient(contentType).post(`${baseURL}/portfolio`, payload);
+};

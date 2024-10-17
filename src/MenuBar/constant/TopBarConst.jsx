@@ -82,7 +82,7 @@ export const returnCssTopbar = (item, locationPath) => {
   // Check if the item has a submenu
   if (item?.subMenu && item?.subMenu.length > 0) {
     // Iterate through the submenu items
-    item.subMenu.forEach((item) => {
+    item.subMenu?.forEach((item) => {
       // If any submenu item path matches the location path
       if (item.menuPath === locationPath) {
         boxShadow = "0 5px 0 -1px #1d7ad7db";

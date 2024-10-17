@@ -91,7 +91,7 @@ const InvestmentAllocation = () => {
                     <TableCell align="center">{row.units}</TableCell>
                     <TableCell align="center">${row.pricePerUnit} </TableCell>
                     <TableCell align="center">
-                      ${row.transactionAmount}
+                      ${row.transactionAmount.toFixed(2)}
                     </TableCell>
                     <TableCell align="center">{row.date}</TableCell>
                     {/* <TableCell align="center">

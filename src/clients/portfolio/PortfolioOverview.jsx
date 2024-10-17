@@ -10,7 +10,7 @@ import {
   VerticalDivider,
 } from "./PortfolioStyled";
 
-export const PortfolioOverview = () => {
+export const PortfolioOverview = ({ portfolioPrice }) => {
   return (
     <>
       {/* <div style={{ display: "flex", alignItems: "center" }}> */}
@@ -37,7 +37,9 @@ export const PortfolioOverview = () => {
           <Grid2 item size={{ xs: 12, md: 4 }}>
             <ValueBox>
               <OverviewTitle variant="subtitle1">CURRENT VALUE</OverviewTitle>
-              <Typography variant="h5">$53,074.01</Typography>
+              <Typography variant="h5">
+                ${portfolioPrice?.portfolio_current_value}
+              </Typography>
               <Typography variant="caption" sx={{ color: "#999292" }}>
                 Priced as of 09/12/2018 10:39 AM ET
               </Typography>
@@ -48,8 +50,12 @@ export const PortfolioOverview = () => {
           <Grid2 item size={{ xs: 12, md: 4 }}>
             <ValueBox>
               <OverviewTitle variant="subtitle1">DAILY CHANGE</OverviewTitle>
-              <ValueText variant="h4">$(386.47)</ValueText>
-              <ValueText variant="h6">(0.73 %)</ValueText>
+              <ValueText variant="h4">
+                $({portfolioPrice?.porfolio_daily_change})
+              </ValueText>
+              <ValueText variant="h6">
+                ({portfolioPrice?.portfolio_daily_change_perc})%
+              </ValueText>
             </ValueBox>
           </Grid2>
           <VerticalDivider />
@@ -60,10 +66,10 @@ export const PortfolioOverview = () => {
                 INVESTMENT GAIN/LOSS
               </OverviewTitle>
               <AmountText isPositive={true} isHighlighted variant="h4">
-                $9,695.23
+                ${portfolioPrice?.portfolio_investment_gain_loss}
               </AmountText>
               <AmountText isPositive={true} isHighlighted variant="h6">
-                55.82 %
+                {portfolioPrice?.portfolio_investment_gain_loss_perc} %
               </AmountText>
             </ValueBox>
           </Grid2>

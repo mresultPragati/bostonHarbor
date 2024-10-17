@@ -8,6 +8,7 @@ import {
   subTopItem,
 } from "./constant/TopBarConst";
 import { useLocation, useNavigate } from "react-router-dom";
+import { scrollToTop } from "../resusedComponents/constant/ResusableConst";
 
 const SubTopBar = () => {
   const location = useLocation(); // Get the current location
@@ -39,6 +40,7 @@ const SubTopBar = () => {
                   //   }}
                   sx={returnSubTopbarCss(item, location)}
                   onClick={(e) => {
+                    scrollToTop();
                     if (e?.ctrlKey || e?.metaKey)
                       window.open(
                         `${item.path}/${clients?.uniqueId}`,

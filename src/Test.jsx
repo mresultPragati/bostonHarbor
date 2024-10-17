@@ -88,119 +88,207 @@
 // export default PieChart3D;
 
 // ---------------------------------------Pre code -> pie chart--------------------
-import React, { useEffect } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts3D from "highcharts/highcharts-3d";
+// import React, { useEffect } from "react";
+// import Highcharts from "highcharts";
+// import HighchartsReact from "highcharts-react-official";
+// import Highcharts3D from "highcharts/highcharts-3d";
 
-Highcharts3D(Highcharts);
+// Highcharts3D(Highcharts);
 
-const PieChart3D = () => {
-  const options = {
-    chart: {
-      type: "pie",
-      backgroundColor: "#fff",
-      options3d: {
-        enabled: true,
-        alpha: 45,
-        beta: 0,
-      },
-    },
-    title: {
-      text: "3D Pie Chart Example",
-    },
-    plotOptions: {
-      pie: {
-        // innerSize: 100,
-        depth: 45, // to increase the hight of pie vertically
-        dataLabels: {
-          enabled: true,
-          formatter: function () {
-            const total = this.series.data.reduce(
-              (sum, point) => sum + point.y,
-              0
-            );
-            const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
-            return `${this.point.name}: ${percentage}`; // Return formatted label
-          },
-          formatter: function () {
-            const total = this.series.data.reduce(
-              (sum, point) => sum + point.y,
-              0
-            );
-            const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
-            return `${this.point.name}: ${percentage}`; // Return formatted label
-          },
-        },
-        states: {
-          hover: {
-            brightness: 0.1, // Increase brightness on hover
-          },
-        },
-        allowPointSelect: true, // Allow the pie to be selected
-        cursor: "pointer",
-        showInLegend: true,
-      },
-      states: {
-        hover: {
-          brightness: 0.3, // Disable hover brightness globally for all slices
-        },
-        select: {
-          brightness: 1, // Increase brightness only on the selected slice
-        },
-      },
-    },
-    series: [
-      {
-        name: "Share",
-        data: [
-          {
-            name: "Category A",
-            y: 4563,
-            // sliced: true, // This slice is highlighted
-            // selected: true,
-            // color: "#c91515", // Highlighted color for Category A
-          },
-          {
-            name: "Category B",
-            y: 2600,
-          },
-          {
-            name: "Category C",
-            y: 1296,
-          },
-          {
-            name: "Category D",
-            y: 1702,
-          },
-        ],
-      },
-    ],
-    tooltip: {
-      formatter: function () {
-        // Use Highcharts.numberFormat to remove the thousands separator in the tooltip
-        const valueWithoutSeparator = Highcharts.numberFormat(
-          this.y,
-          0,
-          ".",
-          ""
-        );
-        return `${this.point.name}: ${valueWithoutSeparator}`;
-      },
-    },
+// const PieChart3D = () => {
+//   const options = {
+//     chart: {
+//       type: "pie",
+//       backgroundColor: "#fff",
+//       options3d: {
+//         enabled: true,
+//         alpha: 45,
+//         beta: 0,
+//       },
+//     },
+//     title: {
+//       text: "3D Pie Chart Example",
+//     },
+//     plotOptions: {
+//       pie: {
+//         // innerSize: 100,
+//         depth: 45, // to increase the hight of pie vertically
+//         dataLabels: {
+//           enabled: true,
+//           formatter: function () {
+//             const total = this.series.data.reduce(
+//               (sum, point) => sum + point.y,
+//               0
+//             );
+//             const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
+//             return `${this.point.name}: ${percentage}`; // Return formatted label
+//           },
+//           formatter: function () {
+//             const total = this.series.data.reduce(
+//               (sum, point) => sum + point.y,
+//               0
+//             );
+//             const percentage = ((this.y / total) * 100).toFixed(2) + "%"; // Calculate percentage
+//             return `${this.point.name}: ${percentage}`; // Return formatted label
+//           },
+//         },
+//         states: {
+//           hover: {
+//             brightness: 0.1, // Increase brightness on hover
+//           },
+//         },
+//         allowPointSelect: true, // Allow the pie to be selected
+//         cursor: "pointer",
+//         showInLegend: true,
+//       },
+//       states: {
+//         hover: {
+//           brightness: 0.3, // Disable hover brightness globally for all slices
+//         },
+//         select: {
+//           brightness: 1, // Increase brightness only on the selected slice
+//         },
+//       },
+//     },
+//     series: [
+//       {
+//         name: "Share",
+//         data: [
+//           {
+//             name: "Category A",
+//             y: 4563,
+//             // sliced: true, // This slice is highlighted
+//             // selected: true,
+//             // color: "#c91515", // Highlighted color for Category A
+//           },
+//           {
+//             name: "Category B",
+//             y: 2600,
+//           },
+//           {
+//             name: "Category C",
+//             y: 1296,
+//           },
+//           {
+//             name: "Category D",
+//             y: 1702,
+//           },
+//         ],
+//       },
+//     ],
+//     tooltip: {
+//       formatter: function () {
+//         // Use Highcharts.numberFormat to remove the thousands separator in the tooltip
+//         const valueWithoutSeparator = Highcharts.numberFormat(
+//           this.y,
+//           0,
+//           ".",
+//           ""
+//         );
+//         return `${this.point.name}: ${valueWithoutSeparator}`;
+//       },
+//     },
+//   };
+//   return (
+//     <div>
+//       <HighchartsReact
+//         style={{ width: "600px", height: "auto" }}
+//         highcharts={Highcharts}
+//         options={options}
+//       />
+//     </div>
+//   );
+// };
+
+// export default PieChart3D;
+
+// ------------------------------------TAb----------------------------
+
+import React, { useState } from "react";
+import { AppBar, Tabs, Tab, Box, Typography } from "@mui/material";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
+}
+
+const StyledTabs = () => {
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div>
-      <HighchartsReact
-        style={{ width: "600px", height: "auto" }}
-        highcharts={Highcharts}
-        options={options}
-      />
+      <AppBar position="static" color="transparent" elevation={0}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="styled tabs example"
+          sx={{
+            "& .MuiTab-root": {
+              minWidth: 100,
+              textTransform: "none",
+              color: "#757575", // Gray color for default tabs
+              backgroundColor: "#f5f5f5", // Gray background for tabs
+              borderRadius: "5px 5px 0 0", // Rounded top corners
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#e0e0e0", // Darker gray on hover
+              },
+            },
+            "& .Mui-selected": {
+              color: "#007bff", // Blue color for selected tab text
+              backgroundColor: "#ffffff", // White background for selected tab
+              borderBottom: "3px solid #007bff", // Blue underline for selected tab
+            },
+            "& .MuiTabs-indicator": {
+              backgroundColor: "transparent", // Hide the default indicator
+            },
+          }}
+        >
+          <Tab label="Overview" {...a11yProps(0)} />
+          <Tab label="Details" {...a11yProps(1)} />
+          <Tab label="Devices" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        Content for Overview
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Content for Details
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Content for Devices
+      </TabPanel>
     </div>
   );
 };
 
-export default PieChart3D;
+export default StyledTabs;
 
 // ------------------------------price (change/ms)------------------------------/
 

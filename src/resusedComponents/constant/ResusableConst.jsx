@@ -63,3 +63,27 @@ export const Textarea = styled(TextareaAutosize)(
     }
   `
 );
+
+export const a11yProps = (index) => {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+};
+
+export const USTimezone = () => {
+  const currentDate = new Date();
+  //US Format the date and time
+  const options = {
+    timeZone: "America/New_York", // Set timezone to US Eastern Time
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false, // Use 24-hour format
+  };
+  const formattedDateTime = currentDate.toLocaleString("en-US", options);
+  return formattedDateTime;
+};

@@ -24,6 +24,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Collapse, Drawer, List, ListItem, ListItemText } from "@mui/material";
 import SubTopBar from "./SubTopBar";
 import { BostonTopBar } from "./TopBarStyled";
+import { scrollToTop } from "../resusedComponents/constant/ResusableConst";
 
 const settings = ["Profile", "Logout"];
 
@@ -137,6 +138,7 @@ const TopBar = () => {
                     fontSize: "12px",
                   }}
                   onClick={(e) => {
+                    scrollToTop();
                     if (page.subMenu?.length > 0) subMenuHandleOpne(e);
                     else handlePageMenu(page.path, e);
                   }}

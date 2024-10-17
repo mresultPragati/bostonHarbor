@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Box, Paper, Divider } from "@mui/material";
 import { AssetsLiabilityChart } from "../../assetsLiabilityChart/AssetsLiabilityCharts";
 import AssetsDetails from "./AssetsDetails";
+import { getClientOrderList } from "../../api/apiServiece";
+import BostonLoader from "../../resusedComponents/BostonLoader";
+import { getMidDarkColor } from "../../assetsLiabilityChart/Constant";
 
 const chartData = {
   labels: ["Bons", "Stock", "Real Estate", "Commodities"],
@@ -28,16 +31,72 @@ const data = [
 ];
 
 const AssetsSummary = ({ formData, setFormData }) => {
-  const [availableBalance, setAvailableBalance] = useState(800);
-  const clients = JSON.parse(localStorage.getItem("clients"));
-  // console.log("id, name", clients);
+  const [showLoader, setShowLoader] = useState(false);
+  const [investmentList, setInvestmentList] = useState([]);
+  const [orderChartData, setOrderChartData] = useState([]);
+
+  const selectedClient = JSON?.parse?.(
+    localStorage?.getItem?.("selectedClient")
+  );
+
+  useEffect(() => {
+    getInvestmentList();
+    getChartData();
+  }, []);
+
+  const getInvestmentList = async () => {
+    let payload = {
+      client_id: selectedClient?.uniqueId,
+    };
+    setShowLoader(true);
+    const resp = await getClientOrderList(payload, "application/json");
+    console.log("respp", resp);
+    if (resp.status === 200) {
+      setShowLoader(false);
+      setInvestmentList(resp?.data?.transaction_data);
+    }
+  };
+
+  const getChartData = () => {
+    const assetLabels = [];
+    const transactionAmountsData = [];
+
+    // Loop through each transaction to extract asset name and transaction amount
+    investmentList?.forEach((item) => {
+      const { assetNames, transactionAmount } = item;
+
+      // Push the values into respective arrays
+      assetLabels.push(assetNames);
+      transactionAmountsData.push(transactionAmount);
+    });
+
+    var backgroundColor = [];
+
+    for (let i = 0; i <= investmentList?.data?.length; i++) {
+      backgroundColor?.push(getMidDarkColor());
+    }
+
+    const chartData = {
+      labels: assetLabels,
+      datasets: [
+        {
+          label: "Assets",
+          data: transactionAmountsData,
+          backgroundColor: backgroundColor,
+          borderWidth: 1,
+        },
+      ],
+    };
+    setOrderChartData(chartData);
+  };
 
   const getTotalBalance = () => {
-    return data.reduce((total, item) => total + item.balance, 0);
+    return investmentList?.reduce((total, item) => total + item.balance, 0);
   };
 
   return (
     <>
+      {showLoader && <BostonLoader />}
       <Paper
         elevation={3}
         sx={{
@@ -49,18 +108,6 @@ const AssetsSummary = ({ formData, setFormData }) => {
           backgroundColor: "#f7f9fc",
         }}
       >
-        {/* <Box
-          sx={{
-            padding: "1rem",
-            backgroundColor: "#fff",
-            borderRadius: "8px",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            justifyContent: "space-between", // Align children to edges
-            alignItems: "center", // Center align items vertically
-            flexDirection: "row", // Keep items in a row
-          }}
-        > */}
         <Box
           sx={{
             display: "flex",
@@ -76,33 +123,22 @@ const AssetsSummary = ({ formData, setFormData }) => {
             Funds Available:
           </Typography>
           <Typography variant="body1" sx={{ color: "#333" }}>
-            $
-            {clients?.investmentAmount
-              ? Number(clients?.investmentAmount) - Number(getTotalBalance())
+            {selectedClient?.investmentAmount
+              ? `$${
+                  Number(selectedClient?.investmentAmount) -
+                  Number(getTotalBalance())
+                }`
               : "Please invest funds"}
           </Typography>
-          {/* </Box> */}
-
-          {/* <Divider orientation="vertical" flexItem sx={{ margin: "0 1rem" }} />
-
-          <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
-              Available Cash:
-            </Typography>
-            <Typography variant="body1" sx={{ color: "#333" }}>
-              ${availableBalance.toLocaleString()}
-            </Typography>
-          </Box> */}
         </Box>
       </Paper>
-      <AssetsDetails
-        getTotalBalance={getTotalBalance}
-        chartData={chartData}
-        data={data}
-      />
+      {investmentList?.length > 0 && (
+        <AssetsDetails
+          getTotalBalance={getTotalBalance}
+          chartData={orderChartData}
+          data={investmentList}
+        />
+      )}
       <AssetsLiabilityChart />
     </>
   );

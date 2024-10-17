@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Table,
@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import PortfolioOverview from "./PortfolioOverview";
+import { getPortfolioList } from "../../api/apiServiece";
+import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
 
 // Custom styles
 const BoldCell = styled(TableCell)({
@@ -60,11 +62,29 @@ const data = [
   // Add more rows as needed
 ];
 export const PortfolioDetails = () => {
-  const [portfolioList, setPortfolioList] = useState(data);
+  const [portfolioList, setPortfolioList] = useState([]);
+  const [portfolioPrice, setPortfolioPrice] = useState([]);
+  const selectedClient = JSON?.parse?.(
+    localStorage?.getItem?.("selectedClient")
+  );
+
+  useEffect(() => {
+    let payload = {
+      client_id: selectedClient?.uniqueId,
+      curr_date: USTimezone(),
+    };
+    const resp = getPortfolioList(payload);
+    console.log("RESPPP", resp);
+
+    if (resp.status === 200) {
+      setPortfolioList(resp?.data?.portfolio_data);
+      setPortfolioPrice(resp?.data);
+    }
+  });
 
   return (
     <>
-      <PortfolioOverview />
+      <PortfolioOverview portfolioPrice={portfolioPrice} />
 
       <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
         Portfolio Details
@@ -89,34 +109,45 @@ export const PortfolioDetails = () => {
               <BoldCell>Amount Invested </BoldCell>
               <BoldCell>Investment Gain or (Loss) %</BoldCell>
               <BoldCell>Investment Gain or (Loss) $</BoldCell>
+              <BoldCell>Estimated Annual Income</BoldCell>
+              <BoldCell>Estimated Yield</BoldCell>
               {/* <BoldCell>Estimated Annual Income</BoldCell> */}
               <BoldCell>Time Held</BoldCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {portfolioList.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{row.assetClass}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.symbol}</TableCell>
-                <TableCell>{row.quantity}</TableCell>
-                <TableCell>{row.delayedPrice}</TableCell>
-                <TableCell>{row.currentValue}</TableCell>
-                <CurrencyCell isNegative={row.dailyPriceChange.startsWith("-")}>
-                  {row.dailyPriceChange}
-                </CurrencyCell>
-                <CurrencyCell isNegative={row.dailyValueChange.startsWith("-")}>
-                  {row.dailyValueChange}
-                </CurrencyCell>
-                <TableCell>{row.amountInvested}</TableCell>
-                <TableCell>{row.amountInvestedTotal}</TableCell>
-                <TableCell>{row.gainOrLossPercent}</TableCell>
-                <TableCell>{row.gainOrLossValue}</TableCell>
-                {/* <TableCell>{row.estimatedIncome}</TableCell> */}
-                <TableCell>{row.timeHeld}</TableCell>
-              </TableRow>
-            ))}
+            {portfolioList?.length > 0 &&
+              portfolioList?.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{row.assetClass}</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.symbol}</TableCell>
+                  <TableCell>{row.Quantity}</TableCell>
+                  <TableCell>{row.Delayed_Price}</TableCell>
+                  <TableCell>{row.current_value}</TableCell>
+                  <CurrencyCell
+                    isNegative={row.dailyPriceChange.startsWith("-")}
+                  >
+                    {row.Daily_Price_Change}
+                  </CurrencyCell>
+                  <CurrencyCell
+                    isNegative={row.dailyValueChange.startsWith("-")}
+                  >
+                    {row.Daily_Value_Change}
+                  </CurrencyCell>
+                  <TableCell>{row.Amount_Invested_per_Unit}</TableCell>
+                  <TableCell>{row.Amount_Invested}</TableCell>
+                  <TableCell>
+                    {row.Investment_Gain_or_Loss_percentage}
+                  </TableCell>
+                  <TableCell>{row.Investment_Gain_or_Loss}</TableCell>
+                  <TableCell>{row.Estimated_Annual_Income}</TableCell>
+                  <TableCell>{row.Estimated_Yield}</TableCell>
+                  {/* <TableCell>{row.estimatedIncome}</TableCell> */}
+                  <TableCell>{row.Time_Held}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

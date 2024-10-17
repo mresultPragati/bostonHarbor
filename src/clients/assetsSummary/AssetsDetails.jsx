@@ -12,6 +12,7 @@ import {
   Grid2,
 } from "@mui/material";
 import BostonPieChart3D from "../../resusedComponents/Boston3DChart";
+import { getClientOrderList } from "../../api/apiServiece";
 
 const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
   return (
@@ -39,11 +40,13 @@ const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {data.map((row, index) => (
+                    {data?.map((row, index) => (
                       <TableRow key={row.id}>
                         <TableCell>{index + 1}</TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell>{`$${row.balance}`}</TableCell>
+                        <TableCell>{row.assetClass}</TableCell>
+                        <TableCell>{`$${row.transactionAmount.toFixed(
+                          2
+                        )}`}</TableCell>
                       </TableRow>
                     ))}
                     {/* Total row */}
