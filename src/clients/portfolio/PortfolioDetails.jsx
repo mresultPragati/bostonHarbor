@@ -15,12 +15,12 @@ import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
 import { useLocation, useParams } from "react-router-dom";
 import { BoldCell, CurrencyCell } from "./PortfolioStyled";
 import BostonLoader from "../../resusedComponents/BostonLoader";
-import { calculateDaysFromNow } from "./PortfolioConstant";
+import { calculateDaysFromNow, openInNewTab } from "./PortfolioConstant";
 
 export const PortfolioDetails = () => {
   const [portfolioList, setPortfolioList] = useState([]);
   const [portfolioPrice, setPortfolioPrice] = useState([]);
-  const [portfolioHtmlResp, setPortfolioHtlResp] = useState("");
+  const [portfolioHtmlResp, setPortfolioHtmlResp] = useState("");
   const [showLoader, setShowLoader] = useState(false);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
   const { uniqueId } = useParams();
@@ -49,7 +49,8 @@ export const PortfolioDetails = () => {
     }
   };
 
-  const generatePortfolioSuggestion = () => {
+  const generatePortfolioSuggestion = async () => {
+    setShowLoader(true);
     let payload = {
       client_id: selectedClient?.uniqueId,
       client_name: selectedClient?.clientDetail?.clientName,
@@ -62,10 +63,12 @@ export const PortfolioDetails = () => {
       portfolio_investment_gain_loss_perc:
         portfolioPrice?.portfolio_investment_gain_loss_perc,
     };
-    const resp = genPortfolioAnalysis(payload);
+    const resp = await genPortfolioAnalysis(payload);
     console.log("RESPPP", resp);
     if (resp.status === 200) {
-      setPortfolioHtlResp(resp?.data?.suggestion);
+      setShowLoader(false);
+      setPortfolioHtmlResp(resp?.data?.suggestion);
+      openInNewTab(resp?.data?.suggestion);
     }
   };
 
@@ -95,13 +98,13 @@ export const PortfolioDetails = () => {
               Portfolio Analysis
             </Button>
           </div>
-          <div
+          {/* <div
             className="mt-5"
             style={{ textAlign: "start" }}
             dangerouslySetInnerHTML={{
               __html: portfolioHtmlResp,
             }}
-          />
+          /> */}
           <TableContainer>
             <Table aria-labelledby="tableTitle">
               <TableHead>

@@ -18,3 +18,22 @@ export const calculateDaysFromNow = (dateString) => {
 
   return diffInDays;
 };
+
+export const openInNewTab = (htmlContent) => {
+  // Create a new window (tab)
+  const newTab = window.open();
+
+  // Write the HTML content to the new tab
+  newTab.document.open();
+  newTab.document.write(`
+      <html>
+        <head>
+          <title>Portfolio Details</title>
+        </head>
+        <body>
+          ${htmlContent}
+        </body>
+      </html>
+    `);
+  newTab.document.close(); // Close the document to finish loading
+};
