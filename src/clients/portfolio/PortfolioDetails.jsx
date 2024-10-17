@@ -131,12 +131,12 @@ export const PortfolioDetails = () => {
                   <TableCell>{row.Delayed_Price}</TableCell>
                   <TableCell>{row.current_value}</TableCell>
                   <CurrencyCell
-                    isNegative={row.dailyPriceChange.startsWith("-")}
+                    isNegative={row.dailyPriceChange?.startsWith("-")}
                   >
                     {row.Daily_Price_Change}
                   </CurrencyCell>
                   <CurrencyCell
-                    isNegative={row.dailyValueChange.startsWith("-")}
+                    isNegative={row.dailyValueChange?.startsWith("-")}
                   >
                     {row.Daily_Value_Change}
                   </CurrencyCell>
