@@ -95,6 +95,13 @@ export const PortfolioDetails = () => {
               Portfolio Analysis
             </Button>
           </div>
+          <div
+            className="mt-5"
+            style={{ textAlign: "start" }}
+            dangerouslySetInnerHTML={{
+              __html: portfolioHtmlResp,
+            }}
+          />
           <TableContainer>
             <Table aria-labelledby="tableTitle">
               <TableHead>
