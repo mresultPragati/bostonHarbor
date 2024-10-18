@@ -49,7 +49,7 @@ export const BostonPieChart = ({ data, width, height, options }) => {
         color: "white", // Color of the labels
         formatter: (value, context) => {
           const total = context.chart._metasets?.[0]?.total;
-          const percentage = ((value / total) * 100).toFixed(2) + "%";
+          const percentage = ((value / total) * 100)?.toFixed(2) + "%";
           return percentage;
         },
       },
@@ -59,7 +59,7 @@ export const BostonPieChart = ({ data, width, height, options }) => {
           (acc, curr) => acc + curr
         );
         const value = tooltipItem.raw;
-        const percentage = ((value / total) * 100).toFixed(2);
+        const percentage = ((value / total) * 100)?.toFixed(2);
         return `${tooltipItem.label}: ${percentage}%`;
       },
     },

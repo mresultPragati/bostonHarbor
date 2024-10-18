@@ -46,7 +46,7 @@ const BostonPieChart3D = ({ chartData }) => {
               (sum, point) => sum + point.y,
               0
             );
-            const percentage = ((this.y / total) * 100).toFixed(2) + "%";
+            const percentage = ((this.y / total) * 100)?.toFixed(2) + "%";
             return `${this.point.name}: ${percentage}`;
           },
         },

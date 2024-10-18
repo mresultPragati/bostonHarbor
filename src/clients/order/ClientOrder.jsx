@@ -28,6 +28,7 @@ import {
   markets,
 } from "../../analysis/stockAnalysis/constants";
 import BostonLoader from "../../resusedComponents/BostonLoader";
+import { updateKeyOfArray } from "../assetsSummary/Constants";
 
 const ClientOrder = () => {
   const [investmentList, setInvestmentList] = useState([]);
@@ -63,14 +64,16 @@ const ClientOrder = () => {
     if (resp.status === 200) {
       setShowLoader(false);
 
-      let filteredInvestmentList = resp?.data?.transaction_data?.filter(
+      let updatedArr = updateKeyOfArray(resp?.data?.transaction_data);
+
+      let filteredInvestmentList = updatedArr?.filter(
         (item) =>
-          (item?.assetClass).toLowerCase() !== "Real Estate".toLowerCase()
+          item?.assetClass?.toLowerCase() !== "Real Estate"?.toLowerCase()
       );
 
-      let filteredRealEstateList = resp?.data?.transaction_data?.filter(
+      let filteredRealEstateList = updatedArr?.filter(
         (item) =>
-          (item?.assetClass).toLowerCase() === "Real Estate".toLowerCase()
+          item?.assetClass?.toLowerCase() === "Real Estate"?.toLowerCase()
       );
       setInvestmentList(filteredInvestmentList);
       setRealEstateList(filteredRealEstateList);

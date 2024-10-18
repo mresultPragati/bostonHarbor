@@ -9,6 +9,8 @@ import {
   Paper,
 } from "@mui/material";
 import { BostonTableHead } from "../OrderStyled";
+import { BoldCell } from "../../portfolio/PortfolioStyled";
+import { calculateTotals } from "../../../resusedComponents/constant/ResusableConst";
 
 export const FinancialInstrument = ({ investmentList }) => {
   return (
@@ -19,6 +21,9 @@ export const FinancialInstrument = ({ investmentList }) => {
             <Table sx={{ minWidth: 650 }} aria-label="transaction table">
               <TableHead>
                 <TableRow>
+                  <BostonTableHead sx={{ fontWeight: "bold" }}>
+                    Sr. No.
+                  </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }}>
                     Asset Class
                   </BostonTableHead>
@@ -48,17 +53,33 @@ export const FinancialInstrument = ({ investmentList }) => {
               <TableBody>
                 {investmentList?.map((row, index) => (
                   <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.assetClass}</TableCell>
-                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.Name}</TableCell>
                     <TableCell align="center">{row.Action}</TableCell>
                     <TableCell align="center">{row.Units}</TableCell>
-                    <TableCell align="center">${row.UnitPrice} </TableCell>
                     <TableCell align="center">
-                      ${row.transactionAmount.toFixed(2)}
+                      ${row.UnitPrice?.toFixed(2)}{" "}
+                    </TableCell>
+                    <TableCell align="center">
+                      ${row.clientAmount?.toFixed(2)}
                     </TableCell>
                     <TableCell align="center">{row.date}</TableCell>
                   </TableRow>
                 ))}
+                <TableRow>
+                  <BoldCell colSpan={4}>Total</BoldCell>
+
+                  <BoldCell align="center">
+                    {calculateTotals("Units", investmentList)}
+                  </BoldCell>
+                  <BoldCell align="center">
+                    {calculateTotals("UnitPrice", investmentList)}
+                  </BoldCell>
+                  <BoldCell align="center">
+                    {calculateTotals("clientAmount", investmentList)}
+                  </BoldCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid2, Typography, Divider } from "@mui/material";
 // import { styled } from "@mui/system";
 import PortfolioDetails from "./PortfolioDetails";
@@ -9,9 +9,14 @@ import {
   ValueText,
   VerticalDivider,
 } from "./PortfolioStyled";
-import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
+import {
+  calculateTotals,
+  USTimezone,
+} from "../../resusedComponents/constant/ResusableConst";
 
-export const PortfolioOverview = ({ portfolioPrice }) => {
+export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
+  const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
+
   return (
     <>
       {/* <div style={{ display: "flex", alignItems: "center" }}> */}
@@ -36,11 +41,27 @@ export const PortfolioOverview = ({ portfolioPrice }) => {
         {Object.keys(portfolioPrice).length > 0 ? (
           <Grid2 container spacing={2}>
             {/* Current Value */}
-            <Grid2 item size={{ xs: 12, md: 4 }}>
+            <Grid2 item size={{ xs: 12, md: 3 }}>
+              <ValueBox>
+                <OverviewTitle variant="subtitle1">
+                  Available Funds
+                </OverviewTitle>
+                <Typography variant="h5">
+                  $
+                  {(
+                    Number(selectedClient?.investmentAmount) -
+                    Number(calculateTotals("Amount_Invested", portfolioList))
+                  )?.toFixed(2)}
+                </Typography>
+              </ValueBox>
+            </Grid2>
+            <VerticalDivider />
+
+            <Grid2 item size={{ xs: 12, md: 3 }}>
               <ValueBox>
                 <OverviewTitle variant="subtitle1">CURRENT VALUE</OverviewTitle>
                 <Typography variant="h5">
-                  ${portfolioPrice?.portfolio_current_value.toFixed(2)}
+                  ${portfolioPrice?.portfolio_current_value?.toFixed(2)}
                 </Typography>
                 <Typography variant="caption" sx={{ color: "#999292" }}>
                   Priced as of {USTimezone()} ET
@@ -49,14 +70,14 @@ export const PortfolioOverview = ({ portfolioPrice }) => {
             </Grid2>
             <VerticalDivider />
             {/* Daily Change */}
-            <Grid2 item size={{ xs: 12, md: 4 }}>
+            <Grid2 item size={{ xs: 12, md: 3 }}>
               <ValueBox>
                 <OverviewTitle variant="subtitle1">DAILY CHANGE</OverviewTitle>
                 <ValueText variant="h4">
-                  ${portfolioPrice?.porfolio_daily_change.toFixed(2)}
+                  ${portfolioPrice?.porfolio_daily_change?.toFixed(2)}
                 </ValueText>
                 <ValueText variant="h6">
-                  {portfolioPrice?.portfolio_daily_change_perc.toFixed(2)}%
+                  {portfolioPrice?.portfolio_daily_change_perc?.toFixed(2)}%
                 </ValueText>
               </ValueBox>
             </Grid2>

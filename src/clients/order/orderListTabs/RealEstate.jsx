@@ -9,6 +9,8 @@ import {
   Paper,
 } from "@mui/material";
 import { BostonTableHead } from "../OrderStyled";
+import { calculateTotals } from "../../../resusedComponents/constant/ResusableConst";
+import { BoldCell } from "../../portfolio/PortfolioStyled";
 
 export const RealEstate = ({ realEstateList }) => {
   return (
@@ -19,6 +21,9 @@ export const RealEstate = ({ realEstateList }) => {
             <Table sx={{ minWidth: 650 }} aria-label="transaction table">
               <TableHead>
                 <TableRow>
+                  <BostonTableHead sx={{ fontWeight: "bold" }}>
+                    Sr. No.
+                  </BostonTableHead>
                   <BostonTableHead sx={{ fontWeight: "bold" }}>
                     Asset Class
                   </BostonTableHead>
@@ -48,16 +53,27 @@ export const RealEstate = ({ realEstateList }) => {
               <TableBody>
                 {realEstateList?.map((row, index) => (
                   <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.assetClass}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell align="center">{row.ownership}</TableCell>
                     <TableCell align="center">{row.DividendYield}</TableCell>
                     <TableCell align="center">
-                      ${row.InvestmentAmount?.toFixed(2)}
+                      ${row.clientAmount?.toFixed(2)}
                     </TableCell>
                     <TableCell align="center">{row.date}</TableCell>
                   </TableRow>
                 ))}
+                <TableRow>
+                  <BoldCell colSpan={4}>Total</BoldCell>
+
+                  <BoldCell align="center">
+                    {calculateTotals("DividendYield", realEstateList)}
+                  </BoldCell>
+                  <BoldCell align="center">
+                    {calculateTotals("clientAmount", realEstateList)}
+                  </BoldCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

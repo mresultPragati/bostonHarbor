@@ -130,7 +130,7 @@ export const AssetsLiabilityChart = () => {
               (acc, curr) => acc + curr
             );
             const value = tooltipItem.raw;
-            const percentage = ((value / total) * 100).toFixed(2);
+            const percentage = ((value / total) * 100)?.toFixed(2);
             return `${tooltipItem.label}: ${percentage}%`;
           },
         },

@@ -6,6 +6,7 @@ import { getClientOrderList } from "../../api/apiServiece";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { getMidDarkColor } from "../../assetsLiabilityChart/Constant";
 import { useParams } from "react-router-dom";
+import { groupByAssetClass, updateKeyOfArray } from "./Constants";
 
 const chartData = {
   labels: ["Bons", "Stock", "Real Estate", "Commodities"],
@@ -45,6 +46,10 @@ const AssetsSummary = ({ formData, setFormData }) => {
     getChartData();
   }, []);
 
+  useEffect(() => {
+    getChartData();
+  }, [investmentList]);
+
   const getInvestmentList = async () => {
     let payload = {
       client_id: uniqueId ? uniqueId : selectedClient?.uniqueId,
@@ -54,11 +59,17 @@ const AssetsSummary = ({ formData, setFormData }) => {
     console.log("respp", resp);
     if (resp.status === 200) {
       setShowLoader(false);
-      let filtereList = resp?.data?.transaction_data?.filter(
-        (item) =>
-          (item?.assetClass).toLowerCase() !== "Real Estate".toLowerCase()
-      );
-      setInvestmentList(filtereList);
+      // let filtereList = resp?.data?.transaction_data?.filter(
+      //   (item) =>
+      //     (item?.assetClass).toLowerCase() !== "Real Estate".toLowerCase()
+      // );
+      // setInvestmentList(resp?.data?.transaction_data);
+
+      let updatedData = updateKeyOfArray(resp?.data?.transaction_data);
+      let commonAssetClass = groupByAssetClass(updatedData);
+      console.log("commonAssetClass", commonAssetClass);
+
+      setInvestmentList(commonAssetClass);
     }
   };
 
@@ -68,11 +79,11 @@ const AssetsSummary = ({ formData, setFormData }) => {
 
     // Loop through each transaction to extract asset name and transaction amount
     investmentList?.forEach((item) => {
-      const { name, transactionAmount } = item;
+      const { assetClass, totalBalance } = item;
 
       // Push the values into respective arrays
-      assetLabels.push(name);
-      transactionAmountsData.push(transactionAmount);
+      assetLabels.push(assetClass);
+      transactionAmountsData.push(totalBalance);
     });
 
     var backgroundColor = [];
@@ -97,8 +108,8 @@ const AssetsSummary = ({ formData, setFormData }) => {
 
   const getTotalBalance = () => {
     return investmentList?.reduce(
-      (total, item) =>
-        item.assetClass !== "Real Estate" && total + item.transactionAmount,
+      (total, item) => total + item.totalBalance,
+      // item.assetClass !== "Real Estate" && total + item.transactionAmount,
       0
     );
   };
@@ -136,7 +147,7 @@ const AssetsSummary = ({ formData, setFormData }) => {
               ? `$${(
                   Number(selectedClient?.investmentAmount) -
                   Number(getTotalBalance())
-                ).toFixed(2)}`
+                )?.toFixed(2)}`
               : "Please invest funds"}
           </Typography>
         </Box>

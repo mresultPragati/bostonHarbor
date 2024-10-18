@@ -66,10 +66,17 @@ export const assets = [
   { label: "Commodities", isChangeUI: false },
   { label: "Mutual Funds", isChangeUI: false },
   { label: "ETFS", isChangeUI: false },
+  { label: "cryptocurrency", isChangeUI: false },
 ];
 
 export const companies = [
   { label: "Tesla", ticker: "TSLA" },
   { label: "NVIDIA Corporation", ticker: "NVDA" },
   { label: "Apple", ticker: "AAPL" },
+];
+
+export const crypto = [
+  { label: "Bitcoin", ticker: "BTC" },
+  { label: "Litecoin", ticker: "LTC" },
+  { label: "Ethereum", ticker: "ETH" },
 ];

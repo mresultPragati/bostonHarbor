@@ -18,6 +18,7 @@ import ClientSummary from "./dashboard/Summary/ClientSummary";
 import AssetsSummary from "./clients/assetsSummary/AssetsSummary";
 import ClientOrder from "./clients/order/ClientOrder";
 import PortfolioDetails from "./clients/portfolio/PortfolioDetails";
+import PortfolioHtml from "./clients/portfolio/PortfolioHtml";
 
 function App() {
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -81,6 +82,10 @@ function App() {
           <Route path="client/summary/:id" element={<AssetsSummary />} />
           <Route path="client/orders/:id" element={<ClientOrder />} />
           <Route path="client/portfolio/:id" element={<PortfolioDetails />} />
+          <Route
+            path="client/portfolioAnalysis/:id"
+            element={<PortfolioHtml />}
+          />
           {/* <Route path={navigatorPath.summary} element={<AssetsSummary />} />
           <Route path={navigatorPath.orders} element={<ClientOrder />} /> */}
         </Routes>

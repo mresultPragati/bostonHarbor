@@ -20,6 +20,7 @@ import {
   commercialList,
   companies,
   crowdfundedList,
+  crypto,
   directList,
   markets,
   ownership,
@@ -34,7 +35,7 @@ import {
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { OwnershipOrder } from "./orderOwnership/OwnershipOrder";
-import { USTimezone } from "../../resusedComponents/constant/ResusableConst";
+import { getUSTime } from "../../resusedComponents/constant/ResusableConst";
 
 const TransactionForm = (props) => {
   const {
@@ -129,7 +130,7 @@ const TransactionForm = (props) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "units" && value <= 0) {
+    if (name === "units" && value < 0) {
       setFormData({
         ...formData,
         [name]: 0, // Set to 0 if a negative number is entered
@@ -147,7 +148,7 @@ const TransactionForm = (props) => {
     e.preventDefault();
 
     const updatedFormData = {
-      date: USTimezone(),
+      date: getUSTime(),
       transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
       name: selectedCompany?.label,
       symbol: selectedCompany?.ticker,
@@ -171,7 +172,7 @@ const TransactionForm = (props) => {
         order_data: {
           ownership: selectedOwnership?.label,
           assetClass: selectedAssetClass.label,
-          date: USTimezone(),
+          date: getUSTime(),
           name: selectedCompany?.label,
           investmentAmount: Number(formData?.investmentAmount),
           dividendYield: formData?.dividendYield,
@@ -293,18 +294,20 @@ const TransactionForm = (props) => {
                 </FormControl>
               </>
             ) : (
-              <FormControl fullWidth margin="normal">
-                <BostonSearch
-                  searchTerm={marketSearch}
-                  setSearchTerm={setMarketSearch}
-                  label="Market"
-                  listArray={stockMarket}
-                  filterFields={["label"]}
-                  setSelectedObj={setSelectedMarket}
-                  primaryValue="label"
-                  width={100}
-                />
-              </FormControl>
+              selectedAssetClass?.label !== "cryptocurrency" && (
+                <FormControl fullWidth margin="normal">
+                  <BostonSearch
+                    searchTerm={marketSearch}
+                    setSearchTerm={setMarketSearch}
+                    label="Market"
+                    listArray={stockMarket}
+                    filterFields={["label"]}
+                    setSelectedObj={setSelectedMarket}
+                    primaryValue="label"
+                    width={100}
+                  />
+                </FormControl>
+              )
             )}
           </Grid2>
         </Grid2>
@@ -327,7 +330,9 @@ const TransactionForm = (props) => {
                     : selectedOwnership?.type === ownershipType?.direct
                     ? directList
                     : !selectedAssetClass?.isChangeUI
-                    ? stockCompany
+                    ? selectedAssetClass?.label === "cryptocurrency"
+                      ? crypto
+                      : stockCompany
                     : []
                 }
                 filterFields={["label", "ticker"]}
@@ -435,7 +440,7 @@ const TransactionForm = (props) => {
                 name="transactionAmount"
                 value={(
                   Number(formData.units) * Number(formData.pricePerUnit)
-                ).toFixed(2)}
+                )?.toFixed(2)}
                 type="number"
                 fullWidth
                 margin="normal"

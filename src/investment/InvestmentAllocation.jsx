@@ -89,9 +89,11 @@ const InvestmentAllocation = () => {
                     <TableCell>{row.assetClass}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell align="center">{row.units}</TableCell>
-                    <TableCell align="center">${row.pricePerUnit} </TableCell>
                     <TableCell align="center">
-                      ${row.transactionAmount.toFixed(2)}
+                      ${row.pricePerUnit?.toFixed(2)}{" "}
+                    </TableCell>
+                    <TableCell align="center">
+                      ${row.transactionAmount?.toFixed(2)}
                     </TableCell>
                     <TableCell align="center">{row.date}</TableCell>
                     {/* <TableCell align="center">

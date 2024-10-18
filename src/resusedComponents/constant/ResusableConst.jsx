@@ -1,4 +1,5 @@
 import { styled, TextareaAutosize } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export const scrollToTop = () => {
   window.scrollTo({
@@ -71,9 +72,17 @@ export const a11yProps = (index) => {
   };
 };
 
-export const USTimezone = () => {
+export const isEmpty = (obj) => JSON.stringify(obj) === "{}";
+
+// Function to calculate totals
+export const calculateTotals = (key, list) => {
+  return list
+    .reduce((total, row) => total + parseFloat(row[key] || 0), 0)
+    ?.toFixed(2);
+};
+
+export const getUSTime = () => {
   const currentDate = new Date();
-  //US Format the date and time
   const options = {
     timeZone: "America/New_York", // Set timezone to US Eastern Time
     year: "numeric",
@@ -84,8 +93,19 @@ export const USTimezone = () => {
     second: "2-digit",
     hour12: false, // Use 24-hour format
   };
-  const formattedDateTime = currentDate.toLocaleString("en-US", options);
-  return formattedDateTime;
+  return currentDate.toLocaleString("en-US", options);
 };
 
-export const isEmpty = (obj) => JSON.stringify(obj) === "{}";
+export const USTimezone = () => {
+  const [currentTime, setCurrentTime] = useState(getUSTime());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(getUSTime());
+    }, 1000); // Update every second (adjust this interval as needed)
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
+  return currentTime;
+};

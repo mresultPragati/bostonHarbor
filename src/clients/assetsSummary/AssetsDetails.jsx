@@ -12,7 +12,6 @@ import {
   Grid2,
 } from "@mui/material";
 import BostonPieChart3D from "../../resusedComponents/Boston3DChart";
-import { getClientOrderList } from "../../api/apiServiece";
 
 const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
   return (
@@ -23,7 +22,7 @@ const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
         </Typography>
         <Grid2 container spacing={3}>
           <Grid2 size={{ xs: 12, md: 5 }}>
-            <Paper elevation={3}>
+            <Paper elevation={3} className="mt-5">
               <TableContainer>
                 <Table>
                   <TableHead>
@@ -34,7 +33,7 @@ const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
                       <TableCell style={{ fontWeight: "bold" }}>
                         Assets
                       </TableCell>
-                      <TableCell style={{ fontWeight: "bold" }}>Name</TableCell>
+                      {/* <TableCell style={{ fontWeight: "bold" }}>Name</TableCell> */}
                       <TableCell style={{ fontWeight: "bold" }}>
                         Balance
                       </TableCell>
@@ -45,19 +44,22 @@ const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
                       <TableRow key={row.id}>
                         <TableCell>{index + 1}</TableCell>
                         <TableCell>{row.assetClass}</TableCell>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell>{`$${row.transactionAmount?.toFixed(
-                          2
-                        )}`}</TableCell>
+                        {/* <TableCell>{row.name}</TableCell> */}
+                        <TableCell>
+                          {/* {row.assetClass === "Real Estate"
+                            ? `$${row.InvestmentAmount?.toFixed(2)}`
+                            : `$${row.transactionAmount?.toFixed(2)}`} */}
+                          {row.totalBalance?.toFixed(2)}
+                        </TableCell>
                       </TableRow>
                     ))}
                     {/* Total row */}
                     <TableRow>
-                      <TableCell colSpan={3} style={{ fontWeight: "bold" }}>
+                      <TableCell colSpan={2} style={{ fontWeight: "bold" }}>
                         Total Balance
                       </TableCell>
                       <TableCell style={{ fontWeight: "bold" }}>
-                        {`$${getTotalBalance().toFixed(2)}`}
+                        {`$${getTotalBalance()?.toFixed(2)}`}
                       </TableCell>
                     </TableRow>
                   </TableBody>
@@ -65,11 +67,11 @@ const AssetsDetails = ({ getTotalBalance, chartData, data }) => {
               </TableContainer>
             </Paper>
           </Grid2>
-          <div className="mt-5">
-            <Grid2 size={{ xs: 12, md: 7 }}>
-              <BostonPieChart3D chartData={chartData} />
-            </Grid2>
-          </div>
+          {/* <div> */}
+          <Grid2 size={{ xs: 12, md: 7 }}>
+            <BostonPieChart3D chartData={chartData} />
+          </Grid2>
+          {/* </div> */}
         </Grid2>
       </Box>
     </>
