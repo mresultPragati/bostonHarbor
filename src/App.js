@@ -50,7 +50,7 @@ function App() {
         {isSubMenuOpen && <SubTopBar />}
       </AppBar>
 
-      <div style={{ padding: isSubMenuOpen ? "10rem 5rem" : "8rem 5rem" }}>
+      <div style={{ padding: isSubMenuOpen ? "9rem 2rem" : "8rem 5rem" }}>
         <Routes>
           <Route path={navigatorPath.dashboard} element={<ClientSummary />} />
           <Route

@@ -20,6 +20,7 @@ export const CircleLoader = styled.div`
 
 export const LoaderDiv = styled.div`
   display: flex;
+  flex-direction: column; /* Stack dots and message vertically */
   align-items: center;
   justify-content: center;
   width: 100vw; /* Full viewport width */
@@ -27,11 +28,11 @@ export const LoaderDiv = styled.div`
   position: fixed; /* Stays in place while scrolling */
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 1000;
   background-color: rgba(
     255,
     255,
     255,
-    0.7
-  ); /* Optional: Add a semi-transparent background */
+    1
+  ); /* Optional: Add a white background */
 `;

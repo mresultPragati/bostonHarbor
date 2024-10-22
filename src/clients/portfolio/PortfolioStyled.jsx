@@ -1,21 +1,37 @@
 import styled from "styled-components";
 import { Box, TableCell, Typography } from "@mui/material";
 
-export const StickyBox = styled(Box)(({ theme }) => ({
+export const StickyBox = styled(Box)`
   position: "sticky", // Sticky positioning
   top: 0, // Stick to the top of the viewport
-  zIndex: 1000, // High z-index to keep it on top of other content
-  //   padding: theme.spacing(1),
+  zIndex: 1000, 
   backgroundColor: "#002D57",
   color: "#fff",
-  //   borderRadius: theme.shape.borderRadius,
-  //   marginBottom: theme.spacing(8),
-}));
+  display: flex,
+  justifyContent: center,
+
+   @media (max-width: 960px) {
+    width: 80%;
+    }
+    
+    @media (max-width: 1024px) {
+    width: 100%;
+    display: block;
+    transform: translateX(3rem),
+  }
+  
+`;
 
 export const VerticalDivider = styled.div`
   width: 2px;
   height: auto;
   background-color: #ddd;
+  @media (max-width: 960px) {
+    display: ${({ isDisplay }) => (isDisplay ? "block" : "none")};
+  }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 export const OverviewTitle = styled(Typography)`
@@ -61,7 +77,15 @@ export const BoldCell = styled(TableCell)`
 `;
 
 export const CurrencyCell = styled(TableCell)`
-  color: ${({ isNegative }) => (isNegative ? "red" : "green")} !important;
+  color: ${({ isNegative }) =>
+    isNegative === "zero" ? "black" : isNegative ? "red" : "green"} !important;
+`;
+
+export const StickBox = styled(Box)`
+  position: sticky;
+  top: 8.2rem; /* The distance from the top of the viewport */
+  z-index: 100; /* To ensure it's on top of other elements */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
 `;
 
 // export const AmountText = styled(Typography)`

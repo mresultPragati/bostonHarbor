@@ -12,20 +12,24 @@ import {
   Grid2,
   FormLabel,
   InputAdornment,
+  ListItemText,
 } from "@mui/material";
 import { BostonSearch } from "../../resusedComponents/BostonSearch";
-import { investmentForm } from "./OrderConst";
+import { investmentForm, isSubmitDisabled, resetOrderForm } from "./OrderConst";
 import {
   assets,
   commercialList,
-  companies,
+  commodities,
+  stocks,
   crowdfundedList,
   crypto,
   directList,
   markets,
+  mutualFunds,
   ownership,
   ownershipType,
   reitList,
+  bonds,
 } from "../../analysis/stockAnalysis/constants";
 import {
   getDividendYield,
@@ -36,6 +40,8 @@ import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { OwnershipOrder } from "./orderOwnership/OwnershipOrder";
 import { getUSTime } from "../../resusedComponents/constant/ResusableConst";
+import BostonAutocomplete from "../../resusedComponents/BostonAutocomplete";
+import { StyledListItem } from "./OrderStyled";
 
 const TransactionForm = (props) => {
   const {
@@ -72,9 +78,9 @@ const TransactionForm = (props) => {
         // setSelectedCompany({});
         // setSelectedMarket({});
         // setSelectedAssetClass({});
-        setNameSearch("");
-        setOwnershipSearch("");
-        setMarketSearch("");
+        // setNameSearch("");
+        // setOwnershipSearch("");
+        // setMarketSearch("");
       }, 500);
       // return;
     }
@@ -96,7 +102,11 @@ const TransactionForm = (props) => {
   }, [ownershipSearch]);
 
   useEffect(() => {
-    if (selectedCompany?.ticker) getValueOfTicker();
+    if (
+      selectedCompany?.ticker &&
+      selectedOwnership?.type !== ownershipType.direct
+    )
+      getValueOfTicker();
   }, [selectedCompany]);
 
   const getValueOfTicker = async () => {
@@ -152,7 +162,7 @@ const TransactionForm = (props) => {
       transactionAmount: Number(formData.units) * Number(formData.pricePerUnit),
       name: selectedCompany?.label,
       symbol: selectedCompany?.ticker,
-      market: selectedMarket.label,
+      market: selectedMarket?.label,
       assetClass: selectedAssetClass.label,
       buy_or_sell: formData.transactionType,
       unit_price: formData.pricePerUnit,
@@ -179,12 +189,6 @@ const TransactionForm = (props) => {
         },
         client_name: selectedClient?.clientDetail?.clientName,
         client_id: selectedClient.uniqueId,
-        // AssetClass: selectedAssetClass.label,
-        // ownership: selectedOwnership?.label,
-        // Date: formattedDateTime,
-        // Name: selectedCompany?.label,
-        // InvestmentAmount: Number(formData?.investmentAmount),
-        // DividendYield: formData?.dividendYield,
       };
     }
     const resp = await placeOrder(payload, "application/json");
@@ -195,62 +199,19 @@ const TransactionForm = (props) => {
       });
       getInvestmentList();
       setTimeout(() => {
-        setFormData(investmentForm);
-        setSelectedCompany({});
-        setSelectedMarket({});
-        setSelectedAssetClass({});
-        setSelectedOwnership({});
-        setSelectedAssetClass({});
-        setNameSearch("");
-        setOwnershipSearch("");
-        setMarketSearch("");
-        setAssetSearch("");
+        resetOrderForm(
+          setFormData,
+          setSelectedCompany,
+          setSelectedMarket,
+          setSelectedAssetClass,
+          setSelectedOwnership,
+          setNameSearch,
+          setOwnershipSearch,
+          setMarketSearch,
+          setAssetSearch
+        );
       }, 1000);
     }
-  };
-  console.log("selectedAssetClass?.isChangeUI", selectedAssetClass?.isChangeUI);
-
-  const isSubmitDisabled = () => {
-    switch (selectedOwnership?.type) {
-      case ownershipType?.reit:
-        return (
-          !formData.investmentAmount ||
-          !selectedAssetClass?.label ||
-          !selectedOwnership?.label ||
-          !selectedCompany?.label
-        );
-
-      case ownershipType?.commercial:
-        return (
-          !formData.investmentAmount ||
-          !selectedAssetClass?.label ||
-          !selectedOwnership?.label ||
-          !selectedCompany?.label
-        );
-
-      default:
-        return (
-          // !selectedMarket?.label ||
-          !selectedAssetClass?.label ||
-          !selectedCompany?.label ||
-          !formData?.transactionType ||
-          !formData?.units
-          // || !formData?.pricePerUnit
-        );
-    }
-
-    // if (selectedAssetClass?.isChangeUI) {
-    //   // return false;
-    // } else
-    //   return (
-    //     // !selectedMarket?.label ||
-    //     !selectedAssetClass?.label ||
-    //     !selectedCompany?.label ||
-    //     !formData?.transactionType ||
-    //     !formData?.units ||
-    //     !formData?.pricePerUnit
-    //   );
-    // console.log("itemitem,", selectedAssetClass, selectedCompany);
   };
 
   return (
@@ -259,19 +220,41 @@ const TransactionForm = (props) => {
       <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
 
       <form onSubmit={handleSubmit}>
-        <Grid2 container spacing={2} alignItems="center">
+        <Grid2 container spacing={2} alignItems="center" sx={{ mb: 2 }}>
           <Grid2 item size={{ md: 1 }} />
           <Grid2 item size={{ xs: 12, md: 4 }}>
             <FormControl fullWidth margin="normal">
-              <BostonSearch
-                searchTerm={assetSearch}
-                setSearchTerm={setAssetSearch}
+              <BostonAutocomplete
+                value={assetSearch}
+                options={assetClasses}
+                getOptionLabel={(option) => option.label || ""}
+                onChange={(event, value) => {
+                  // handleAutocompleteChange(event, value, "assetClass");
+                  setSelectedAssetClass(value);
+                  setAssetSearch(value);
+                  // setMarketSearch("");
+                  // setNameSearch("");
+                  // setOwnershipSearch("");
+                  resetOrderForm(
+                    setFormData,
+                    setSelectedCompany,
+                    setSelectedMarket,
+                    setSelectedAssetClass,
+                    setSelectedOwnership,
+                    setNameSearch,
+                    setOwnershipSearch,
+                    setMarketSearch,
+                    setAssetSearch,
+                    false
+                  );
+                }}
                 label="Asset Class"
-                listArray={assetClasses}
-                filterFields={["label"]}
-                setSelectedObj={setSelectedAssetClass}
-                primaryValue="label"
-                width={100}
+                required
+                renderOption={(props, option) => (
+                  <StyledListItem {...props}>
+                    <ListItemText primary={option.label} />
+                  </StyledListItem>
+                )}
               />
             </FormControl>
           </Grid2>
@@ -279,70 +262,93 @@ const TransactionForm = (props) => {
           <Grid2 item size={{ xs: 12, md: 4 }}>
             {selectedAssetClass?.isChangeUI ? (
               <>
-                <FormControl fullWidth margin="normal">
-                  <BostonSearch
-                    searchTerm={ownershipSearch}
-                    setSearchTerm={setOwnershipSearch}
-                    label="Ownership"
-                    listArray={ownership}
-                    filterFields={["label"]}
-                    setSelectedObj={setSelectedOwnership}
-                    primaryValue="label"
-                    secondaryName="Ticker"
-                    width={100}
-                  />
-                </FormControl>
+                <BostonAutocomplete
+                  value={ownershipSearch}
+                  options={ownership}
+                  getOptionLabel={(option) => option.label || ""}
+                  onChange={(event, value) => {
+                    // handleAutocompleteChange(event, value, "ownership");
+                    setSelectedOwnership(value);
+                    setOwnershipSearch(value);
+                    setNameSearch("");
+                  }}
+                  label="Ownership"
+                  required
+                  renderOption={(props, option) => (
+                    <StyledListItem {...props}>
+                      <ListItemText primary={option.label} />
+                    </StyledListItem>
+                  )}
+                />
               </>
             ) : (
-              selectedAssetClass?.label !== "cryptocurrency" && (
-                <FormControl fullWidth margin="normal">
-                  <BostonSearch
-                    searchTerm={marketSearch}
-                    setSearchTerm={setMarketSearch}
-                    label="Market"
-                    listArray={stockMarket}
-                    filterFields={["label"]}
-                    setSelectedObj={setSelectedMarket}
-                    primaryValue="label"
-                    width={100}
-                  />
-                </FormControl>
+              selectedAssetClass?.label !== "Cryptocurrency" && (
+                <BostonAutocomplete
+                  value={marketSearch}
+                  options={stockMarket}
+                  getOptionLabel={(option) => option.label || ""}
+                  onChange={(event, value) => {
+                    // handleAutocompleteChange(event, value, "market");
+                    setSelectedMarket(value);
+                    setMarketSearch(value);
+                    setNameSearch("");
+                  }}
+                  label="Market"
+                  // required
+                  renderOption={(props, option) => (
+                    <StyledListItem {...props}>
+                      <ListItemText primary={option.label} />
+                    </StyledListItem>
+                  )}
+                />
               )
             )}
           </Grid2>
         </Grid2>
 
-        <Grid2 container spacing={2} alignItems="center">
+        <Grid2 container spacing={2} alignItems="center" sx={{ mb: 2 }}>
           <Grid2 item size={{ md: 1 }} />
           <Grid2 item size={{ xs: 12, md: 4 }}>
-            <FormControl fullWidth margin="normal">
-              <BostonSearch
-                searchTerm={nameSearch}
-                setSearchTerm={setNameSearch}
-                label="Name"
-                listArray={
-                  selectedOwnership?.type === ownershipType?.reit
-                    ? reitList
-                    : selectedOwnership?.type === ownershipType?.commercial
-                    ? commercialList
-                    : selectedOwnership?.type === ownershipType?.crowdfund
-                    ? crowdfundedList
-                    : selectedOwnership?.type === ownershipType?.direct
-                    ? directList
-                    : !selectedAssetClass?.isChangeUI
-                    ? selectedAssetClass?.label === "cryptocurrency"
-                      ? crypto
-                      : stockCompany
-                    : []
-                }
-                filterFields={["label", "ticker"]}
-                setSelectedObj={setSelectedCompany}
-                primaryValue="label"
-                secondary={"ticker"}
-                secondaryName="Ticker"
-                width={100}
-              />
-            </FormControl>
+            <BostonAutocomplete
+              options={
+                selectedOwnership?.type === ownershipType?.reit
+                  ? reitList
+                  : selectedOwnership?.type === ownershipType?.commercial
+                  ? commercialList
+                  : selectedOwnership?.type === ownershipType?.crowdfund
+                  ? crowdfundedList
+                  : selectedOwnership?.type === ownershipType?.direct
+                  ? directList
+                  : selectedAssetClass?.label === "Cryptocurrency"
+                  ? crypto
+                  : selectedAssetClass?.label === "Commodities"
+                  ? commodities
+                  : selectedAssetClass?.label === "Mutual Funds"
+                  ? mutualFunds
+                  : selectedAssetClass?.label === "Bonds"
+                  ? bonds
+                  : selectedAssetClass?.label === "Stocks"
+                  ? stockCompany
+                  : []
+              }
+              value={nameSearch}
+              getOptionLabel={(option) => option.label || ""}
+              onChange={(event, value) => {
+                // handleAutocompleteChange(event, value, "name");
+                setSelectedCompany(value);
+                setNameSearch(value);
+              }}
+              label="Name"
+              required
+              renderOption={(props, option) => (
+                <StyledListItem {...props}>
+                  <ListItemText
+                    primary={option?.label}
+                    secondary={`Ticker: ${option.ticker}`}
+                  />
+                </StyledListItem>
+              )}
+            />
           </Grid2>
 
           <Grid2 item size={{ md: 1 }} />
@@ -459,19 +465,24 @@ const TransactionForm = (props) => {
             />
           </>
         )}
-
-        <Button
-          className="mt-5 mb-5"
-          sx={{ width: "auto" }}
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          // disabled={false}
-          disabled={isSubmitDisabled()} // Disable the button if any field is empty
-        >
-          Order
-        </Button>
+        <div className="mt-5 mb-5" style={{ marginTop: "3rem" }}>
+          <Button
+            sx={{ width: "auto" }}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            disabled={isSubmitDisabled(
+              selectedOwnership,
+              ownershipType,
+              formData,
+              selectedAssetClass,
+              selectedCompany
+            )}
+          >
+            Order
+          </Button>
+        </div>
       </form>
       {/* )} */}
     </>

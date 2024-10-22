@@ -19,6 +19,11 @@ const SubTopBar = () => {
   return (
     <SubTopBarContainer>
       <Toolbar>
+        <h5 style={{ color: "#2a4e68" }}>
+          {" "}
+          {clients?.clientDetail?.clientName}
+        </h5>
+
         <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "end" }}>
           {subTopItem.map((item, index) => {
             // const isActive = location.pathname.startsWith(item.path);

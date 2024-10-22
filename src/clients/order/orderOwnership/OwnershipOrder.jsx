@@ -21,7 +21,9 @@ export const OwnershipOrder = ({
           setFormData={setFormData}
         />
       )}
-      {selectedOwnership?.type === ownershipType?.direct && <DirectOwnership />}
+      {selectedOwnership?.type === ownershipType?.direct && (
+        <DirectOwnership formData={formData} setFormData={setFormData} />
+      )}
     </div>
   );
 };

@@ -12,11 +12,15 @@ export const country = [
   { label: "Japan" },
 ];
 
+// -------------------------market-----------------------
+
 export const markets = [
   { label: "Dow Jones" },
   { label: "NASDAQ" },
   { label: "S&P 500" },
 ];
+
+// -------------------------ownership-----------------------
 
 export const ownership = [
   { label: "Direct", type: ownershipType?.direct },
@@ -30,6 +34,8 @@ export const ownership = [
   //   type: ownershipType?.crowdfund,
   // },
 ];
+
+// -------------------------ownership names-----------------------
 
 export const reitList = [
   { label: "Regency Centers Corporation", ticker: "REG" },
@@ -59,17 +65,25 @@ export const directList = [
   // { label: "Vornado Realty Trust", ticker: "VNO" },
 ];
 
-export const assets = [
-  { label: "Stocks", isChangeUI: false },
-  { label: "Bonds", isChangeUI: false },
-  { label: "Real Estate", isChangeUI: true },
-  { label: "Commodities", isChangeUI: false },
-  { label: "Mutual Funds", isChangeUI: false },
-  { label: "ETFS", isChangeUI: false },
-  { label: "cryptocurrency", isChangeUI: false },
+// -------------------------company names-----------------------
+
+export const commodities = [
+  { label: "Commodities Index", ticker: "COM" },
+  { label: "Commodities Basket", ticker: "BSKT" },
+  { label: "Resource Fund", ticker: "RSRC" },
+  { label: "Natural Assets", ticker: "NAT" },
+  { label: "Metals Index", ticker: "AMI" },
 ];
 
-export const companies = [
+export const mutualFunds = [
+  { label: "Growth Fund", ticker: "GF" },
+  { label: "Balanced Fund", ticker: "BF" },
+  { label: "Income Fund", ticker: "IF" },
+  { label: "Equity Fund", ticker: "EF" },
+  { label: "Diversified Fund", ticker: "DF" },
+];
+
+export const stocks = [
   { label: "Tesla", ticker: "TSLA" },
   { label: "NVIDIA Corporation", ticker: "NVDA" },
   { label: "Apple", ticker: "AAPL" },
@@ -79,4 +93,23 @@ export const crypto = [
   { label: "Bitcoin", ticker: "BTC" },
   { label: "Litecoin", ticker: "LTC" },
   { label: "Ethereum", ticker: "ETH" },
+];
+
+export const bonds = [
+  { label: "iShares Core U.S. Aggregate Bond ETF", ticker: "AGG" },
+  { label: "Vanguard Total Bond Market ETF", ticker: "BND" },
+  { label: "iShares U.S. Treasury Bond ETF", ticker: "GOVT" },
+  { label: "Corporate Bond Fund", ticker: "CBND" },
+];
+
+// -------------------------asset class-----------------------
+
+export const assets = [
+  { label: "Stocks", isChangeUI: false },
+  { label: "Bonds", isChangeUI: false },
+  { label: "Real Estate", isChangeUI: true },
+  { label: "Commodities", isChangeUI: false },
+  { label: "Mutual Funds", isChangeUI: false },
+  { label: "ETFS", isChangeUI: false },
+  { label: "Cryptocurrency", isChangeUI: false },
 ];

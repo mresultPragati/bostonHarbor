@@ -7,30 +7,7 @@ import BostonLoader from "../../resusedComponents/BostonLoader";
 import { getMidDarkColor } from "../../assetsLiabilityChart/Constant";
 import { useParams } from "react-router-dom";
 import { groupByAssetClass, updateKeyOfArray } from "./Constants";
-
-const chartData = {
-  labels: ["Bons", "Stock", "Real Estate", "Commodities"],
-  datasets: [
-    {
-      label: "Assets",
-      data: [1000, 1500, 3000, 2500],
-      backgroundColor: [
-        "rgba(55, 200, 241, 1.7)",
-        "rgba(55, 150, 150, 1.7)",
-        "rgba(85, 200, 30, 1.7)",
-        "rgba(95, 50, 60, 1.7)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
-const data = [
-  { id: 1, name: "Bons", balance: 1000, availableBalance: 800 },
-  { id: 2, name: "Stock", balance: 1500, availableBalance: 1200 },
-  { id: 3, name: "Commodities", balance: 2500, availableBalance: 2300 },
-  { id: 4, name: "Real Estate", balance: 3000, availableBalance: 2800 },
-];
+import { StickBox } from "../portfolio/PortfolioStyled";
 
 const AssetsSummary = ({ formData, setFormData }) => {
   const [showLoader, setShowLoader] = useState(false);
@@ -117,7 +94,7 @@ const AssetsSummary = ({ formData, setFormData }) => {
   return (
     <>
       {showLoader && <BostonLoader />}
-      <Paper
+      {/* <Paper
         elevation={3}
         sx={{
           // width: "fit-content",
@@ -127,31 +104,34 @@ const AssetsSummary = ({ formData, setFormData }) => {
           borderRadius: "10px",
           backgroundColor: "#f7f9fc",
         }}
+      > */}
+      <StickBox
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          padding: "1rem",
+          borderRadius: "10px",
+          backgroundColor: "#fbfbfb",
+          // backgroundColor: "#f3f3f3",
+          width: 300,
+          border: "1.3px solid",
+          // width: "max-content",
+        }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            flexGrow: 1,
-            // width: "max-content",
-          }}
-        >
-          <Typography
-            variant="body1"
-            sx={{ fontWeight: "bold", color: "#555" }}
-          >
-            Funds Available:
-          </Typography>
-          <Typography variant="body1" sx={{ color: "#333" }}>
-            {selectedClient?.investmentAmount
-              ? `$${(
-                  Number(selectedClient?.investmentAmount) -
-                  Number(getTotalBalance())
-                )?.toFixed(2)}`
-              : "Please invest funds"}
-          </Typography>
-        </Box>
-      </Paper>
+        <Typography variant="body1" sx={{ fontWeight: "bold", color: "#555" }}>
+          Funds Available:
+        </Typography>
+        <Typography variant="body1" sx={{ color: "#333" }}>
+          {selectedClient?.investmentAmount
+            ? `$${(
+                Number(selectedClient?.investmentAmount) -
+                Number(getTotalBalance())
+              )?.toFixed(2)}`
+            : "Please invest funds"}
+        </Typography>
+      </StickBox>
+      {/* </Paper> */}
       {investmentList?.length > 0 && (
         <AssetsDetails
           getTotalBalance={getTotalBalance}

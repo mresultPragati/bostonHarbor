@@ -109,3 +109,11 @@ export const USTimezone = () => {
 
   return currentTime;
 };
+
+export const sortListByDate = (list) => {
+  return list?.sort((a, b) => {
+    const dateA = new Date(a?.date).getTime();
+    const dateB = new Date(b?.date).getTime();
+    return dateB - dateA; // Sort in descending order
+  });
+};

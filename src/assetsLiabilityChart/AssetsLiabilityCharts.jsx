@@ -16,109 +16,108 @@ export const AssetsLiabilityChart = () => {
   useEffect(() => {
     // --------------------------------------------------------------------------------------
     const result = clientList?.find((item) => item.uniqueId === id);
-    if (isEmpty(result?.liabilityDatasets))
-      setLiabilityChartData(
-        extractKeysAndValues(
-          result?.liabilityDatasets ? result?.liabilityDatasets : {}
-        )
-      );
+
+    // if (isEmpty(result?.liabilityDatasets))
+    setLiabilityChartData(
+      extractKeysAndValues(
+        result?.liabilityDatasets ? result?.liabilityDatasets : {}
+      )
+    );
 
     // const values = result?.assetsDatasets?.datasets?.[0]?.data;
     var backgroundColor = [];
-    if (isEmpty(result?.assetsDatasets)) {
-      for (
-        let i = 0;
-        i <= result?.assetsDatasets?.datasets?.[0]?.data?.length;
-        i++
-      ) {
-        backgroundColor?.push(getMidDarkColor());
-      }
-
-      // Step 1: Sort the array to find the median
-      // const sortedValues = [...values].sort((a, b) => a - b);
-
-      // Step 2: Find the median
-      // let median;
-      // const midIndex = Math.floor(sortedValues.length / 2);
-
-      // if (sortedValues.length % 2 === 0) {
-      //   median = (sortedValues[midIndex - 1] + sortedValues[midIndex]) / 2;
-      // } else {
-      //   median = sortedValues[midIndex];
-      // }
-
-      // let smallDataValues = [];
-      // let smallLabelValues = [];
-
-      // values?.filter((item, index) => {
-      //   if (item <= median) {
-      //     smallDataValues?.push(item);
-      //     smallLabelValues?.push(result?.assetsDatasets?.labels[index]);
-      //   }
-      // });
-
-      // let largeDataValues = [];
-      // let largeLabelValues = [];
-
-      // values?.filter((item, index) => {
-      //   if (item > median) {
-      //     largeDataValues?.push(item);
-      //     largeLabelValues?.push(result?.assetsDatasets?.labels[index]);
-      //   }
-      // });
-
-      var assetsList = extractKeysAndValues(
-        result?.assetsDatasets ? result?.assetsDatasets : {}
-      );
-      console.log("assetsList", assetsList);
-
-      const firstPartOfAssetCHart = {
-        labels: assetsList?.labels?.slice(0, 5),
-        // labels: smallLabelValues,
-        datasets: [
-          {
-            label: "Assets",
-            data: assetsList?.datasets[0]?.data?.slice(0, 5),
-            // data: smallDataValues,
-            backgroundColor: backgroundColor?.slice(0, 5),
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      const secondPartOfAssets = {
-        labels: assetsList?.labels?.slice(5, assetsList?.labels?.length),
-        // labels: largeLabelValues,
-        datasets: [
-          {
-            label: "Assets",
-            data: assetsList?.datasets[0]?.data?.slice(
-              5,
-              assetsList?.datasets[0]?.data?.length
-            ),
-            // data: largeDataValues,
-            backgroundColor: backgroundColor?.slice(
-              5,
-              assetsList?.labels?.length
-            ),
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      var chartObj = {
-        firstPartOfAssetCHart: firstPartOfAssetCHart,
-        secondPartOfAssets: secondPartOfAssets,
-      };
-
-      setFirstPartAssestData(chartObj?.firstPartOfAssetCHart);
-      setLargeValueChartData(chartObj?.secondPartOfAssets);
-      setAssetsChartData(
-        extractKeysAndValues(
-          result?.assetsDatasets ? result?.assetsDatasets : {}
-        )
-      );
+    // if (isEmpty(result?.assetsDatasets)) {
+    for (
+      let i = 0;
+      i <= result?.assetsDatasets?.datasets?.[0]?.data?.length;
+      i++
+    ) {
+      backgroundColor?.push(getMidDarkColor());
     }
+
+    // Step 1: Sort the array to find the median
+    // const sortedValues = [...values].sort((a, b) => a - b);
+
+    // Step 2: Find the median
+    // let median;
+    // const midIndex = Math.floor(sortedValues.length / 2);
+
+    // if (sortedValues.length % 2 === 0) {
+    //   median = (sortedValues[midIndex - 1] + sortedValues[midIndex]) / 2;
+    // } else {
+    //   median = sortedValues[midIndex];
+    // }
+
+    // let smallDataValues = [];
+    // let smallLabelValues = [];
+
+    // values?.filter((item, index) => {
+    //   if (item <= median) {
+    //     smallDataValues?.push(item);
+    //     smallLabelValues?.push(result?.assetsDatasets?.labels[index]);
+    //   }
+    // });
+
+    // let largeDataValues = [];
+    // let largeLabelValues = [];
+
+    // values?.filter((item, index) => {
+    //   if (item > median) {
+    //     largeDataValues?.push(item);
+    //     largeLabelValues?.push(result?.assetsDatasets?.labels[index]);
+    //   }
+    // });
+
+    var assetsList = extractKeysAndValues(
+      result?.assetsDatasets ? result?.assetsDatasets : {}
+    );
+    console.log("assetsList", assetsList);
+
+    const firstPartOfAssetCHart = {
+      labels: assetsList?.labels?.slice(0, 5),
+      // labels: smallLabelValues,
+      datasets: [
+        {
+          label: "Assets",
+          data: assetsList?.datasets[0]?.data?.slice(0, 5),
+          // data: smallDataValues,
+          backgroundColor: backgroundColor?.slice(0, 5),
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    const secondPartOfAssets = {
+      labels: assetsList?.labels?.slice(5, assetsList?.labels?.length),
+      // labels: largeLabelValues,
+      datasets: [
+        {
+          label: "Assets",
+          data: assetsList?.datasets[0]?.data?.slice(
+            5,
+            assetsList?.datasets[0]?.data?.length
+          ),
+          // data: largeDataValues,
+          backgroundColor: backgroundColor?.slice(
+            5,
+            assetsList?.labels?.length
+          ),
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    var chartObj = {
+      firstPartOfAssetCHart: firstPartOfAssetCHart,
+      secondPartOfAssets: secondPartOfAssets,
+    };
+
+    setFirstPartAssestData(chartObj?.firstPartOfAssetCHart);
+    setLargeValueChartData(chartObj?.secondPartOfAssets);
+    setAssetsChartData(
+      extractKeysAndValues(result?.assetsDatasets ? result?.assetsDatasets : {})
+    );
+    // }
   }, [id]);
 
   const options = {
@@ -137,6 +136,7 @@ export const AssetsLiabilityChart = () => {
       },
     },
   };
+  console.log(liabilityChartData, "result?.liabilityDatasets linde");
 
   return (
     <div className="mb-5 mt-5">

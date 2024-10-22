@@ -24,11 +24,12 @@ import {
 } from "../../api/apiServiece";
 import {
   assets,
-  companies,
+  stocks,
   markets,
 } from "../../analysis/stockAnalysis/constants";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { updateKeyOfArray } from "../assetsSummary/Constants";
+import { sortListByDate } from "../../resusedComponents/constant/ResusableConst";
 
 const ClientOrder = () => {
   const [investmentList, setInvestmentList] = useState([]);
@@ -40,7 +41,7 @@ const ClientOrder = () => {
   });
   // const [selectedClient, setSelectedClient] = useState({});
   const [stockMarket, setStockMarket] = useState(markets);
-  const [stockCompany, setStockCompany] = useState(companies);
+  const [stockCompany, setStockCompany] = useState(stocks);
   const [assetClasses, setAssetClasses] = useState(assets);
   const [selectedMarket, setSelectedMarket] = useState(null);
   const [selectedAssetClass, setSelectedAssetClass] = useState(null);
@@ -75,13 +76,17 @@ const ClientOrder = () => {
         (item) =>
           item?.assetClass?.toLowerCase() === "Real Estate"?.toLowerCase()
       );
-      setInvestmentList(filteredInvestmentList);
-      setRealEstateList(filteredRealEstateList);
+
+      const sortedInvestedList = sortListByDate(filteredInvestmentList);
+      const sortedRealEstateList = sortListByDate(filteredRealEstateList);
+
+      setInvestmentList(sortedInvestedList);
+      setRealEstateList(sortedRealEstateList);
     }
   };
 
   return (
-    <div className="mb-5 mt-5">
+    <div className="mb-5 mt-5 pr-5">
       {showLoader && <BostonLoader />}
       <TransactionForm
         formData={formData}

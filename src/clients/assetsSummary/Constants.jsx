@@ -3,7 +3,7 @@
 export const groupByAssetClass = (portfolioList) => {
   const grouped = {};
 
-  portfolioList.forEach((item) => {
+  portfolioList?.forEach((item) => {
     const { assetClass, clientAmount } = item; // Adjust this based on your actual data structure
     console.log("portfolioList", item);
 
@@ -15,14 +15,14 @@ export const groupByAssetClass = (portfolioList) => {
   });
 
   // Convert the grouped object into an array of objects
-  return Object.entries(grouped).map(([assetClass, totalBalance]) => ({
+  return Object.entries(grouped)?.map(([assetClass, totalBalance]) => ({
     assetClass,
     totalBalance,
   }));
 };
 
 export const updateKeyOfArray = (list) => {
-  const updatedData = list.map((item) => {
+  const updatedData = list?.map((item) => {
     // Destructure to get properties and rename as needed
     const {
       AssetClass,

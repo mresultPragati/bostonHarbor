@@ -139,6 +139,7 @@ export const PortfolioDetails = () => {
       client_id: selectedClient?.uniqueId,
       client_name: selectedClient?.clientDetail?.clientName,
       funds: Number(selectedClient?.investmentAmount),
+      investor_personality: selectedClient?.investment_personality,
       portfolio_current_value: portfolioPrice?.portfolio_current_value,
       porfolio_daily_change: portfolioPrice?.porfolio_daily_change,
       portfolio_daily_change_perc: portfolioPrice?.portfolio_daily_change_perc,
@@ -157,7 +158,7 @@ export const PortfolioDetails = () => {
         "_blank"
       );
       const checkIfClosed = setInterval(() => {
-        if (newWindowRef.current.closed) {
+        if (newWindowRef?.current?.closed) {
           clearInterval(checkIfClosed); // Stop polling
 
           // Remove portfolioHtml from local storage
@@ -232,9 +233,15 @@ export const PortfolioDetails = () => {
                     <TableCell>${row.Delayed_Price?.toFixed(2)}</TableCell>
                     <TableCell>${row.current_value?.toFixed(2)}</TableCell>
                     <CurrencyCell
-                      isNegative={row.Daily_Price_Change?.toString()?.startsWith(
-                        "-"
-                      )}
+                      // isNegative={row.Daily_Price_Change?.toString()?.startsWith(
+                      //   "-"
+                      // )}
+                      isNegative={
+                        row.Daily_Price_Change === 0 ||
+                        row.Daily_Price_Change.toFixed(2) === 0.0
+                          ? "zero"
+                          : row.Daily_Price_Change?.toString()?.startsWith("-")
+                      }
                     >
                       {row.Daily_Price_Change?.toString()?.startsWith("-")
                         ? `-$${row.Daily_Price_Change?.toFixed(2)
@@ -244,9 +251,12 @@ export const PortfolioDetails = () => {
                     </CurrencyCell>
 
                     <CurrencyCell
-                      isNegative={row.Daily_Value_Change?.toString()?.startsWith(
-                        "-"
-                      )}
+                      isNegative={
+                        row.Daily_Price_Change === 0 ||
+                        row.Daily_Price_Change.toFixed(2) === 0.0
+                          ? "zero"
+                          : row.Daily_Value_Change?.toString()?.startsWith("-")
+                      }
                     >
                       {row.Daily_Value_Change?.toString()?.startsWith("-")
                         ? `-$${row.Daily_Value_Change?.toFixed(2)
@@ -260,16 +270,26 @@ export const PortfolioDetails = () => {
                     </TableCell>
                     <TableCell>${row.Amount_Invested?.toFixed(2)}</TableCell>
                     <CurrencyCell
-                      isNegative={row.Investment_Gain_or_Loss_percentage?.toString()?.startsWith(
-                        "-"
-                      )}
+                      isNegative={
+                        row.Daily_Price_Change === 0 ||
+                        row.Daily_Price_Change.toFixed(2) === 0.0
+                          ? "zero"
+                          : row.Investment_Gain_or_Loss_percentage?.toString()?.startsWith(
+                              "-"
+                            )
+                      }
                     >
                       {row.Investment_Gain_or_Loss_percentage?.toFixed(2)}%
                     </CurrencyCell>
                     <CurrencyCell
-                      isNegative={row.Investment_Gain_or_Loss?.toString()?.startsWith(
-                        "-"
-                      )}
+                      isNegative={
+                        row.Daily_Price_Change === 0 ||
+                        row.Daily_Price_Change.toFixed(2) === 0.0
+                          ? "zero"
+                          : row.Investment_Gain_or_Loss?.toString()?.startsWith(
+                              "-"
+                            )
+                      }
                     >
                       {row.Investment_Gain_or_Loss?.toString()?.startsWith("-")
                         ? `-$${row.Investment_Gain_or_Loss?.toFixed(2)

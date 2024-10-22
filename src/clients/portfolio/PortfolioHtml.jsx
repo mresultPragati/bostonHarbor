@@ -58,12 +58,12 @@ const PortfolioHtml = () => {
     // Retrieve the portfolio HTML from localStorage
     const storedHtml = localStorage.getItem("portfolioHtml");
     setPortfolioHtml(storedHtml);
-
+    document.querySelector("title").textContent = "Portfolio Analysis";
     // if (window?.open?.closed) localStorage.removeItem("portfolioHtml");
   }, []);
 
   return (
-    <div style={{ textAlign: "start" }}>
+    <div style={{ textAlign: "start", marginTop: "2rem" }}>
       <div dangerouslySetInnerHTML={{ __html: portfolioHtml }} />
     </div>
   );

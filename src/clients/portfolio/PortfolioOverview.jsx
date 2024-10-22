@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Box, Grid2, Typography, Divider } from "@mui/material";
-// import { styled } from "@mui/system";
-import PortfolioDetails from "./PortfolioDetails";
+
 import {
   AmountText,
   OverviewTitle,
+  StickBox,
   ValueBox,
   ValueText,
   VerticalDivider,
@@ -18,16 +18,7 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
   return (
-    <>
-      {/* <div style={{ display: "flex", alignItems: "center" }}> */}
-      {/* <div
-        style={{
-          width: "2px", // Line width
-          height: "50px", // Line height
-          backgroundColor: "black", // Line color
-        }}
-      /> */}
-      {/* </div> */}
+    <StickBox>
       <Box
         sx={{
           p: 1,
@@ -41,12 +32,16 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
         {Object.keys(portfolioPrice).length > 0 ? (
           <Grid2 container spacing={2}>
             {/* Current Value */}
-            <Grid2 item size={{ xs: 12, md: 3 }}>
+            <Grid2
+              item
+              sx={{ width: "16rem !important" }}
+              size={{ xs: 12, sm: 6, md: 3 }}
+            >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">
-                  Available Funds
+                  AVAILABLE FUNDS
                 </OverviewTitle>
-                <Typography variant="h5">
+                <Typography variant="h6">
                   $
                   {(
                     Number(selectedClient?.investmentAmount) -
@@ -55,12 +50,16 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
                 </Typography>
               </ValueBox>
             </Grid2>
-            <VerticalDivider />
+            <VerticalDivider isDisplay={true} />
 
-            <Grid2 item size={{ xs: 12, md: 3 }}>
+            <Grid2
+              item
+              sx={{ width: "18rem !important" }}
+              size={{ xs: 12, sm: 6, md: 4 }}
+            >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">CURRENT VALUE</OverviewTitle>
-                <Typography variant="h5">
+                <Typography variant="h6">
                   ${portfolioPrice?.portfolio_current_value?.toFixed(2)}
                 </Typography>
                 <Typography variant="caption" sx={{ color: "#999292" }}>
@@ -68,9 +67,13 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
                 </Typography>
               </ValueBox>
             </Grid2>
-            <VerticalDivider />
+            <VerticalDivider isDisplay={false} />
             {/* Daily Change */}
-            <Grid2 item size={{ xs: 12, md: 3 }}>
+            <Grid2
+              item
+              sx={{ width: "16rem !important" }}
+              size={{ xs: 12, sm: 6, md: 3 }}
+            >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">DAILY CHANGE</OverviewTitle>
                 <ValueText variant="h4">
@@ -81,9 +84,13 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
                 </ValueText>
               </ValueBox>
             </Grid2>
-            <VerticalDivider />
+            <VerticalDivider isDisplay={true} />
             {/* Investment Gain/Loss */}
-            <Grid2 item size={{ xs: 12, md: 3 }}>
+            <Grid2
+              item
+              sx={{ width: "16rem !important" }}
+              size={{ xs: 12, sm: 6, md: 1 }}
+            >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">
                   INVESTMENT GAIN/LOSS
@@ -106,7 +113,7 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
           </div>
         )}
       </Box>
-    </>
+    </StickBox>
   );
 };
 
