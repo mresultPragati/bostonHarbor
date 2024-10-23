@@ -102,7 +102,7 @@ export const USTimezone = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(getUSTime());
-    }, 1000); // Update every second (adjust this interval as needed)
+    }, 1000);
 
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);

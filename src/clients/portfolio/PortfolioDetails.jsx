@@ -16,102 +16,36 @@ import {
   getUSTime,
 } from "../../resusedComponents/constant/ResusableConst";
 import { useLocation, useParams } from "react-router-dom";
-import { BoldCell, CurrencyCell } from "./PortfolioStyled";
+import { BoldCell, CurrencyCell, Note } from "./PortfolioStyled";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { calculateDaysFromNow, openInNewTab } from "./PortfolioConstant";
-import PortfolioHtml from "./PortfolioHtml";
+import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 
 export const PortfolioDetails = () => {
   const [portfolioList, setPortfolioList] = useState([]);
   const [portfolioPrice, setPortfolioPrice] = useState([]);
   const [portfolioHtmlResp, setPortfolioHtmlResp] = useState("");
   const [showLoader, setShowLoader] = useState(false);
-  const newWindowRef = useRef(null);
+  const [alertMsg, setAlertMsg] = useState({
+    msg: "",
+    severity: "",
+  });
+  const [isUpdate, setIsUpdate] = useState(false);
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
   const { uniqueId } = useParams();
-  const pollingInterval = useRef(null); // To track the polling interval
 
   useEffect(() => {
     portfolioAllDetails();
-  }, []);
 
-  // ----------------------------------USE & TEST CODE------------------
+    // // if (isUpdate) {
+    // const intervalId = setInterval(() => {
+    //   portfolioAllDetailsToUpdate();
+    // }, 1000);
+    // return () => clearInterval(intervalId);
+    // // }
 
-  // useEffect(() => {
-  //   // Start polling when the component mounts
-  //   startPolling();
-
-  //   // Cleanup polling when the component unmounts
-  //   return () => {
-  //     clearPolling();
-  //   };
-  // }, []);
-
-  // const startPolling = () => {
-  //   generatePortfolioSuggestion(); // Initial call when component mounts
-  //   pollingInterval.current = setInterval(() => {
-  //     generatePortfolioSuggestion();
-  //   }, 30000); // Call every 30 seconds (adjust as needed)
-  // };
-
-  // // Function to clear polling
-  // const clearPolling = () => {
-  //   if (pollingInterval.current) {
-  //     clearInterval(pollingInterval.current);
-  //   }
-  // };
-
-  // const checkIfWindowClosed = () => {
-  //   const checkIfClosed = setInterval(() => {
-  //     if (newWindowRef.current?.closed) {
-  //       clearInterval(checkIfClosed); // Stop polling the window closure
-  //       localStorage.removeItem("portfolioHtml"); // Remove portfolio HTML from local storage
-  //     }
-  //   }, 1000); // Check every second if the window is closed
-  // };
-
-  // // Function to generate portfolio suggestion and open in new tab
-  // const generatePortfolioSuggestion = async () => {
-  //   setShowLoader(true);
-
-  //   const payload = {
-  //     client_id: selectedClient?.uniqueId,
-  //     client_name: selectedClient?.clientDetail?.clientName,
-  //     funds: Number(selectedClient?.investmentAmount),
-  //     portfolio_current_value: portfolioPrice?.portfolio_current_value,
-  //     porfolio_daily_change: portfolioPrice?.porfolio_daily_change,
-  //     portfolio_daily_change_perc: portfolioPrice?.portfolio_daily_change_perc,
-  //     portfolio_investment_gain_loss: portfolioPrice?.portfolio_investment_gain_loss,
-  //     portfolio_investment_gain_loss_perc: portfolioPrice?.portfolio_investment_gain_loss_perc,
-  //   };
-
-  //   try {
-  //     const resp = await genPortfolioAnalysis(payload);
-  //     console.log("Portfolio API Response:", resp);
-
-  //     if (resp.status === 200) {
-  //       setPortfolioHtmlResp(resp.data.suggestion); // Set the portfolio HTML response
-  //       localStorage.setItem("portfolioHtml", resp.data.suggestion); // Store HTML in local storage
-
-  //       // Open the portfolio analysis in a new tab
-  //       if (!newWindowRef.current || newWindowRef.current.closed) {
-  //         newWindowRef.current = window.open(
-  //           `/client/portfolioAnalysis/${selectedClient?.uniqueId}`,
-  //           "_blank"
-  //         );
-  //       }
-
-  //       // Start checking if the window is closed
-  //       checkIfWindowClosed();
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching portfolio analysis:", error);
-  //   } finally {
-  //     setShowLoader(false); // Hide the loader
-  //   }
-  // };
-
-  // ----------------------------------USE & TEST CODE------------------
+    // Cleanup interval on unmount
+  }, [uniqueId]);
 
   const portfolioAllDetails = async () => {
     console.log("uniqueId", uniqueId);
@@ -121,15 +55,49 @@ export const PortfolioDetails = () => {
       client_id: uniqueId ? uniqueId : selectedClient?.uniqueId,
       curr_date: getUSTime(),
     };
+
+    try {
+      console.log("RESPPP", uniqueId);
+      const resp = await getPortfolioList(payload);
+
+      if (resp.status === 200) {
+        setPortfolioList(resp?.data?.portfolio_data);
+        setPortfolioPrice(resp?.data);
+        setIsUpdate(true);
+        // portfolioAllDetailsToUpdate();
+      } else {
+        console.error(`Unexpected response status: ${resp}`);
+      }
+    } catch (error) {
+      if (error.response) {
+        // Request was made but server responded with a status code outside 200
+        console.error(`API Error: ${error}`);
+        if (error.response.status === 404) {
+          setAlertMsg({
+            msg: `${error.response.status}: No data found for client`,
+            severity: "error",
+          });
+        }
+      }
+    } finally {
+      setShowLoader(false);
+    }
+  };
+
+  const portfolioAllDetailsToUpdate = async () => {
+    let payload = {
+      client_id: uniqueId ? uniqueId : selectedClient?.uniqueId,
+      curr_date: getUSTime(),
+    };
+
     console.log("RESPPP", uniqueId);
     const resp = await getPortfolioList(payload);
 
     if (resp.status === 200) {
-      setShowLoader(false);
       setPortfolioList(resp?.data?.portfolio_data);
       setPortfolioPrice(resp?.data);
     } else {
-      setShowLoader(false);
+      console.error(`Unexpected response status: ${resp}`);
     }
   };
 
@@ -152,37 +120,53 @@ export const PortfolioDetails = () => {
     console.log("RESPPP", resp);
     if (resp.status === 200) {
       setShowLoader(false);
+
+      // Save the HTML response to local storage
       localStorage.setItem("portfolioHtml", resp?.data?.suggestion);
-      newWindowRef.current = window.open(
+
+      // Open a new tab or window
+      var newWindow = window.open(
         `/client/portfolioAnalysis/${selectedClient?.uniqueId}`,
         "_blank"
       );
-      const checkIfClosed = setInterval(() => {
-        if (newWindowRef?.current?.closed) {
-          clearInterval(checkIfClosed); // Stop polling
 
-          // Remove portfolioHtml from local storage
-          localStorage.removeItem("portfolioHtml");
-        }
-      }, 3000);
+      if (!newWindow) {
+        setAlertMsg({
+          msg: "Pop-up blocked! Please enable pop-upsto view Portfolio Analysis.",
+          severity: "error",
+        });
+        // alert("Pop-up blocked! Please enable pop-ups for this site.");
+      } else {
+        newWindow = window.open(
+          `/client/portfolioAnalysis/${selectedClient?.uniqueId}`,
+          "_blank"
+        );
+      }
+
+      if (newWindow) {
+        const checkIfClosed = setInterval(() => {
+          if (newWindow?.closed) {
+            clearInterval(checkIfClosed); // Stop polling when window is closed
+
+            // Remove portfolioHtml from local storage
+            localStorage.removeItem("portfolioHtml");
+          }
+        }, 3000);
+      }
+
       setPortfolioHtmlResp(resp?.data?.suggestion);
       // openInNewTab(resp?.data?.suggestion);
     }
   };
 
-  // // Function to calculate totals
-  // const calculateTotals = (key) => {
-  //   return portfolioList
-  //     .reduce((total, row) => total + parseFloat(row[key] || 0), 0)
-  //     .toFixed(2);
-  // };
-
   return (
     <>
+      <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
       {showLoader && <BostonLoader />}
       <PortfolioOverview
         portfolioPrice={portfolioPrice}
         portfolioList={portfolioList}
+        amount_invested={`${calculateTotals("Amount_Invested", portfolioList)}`}
       />
 
       <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
@@ -190,7 +174,7 @@ export const PortfolioDetails = () => {
       </Typography>
       {portfolioList?.length > 0 ? (
         <>
-          <div className="d-flex justify-content-end mb-4">
+          <div className="d-flex justify-content-end">
             <Button
               variant="contained"
               onClick={() => generatePortfolioSuggestion()}
@@ -199,7 +183,10 @@ export const PortfolioDetails = () => {
               Portfolio Analysis
             </Button>
           </div>
-
+          <Note>
+            Note: Please enable allow pop-ups in browser to view Portfolio
+            Analysis.
+          </Note>
           <TableContainer>
             <Table aria-labelledby="tableTitle">
               <TableHead>

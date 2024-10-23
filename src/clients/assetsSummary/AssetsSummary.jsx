@@ -105,7 +105,7 @@ const AssetsSummary = ({ formData, setFormData }) => {
           backgroundColor: "#f7f9fc",
         }}
       > */}
-      <StickBox
+      <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -130,7 +130,7 @@ const AssetsSummary = ({ formData, setFormData }) => {
               )?.toFixed(2)}`
             : "Please invest funds"}
         </Typography>
-      </StickBox>
+      </Box>
       {/* </Paper> */}
       {investmentList?.length > 0 && (
         <AssetsDetails

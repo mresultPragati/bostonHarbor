@@ -11,6 +11,7 @@ import {
 import { BostonTableHead } from "../OrderStyled";
 import { BoldCell } from "../../portfolio/PortfolioStyled";
 import { calculateTotals } from "../../../resusedComponents/constant/ResusableConst";
+import { BostonTableCell } from "./OrderListStyled";
 
 export const FinancialInstrument = ({ investmentList }) => {
   return (
@@ -53,18 +54,22 @@ export const FinancialInstrument = ({ investmentList }) => {
               <TableBody>
                 {investmentList?.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.assetClass}</TableCell>
-                    <TableCell>{row.Name}</TableCell>
-                    <TableCell align="center">{row.Action}</TableCell>
-                    <TableCell align="center">{row.Units}</TableCell>
-                    <TableCell align="center">
+                    <BostonTableCell>{index + 1}</BostonTableCell>
+                    <BostonTableCell>{row.assetClass}</BostonTableCell>
+                    <BostonTableCell>{row.name}</BostonTableCell>
+                    <BostonTableCell align="center">
+                      {row.Action}
+                    </BostonTableCell>
+                    <BostonTableCell align="center">
+                      {row.Units}
+                    </BostonTableCell>
+                    <BostonTableCell align="center">
                       ${row.UnitPrice?.toFixed(2)}{" "}
-                    </TableCell>
-                    <TableCell align="center">
+                    </BostonTableCell>
+                    <BostonTableCell align="center">
                       ${row.clientAmount?.toFixed(2)}
-                    </TableCell>
-                    <TableCell align="center">{row.date}</TableCell>
+                    </BostonTableCell>
+                    <BostonTableCell align="center">{row.date}</BostonTableCell>
                   </TableRow>
                 ))}
                 <TableRow>

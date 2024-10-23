@@ -31,6 +31,8 @@ export const updateKeyOfArray = (list) => {
       TransactionAmount,
       Date,
       date,
+      Name,
+      name,
       ...rest
     } = item; // Destructure to get the keys to rename
 
@@ -38,8 +40,9 @@ export const updateKeyOfArray = (list) => {
     return {
       ...rest, // Spread the rest of the properties
       assetClass: AssetClass || assetClass, // Change 'AssetClass' to 'assetClass'
-      clientAmount: InvestmentAmount || TransactionAmount, // Set 'clientAmount' to either 'InvestmentAmount' or 'TransactionAmount'
-      date: Date || date, // Set 'clientAmount' to either 'InvestmentAmount' or 'TransactionAmount'
+      clientAmount: InvestmentAmount || TransactionAmount,
+      date: Date || date,
+      name: Name || name,
     };
   });
 

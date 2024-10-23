@@ -36,6 +36,7 @@ export const isSubmitDisabled = (
 
     case ownershipType?.direct:
       return (
+        !formData.directName ||
         !formData.vacancyRate ||
         !formData.capEx ||
         !formData.capRateValuation ||
@@ -46,8 +47,7 @@ export const isSubmitDisabled = (
         !formData.insurance ||
         !formData.utilities ||
         !selectedAssetClass?.label ||
-        !selectedOwnership?.label ||
-        !selectedCompany?.label
+        !selectedOwnership?.label
       );
 
     default:

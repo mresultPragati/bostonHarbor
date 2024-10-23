@@ -3,6 +3,7 @@ import { Box, Grid2, Typography, Divider } from "@mui/material";
 
 import {
   AmountText,
+  CurrencyCell,
   OverviewTitle,
   StickBox,
   ValueBox,
@@ -14,7 +15,11 @@ import {
   USTimezone,
 } from "../../resusedComponents/constant/ResusableConst";
 
-export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
+export const PortfolioOverview = ({
+  portfolioPrice,
+  portfolioList,
+  amount_invested,
+}) => {
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
   return (
@@ -30,12 +35,16 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
         }}
       >
         {Object.keys(portfolioPrice).length > 0 ? (
-          <Grid2 container spacing={2}>
+          <Grid2
+            container
+            spacing={4}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
             {/* Current Value */}
             <Grid2
               item
-              sx={{ width: "16rem !important" }}
-              size={{ xs: 12, sm: 6, md: 3 }}
+              // sx={{ width: "16rem !important" }}
+              size={{ xs: 12, sm: 2, md: 2, lg: 2, xl: 2 }}
             >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">
@@ -50,12 +59,24 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
                 </Typography>
               </ValueBox>
             </Grid2>
-            <VerticalDivider isDisplay={true} />
-
+            <VerticalDivider />
             <Grid2
               item
-              sx={{ width: "18rem !important" }}
-              size={{ xs: 12, sm: 6, md: 4 }}
+              // sx={{ width: "18rem !important" }}
+              size={{ xs: 12, sm: 2, md: 2, lg: 2, xl: 2 }}
+            >
+              <ValueBox>
+                <OverviewTitle variant="subtitle1">
+                  INVESTMENT AMOUNT
+                </OverviewTitle>
+                <Typography variant="h6">${amount_invested}</Typography>
+              </ValueBox>
+            </Grid2>
+            <VerticalDivider isDisplay={false} />
+            <Grid2
+              item
+              // sx={{ width: "18rem !important" }}
+              size={{ xs: 12, sm: 2, md: 2, lg: 2, xl: 2 }}
             >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">CURRENT VALUE</OverviewTitle>
@@ -68,40 +89,104 @@ export const PortfolioOverview = ({ portfolioPrice, portfolioList }) => {
               </ValueBox>
             </Grid2>
             <VerticalDivider isDisplay={false} />
+
             {/* Daily Change */}
             <Grid2
               item
-              sx={{ width: "16rem !important" }}
-              size={{ xs: 12, sm: 6, md: 3 }}
+              // sx={{ width: "16rem !important" }}
+              size={{ xs: 12, sm: 2, md: 2, lg: 2, xl: 2 }}
             >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">DAILY CHANGE</OverviewTitle>
-                <ValueText variant="h4">
-                  ${portfolioPrice?.porfolio_daily_change?.toFixed(2)}
+                <ValueText
+                  isNegative={
+                    portfolioPrice?.porfolio_daily_change === 0 ||
+                    portfolioPrice?.porfolio_daily_change.toFixed(2) === 0.0
+                      ? "zero"
+                      : portfolioPrice?.porfolio_daily_change
+                          ?.toString()
+                          ?.startsWith("-")
+                  }
+                  variant="h4"
+                >
+                  {portfolioPrice?.porfolio_daily_change
+                    ?.toString()
+                    ?.startsWith("-")
+                    ? `-$${portfolioPrice?.porfolio_daily_change
+                        ?.toFixed(2)
+                        ?.toString()
+                        ?.replace("-", "")}`
+                    : `$${portfolioPrice?.porfolio_daily_change?.toFixed(2)}`}
                 </ValueText>
-                <ValueText variant="h6">
+                <ValueText
+                  isNegative={
+                    portfolioPrice?.portfolio_daily_change_perc === 0 ||
+                    portfolioPrice?.portfolio_daily_change_perc.toFixed(2) ===
+                      0.0
+                      ? "zero"
+                      : portfolioPrice?.portfolio_daily_change_perc
+                          ?.toString()
+                          ?.startsWith("-")
+                  }
+                  variant="h6"
+                >
                   {portfolioPrice?.portfolio_daily_change_perc?.toFixed(2)}%
                 </ValueText>
               </ValueBox>
             </Grid2>
-            <VerticalDivider isDisplay={true} />
+            <VerticalDivider />
             {/* Investment Gain/Loss */}
             <Grid2
               item
-              sx={{ width: "16rem !important" }}
-              size={{ xs: 12, sm: 6, md: 1 }}
+              // sx={{ width: "16rem !important" }}
+              size={{ xs: 12, sm: 2, md: 2, lg: 2, xl: 2 }}
             >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">
                   INVESTMENT GAIN/LOSS
                 </OverviewTitle>
-                <AmountText isPositive={true} isHighlighted variant="h4">
-                  ${portfolioPrice?.portfolio_investment_gain_loss.toFixed(2)}
+                <AmountText
+                  isNegative={
+                    portfolioPrice?.portfolio_investment_gain_loss === 0 ||
+                    portfolioPrice?.portfolio_investment_gain_loss.toFixed(
+                      2
+                    ) === 0.0
+                      ? "zero"
+                      : portfolioPrice?.portfolio_investment_gain_loss
+                          ?.toString()
+                          ?.startsWith("-")
+                  }
+                  isHighlighted
+                  variant="h4"
+                >
+                  {portfolioPrice?.portfolio_investment_gain_loss
+                    ?.toString()
+                    ?.startsWith("-")
+                    ? `-$${portfolioPrice?.portfolio_investment_gain_loss
+                        ?.toFixed(2)
+                        ?.toString()
+                        ?.replace("-", "")}`
+                    : `$${portfolioPrice?.portfolio_investment_gain_loss?.toFixed(
+                        2
+                      )}`}
                 </AmountText>
-                <AmountText isPositive={true} isHighlighted variant="h6">
+                <AmountText
+                  isNegative={
+                    portfolioPrice?.portfolio_investment_gain_loss_perc === 0 ||
+                    portfolioPrice?.portfolio_investment_gain_loss_perc.toFixed(
+                      2
+                    ) === 0.0
+                      ? "zero"
+                      : portfolioPrice?.portfolio_investment_gain_loss_perc
+                          ?.toString()
+                          ?.startsWith("-")
+                  }
+                  isHighlighted
+                  variant="h6"
+                >
                   {portfolioPrice?.portfolio_investment_gain_loss_perc.toFixed(
                     2
-                  )}{" "}
+                  )}
                   %
                 </AmountText>
               </ValueBox>

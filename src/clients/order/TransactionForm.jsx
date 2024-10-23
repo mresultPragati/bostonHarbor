@@ -168,9 +168,36 @@ const TransactionForm = (props) => {
       unit_price: formData.pricePerUnit,
       units: Number(formData.units),
     };
-    console.log(selectedClient, updatedFormData, "formDataformData");
+
     var payload;
-    if (!selectedAssetClass?.isChangeUI) {
+    var order_data;
+    if (selectedOwnership?.type === ownershipType.direct) {
+      // order_data = {
+      payload = {
+        order_data: {
+          ownership: selectedOwnership?.label,
+          assetClass: selectedAssetClass.label,
+          vacancy_rate: formData.vacancyRate,
+          capex: formData.capEx,
+          cap_rate: formData.capRateValuation,
+          market_value: formData.currentMarketValue,
+          property_management_fees: formData.propertyManageFees,
+          maintenance_repairs: formData.maintenanceRepairs,
+          property_taxes: formData.propertyTaxes,
+          insurance: formData.insurance,
+          utilities: formData.utilities,
+          hoa_fees: formData.hoaFees,
+          date: getUSTime(),
+        },
+        client_name: selectedClient?.clientDetail?.clientName,
+        client_id: selectedClient.uniqueId,
+        funds: selectedClient.investmentAmount,
+      };
+    } else if (
+      !selectedAssetClass?.isChangeUI &&
+      selectedOwnership?.type !== ownershipType.direct
+    ) {
+      // order_data = updatedFormData;
       payload = {
         order_data: updatedFormData,
         client_name: selectedClient?.clientDetail?.clientName,
@@ -178,6 +205,7 @@ const TransactionForm = (props) => {
         funds: selectedClient.investmentAmount,
       };
     } else {
+      // order_data = {
       payload = {
         order_data: {
           ownership: selectedOwnership?.label,
@@ -188,9 +216,17 @@ const TransactionForm = (props) => {
           dividendYield: formData?.dividendYield,
         },
         client_name: selectedClient?.clientDetail?.clientName,
+        funds: selectedClient.investmentAmount,
         client_id: selectedClient.uniqueId,
       };
     }
+
+    // payload = {
+    //   order_data,
+    //   client_name: selectedClient?.clientDetail?.clientName,
+    //   funds: selectedClient.investmentAmount,
+    //   client_id: selectedClient.uniqueId,
+    // };
     const resp = await placeOrder(payload, "application/json");
     if (resp.status === 200) {
       setAlertMsg({
@@ -309,46 +345,48 @@ const TransactionForm = (props) => {
         <Grid2 container spacing={2} alignItems="center" sx={{ mb: 2 }}>
           <Grid2 item size={{ md: 1 }} />
           <Grid2 item size={{ xs: 12, md: 4 }}>
-            <BostonAutocomplete
-              options={
-                selectedOwnership?.type === ownershipType?.reit
-                  ? reitList
-                  : selectedOwnership?.type === ownershipType?.commercial
-                  ? commercialList
-                  : selectedOwnership?.type === ownershipType?.crowdfund
-                  ? crowdfundedList
-                  : selectedOwnership?.type === ownershipType?.direct
-                  ? directList
-                  : selectedAssetClass?.label === "Cryptocurrency"
-                  ? crypto
-                  : selectedAssetClass?.label === "Commodities"
-                  ? commodities
-                  : selectedAssetClass?.label === "Mutual Funds"
-                  ? mutualFunds
-                  : selectedAssetClass?.label === "Bonds"
-                  ? bonds
-                  : selectedAssetClass?.label === "Stocks"
-                  ? stockCompany
-                  : []
-              }
-              value={nameSearch}
-              getOptionLabel={(option) => option.label || ""}
-              onChange={(event, value) => {
-                // handleAutocompleteChange(event, value, "name");
-                setSelectedCompany(value);
-                setNameSearch(value);
-              }}
-              label="Name"
-              required
-              renderOption={(props, option) => (
-                <StyledListItem {...props}>
-                  <ListItemText
-                    primary={option?.label}
-                    secondary={`Ticker: ${option.ticker}`}
-                  />
-                </StyledListItem>
-              )}
-            />
+            {selectedOwnership?.type !== ownershipType?.direct && (
+              <BostonAutocomplete
+                options={
+                  selectedOwnership?.type === ownershipType?.reit
+                    ? reitList
+                    : selectedOwnership?.type === ownershipType?.commercial
+                    ? commercialList
+                    : selectedOwnership?.type === ownershipType?.crowdfund
+                    ? crowdfundedList
+                    : selectedOwnership?.type === ownershipType?.direct
+                    ? directList
+                    : selectedAssetClass?.label === "Cryptocurrency"
+                    ? crypto
+                    : selectedAssetClass?.label === "Commodities"
+                    ? commodities
+                    : selectedAssetClass?.label === "Mutual Funds"
+                    ? mutualFunds
+                    : selectedAssetClass?.label === "Bonds"
+                    ? bonds
+                    : selectedAssetClass?.label === "Stocks"
+                    ? stockCompany
+                    : []
+                }
+                value={nameSearch}
+                getOptionLabel={(option) => option.label || ""}
+                onChange={(event, value) => {
+                  // handleAutocompleteChange(event, value, "name");
+                  setSelectedCompany(value);
+                  setNameSearch(value);
+                }}
+                label="Name"
+                required
+                renderOption={(props, option) => (
+                  <StyledListItem {...props}>
+                    <ListItemText
+                      primary={option?.label}
+                      secondary={`Ticker: ${option.ticker}`}
+                    />
+                  </StyledListItem>
+                )}
+              />
+            )}
           </Grid2>
 
           <Grid2 item size={{ md: 1 }} />

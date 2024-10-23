@@ -90,9 +90,9 @@ export const stocks = [
 ];
 
 export const crypto = [
-  { label: "Bitcoin", ticker: "BTC" },
-  { label: "Litecoin", ticker: "LTC" },
-  { label: "Ethereum", ticker: "ETH" },
+  { label: "Bitcoin", ticker: "BTC-USD" },
+  { label: "Litecoin", ticker: "LTC-USD" },
+  { label: "Ethereum", ticker: "ETH-USD" },
 ];
 
 export const bonds = [
