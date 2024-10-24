@@ -23,18 +23,19 @@ export const PortfolioOverview = ({
   const selectedClient = JSON?.parse?.(localStorage?.getItem?.("clients"));
 
   return (
-    <StickBox>
-      <Box
-        sx={{
-          p: 1,
-          backgroundColor: "#fff",
-          // color: "#000",
-          borderRadius: 1,
-          marginBottom: 8,
-          border: "1px solid",
-        }}
-      >
-        {Object.keys(portfolioPrice).length > 0 ? (
+    <>
+      {/* {Object.keys(portfolioPrice).length > 0 && ( */}
+      <StickBox>
+        <Box
+          sx={{
+            p: 1,
+            backgroundColor: "#fff",
+            // color: "#000",
+            borderRadius: 1,
+            marginBottom: 8,
+            border: "1px solid",
+          }}
+        >
           <Grid2
             container
             spacing={4}
@@ -67,7 +68,7 @@ export const PortfolioOverview = ({
             >
               <ValueBox>
                 <OverviewTitle variant="subtitle1">
-                  INVESTMENT AMOUNT
+                  INVESTED AMOUNT
                 </OverviewTitle>
                 <Typography variant="h6">${amount_invested}</Typography>
               </ValueBox>
@@ -192,13 +193,10 @@ export const PortfolioOverview = ({
               </ValueBox>
             </Grid2>
           </Grid2>
-        ) : (
-          <div className="mt-5 row">
-            <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
-          </div>
-        )}
-      </Box>
-    </StickBox>
+        </Box>
+      </StickBox>
+      {/* )} */}
+    </>
   );
 };
 

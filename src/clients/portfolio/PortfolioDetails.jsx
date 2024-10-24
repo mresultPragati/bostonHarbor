@@ -70,7 +70,7 @@ export const PortfolioDetails = () => {
         console.error(`API Error: ${error}`);
         if (error.response.status === 404) {
           setAlertMsg({
-            msg: `${error.response.status}: No data found for client`,
+            msg: `Please place the order to view portfolio`,
             severity: "error",
           });
         }
@@ -149,192 +149,27 @@ export const PortfolioDetails = () => {
     <>
       <BostonAlertMessage alertMsg={alertMsg} setAlertMsg={setAlertMsg} />
       {showLoader && <BostonLoader />}
-      <PortfolioOverview
-        portfolioPrice={portfolioPrice}
-        portfolioList={portfolioList}
-        amount_invested={`${calculateTotals("Amount_Invested", portfolioList)}`}
-      />
-
-      <PortfolioTable
-        portfolioList={portfolioList}
-        generatePortfolioSuggestion={generatePortfolioSuggestion}
-      />
-      {/* <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
-        Portfolio Details
-      </Typography>
       {portfolioList?.length > 0 ? (
         <>
-          <div className="d-flex justify-content-end">
-            <Button
-              variant="contained"
-              onClick={() => generatePortfolioSuggestion()}
-            >
-              {" "}
-              Portfolio Analysis
-            </Button>
-          </div>
-          <Note>
-            Note: Please enable allow pop-ups in browser to view Portfolio
-            Analysis.
-          </Note>
-          <TableContainer>
-            <Table aria-labelledby="tableTitle">
-              <TableHead>
-                <TableRow>
-                  <BoldCell>Sr. No.</BoldCell>
-                  <BoldCell>Asset Class</BoldCell>
-                  <BoldCell>Name</BoldCell>
-                  <BoldCell>Symbol</BoldCell>
-                  <BoldCell>Quantity</BoldCell>
-                  <BoldCell>Delayed Price</BoldCell>
-                  <BoldCell>Current Value</BoldCell>
-                  <BoldCell>Daily Price Change</BoldCell>
-                  <BoldCell>Daily Value Change</BoldCell>
-                  <BoldCell>Amount Invested / Unit</BoldCell>
-                  <BoldCell>Amount Invested</BoldCell>
-                  <BoldCell>Investment Gain or (Loss) %</BoldCell>
-                  <BoldCell>Investment Gain or (Loss) $</BoldCell>
-                  <BoldCell>Estimated Annual Income</BoldCell>
-                  <BoldCell>Estimated Yield</BoldCell>
-                  <BoldCell>Time Held</BoldCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {portfolioList.map((row, index) => (
-                  <TableRow hover key={index}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.assetClass}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.symbol}</TableCell>
-                    <TableCell>{row.Quantity}</TableCell>
-                    <TableCell>${row.Delayed_Price?.toFixed(2)}</TableCell>
-                    <TableCell>${row.current_value?.toFixed(2)}</TableCell>
-                    <CurrencyCell
-                      // isNegative={row.Daily_Price_Change?.toString()?.startsWith(
-                      //   "-"
-                      // )}
-                      isNegative={
-                        row.Daily_Price_Change === 0 ||
-                        row.Daily_Price_Change.toFixed(2) === 0.0
-                          ? "zero"
-                          : row.Daily_Price_Change?.toString()?.startsWith("-")
-                      }
-                    >
-                      {row.Daily_Price_Change?.toString()?.startsWith("-")
-                        ? `-$${row.Daily_Price_Change?.toFixed(2)
-                            ?.toString()
-                            ?.replace("-", "")}`
-                        : `$${row.Daily_Price_Change?.toFixed(2)}`}
-                    </CurrencyCell>
+          <PortfolioOverview
+            portfolioPrice={portfolioPrice}
+            portfolioList={portfolioList}
+            amount_invested={`${calculateTotals(
+              "Amount_Invested",
+              portfolioList
+            )}`}
+          />
 
-                    <CurrencyCell
-                      isNegative={
-                        row.Daily_Price_Change === 0 ||
-                        row.Daily_Price_Change.toFixed(2) === 0.0
-                          ? "zero"
-                          : row.Daily_Value_Change?.toString()?.startsWith("-")
-                      }
-                    >
-                      {row.Daily_Value_Change?.toString()?.startsWith("-")
-                        ? `-$${row.Daily_Value_Change?.toFixed(2)
-                            ?.toString()
-                            ?.replace("-", "")}`
-                        : `$${row.Daily_Value_Change.toFixed(2)}`}
-                    </CurrencyCell>
-
-                    <TableCell>
-                      ${row.Amount_Invested_per_Unit?.toFixed(2)}
-                    </TableCell>
-                    <TableCell>${row.Amount_Invested?.toFixed(2)}</TableCell>
-                    <CurrencyCell
-                      isNegative={
-                        row.Daily_Price_Change === 0 ||
-                        row.Daily_Price_Change.toFixed(2) === 0.0
-                          ? "zero"
-                          : row.Investment_Gain_or_Loss_percentage?.toString()?.startsWith(
-                              "-"
-                            )
-                      }
-                    >
-                      {row.Investment_Gain_or_Loss_percentage?.toFixed(2)}%
-                    </CurrencyCell>
-                    <CurrencyCell
-                      isNegative={
-                        row.Daily_Price_Change === 0 ||
-                        row.Daily_Price_Change.toFixed(2) === 0.0
-                          ? "zero"
-                          : row.Investment_Gain_or_Loss?.toString()?.startsWith(
-                              "-"
-                            )
-                      }
-                    >
-                      {row.Investment_Gain_or_Loss?.toString()?.startsWith("-")
-                        ? `-$${row.Investment_Gain_or_Loss?.toFixed(2)
-                            ?.toString()
-                            ?.replace("-", "")}`
-                        : `$${row.Investment_Gain_or_Loss?.toFixed(2)}`}
-                    </CurrencyCell>
-                    <TableCell>${row.Estimated_Annual_Income}</TableCell>
-                    <TableCell>{row.Estimated_Yield}%</TableCell>
-                    <TableCell sx={{ textWrap: "nowrap" }}>
-                      {calculateDaysFromNow(row.Time_Held)}{" "}
-                      {calculateDaysFromNow(row.Time_Held) > 1 ? "days" : "day"}
-                    </TableCell>
-                  </TableRow>
-                ))}
-
-                <TableRow sx={{ backgroundColor: "#dddddd" }}>
-                  <BoldCell colSpan={4}>Total</BoldCell>
-                  <BoldCell>
-                    {calculateTotals("Quantity", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    ${calculateTotals("Delayed_Price", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    ${calculateTotals("current_value", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    ${calculateTotals("Daily_Price_Change", portfolioList)}
-                  </BoldCell>
-              
-                  <BoldCell>
-                    ${calculateTotals("Daily_Value_Change", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    $
-                    {calculateTotals("Amount_Invested_per_Unit", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    ${calculateTotals("Amount_Invested", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    {calculateTotals(
-                      "Investment_Gain_or_Loss_percentage",
-                      portfolioList
-                    )}
-                    %
-                  </BoldCell>
-                  <BoldCell>
-                    ${calculateTotals("Investment_Gain_or_Loss", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    ${calculateTotals("Estimated_Annual_Income", portfolioList)}
-                  </BoldCell>
-                  <BoldCell>
-                    {calculateTotals("Estimated_Yield", portfolioList)}%
-                  </BoldCell>
-                  <BoldCell></BoldCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <PortfolioTable
+            portfolioList={portfolioList}
+            generatePortfolioSuggestion={generatePortfolioSuggestion}
+          />
         </>
       ) : (
         <div className="mt-5 row">
-          <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
+          <h2 style={{ fontWeight: 300 }}>No Orders Placed!!!</h2>
         </div>
-      )} */}
+      )}
     </>
   );
 };

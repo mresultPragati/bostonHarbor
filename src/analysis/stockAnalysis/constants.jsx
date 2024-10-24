@@ -1,8 +1,8 @@
 export const ownershipType = {
   direct: "direct",
   reit: "reit",
-  // commercial: "commercial",
-  // crowdfund: "crowdfund",
+  commercial: "commercial",
+  crowdfund: "crowdfund",
 };
 
 export const country = [
@@ -33,10 +33,10 @@ export const markets = [
 export const ownership = [
   { label: "Direct", type: ownershipType?.direct },
   { label: "REIT/Fund", type: ownershipType?.reit },
-  {
-    label: "Commercial Real Estate (Triple Net Lease)",
-    type: ownershipType?.commercial,
-  },
+  // {
+  //   label: "Commercial Real Estate (Triple Net Lease)",
+  //   type: ownershipType?.commercial,
+  // },
   // {
   //   label: "Crowdfunded Real Estate Investments",
   //   type: ownershipType?.crowdfund,

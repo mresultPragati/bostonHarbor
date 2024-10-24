@@ -19,10 +19,11 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   return (
     <>
-      <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
-        Portfolio Details
-      </Typography>
-      {portfolioList?.length > 0 && (
+      {/* {portfolioList?.length > 0 && ( */}
+      <>
+        <Typography variant="h4" sx={{ textAlign: "center", margin: "2rem 0" }}>
+          Portfolio Details
+        </Typography>
         <>
           <div className="d-flex justify-content-end">
             <Button
@@ -52,6 +53,7 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
                   <BoldCell>Daily Value Change</BoldCell>
                   <BoldCell>Amount Invested / Unit</BoldCell>
                   <BoldCell>Amount Invested</BoldCell>
+                  <BoldCell>Cap Rate</BoldCell>
                   <BoldCell>Investment Gain or (Loss) %</BoldCell>
                   <BoldCell>Investment Gain or (Loss) $</BoldCell>
                   <BoldCell>Estimated Annual Income</BoldCell>
@@ -66,7 +68,9 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
                     <TableCell>{row.assetClass}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.symbol}</TableCell>
-                    <TableCell>{row.Quantity}</TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {row.Quantity}
+                    </TableCell>
                     <TableCell>${row.Delayed_Price?.toFixed(2)}</TableCell>
                     <TableCell>${row.current_value?.toFixed(2)}</TableCell>
                     <CurrencyCell
@@ -106,6 +110,7 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
                       ${row.Amount_Invested_per_Unit?.toFixed(2)}
                     </TableCell>
                     <TableCell>${row.Amount_Invested?.toFixed(2)}</TableCell>
+                    <TableCell>{0}%</TableCell>
                     <CurrencyCell
                       isNegative={
                         row.Daily_Price_Change === 0 ||
@@ -147,7 +152,7 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
                 {/* Totals Row */}
                 <TableRow sx={{ backgroundColor: "#dddddd" }}>
                   <BoldCell colSpan={4}>Total</BoldCell>
-                  <BoldCell>
+                  <BoldCell sx={{ textAlign: "center" }}>
                     {calculateTotals("Quantity", portfolioList)}
                   </BoldCell>
                   <BoldCell>
@@ -172,6 +177,7 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
                   <BoldCell>
                     ${calculateTotals("Amount_Invested", portfolioList)}
                   </BoldCell>
+                  <BoldCell>{0}%</BoldCell>
                   <BoldCell>
                     {calculateTotals(
                       "Investment_Gain_or_Loss_percentage",
@@ -194,12 +200,8 @@ const PortfolioTable = ({ portfolioList, generatePortfolioSuggestion }) => {
             </Table>
           </TableContainer>
         </>
-      )}
-      {portfolioList?.length === 0 && (
-        <div className="mt-5 row">
-          <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
-        </div>
-      )}
+      </>
+      {/* )} */}
 
       {portfolioList?.length > 0 && (
         <BostonPaginationElement
