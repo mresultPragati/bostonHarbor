@@ -177,6 +177,7 @@ const TransactionForm = (props) => {
         order_data: {
           ownership: selectedOwnership?.label,
           assetClass: selectedAssetClass.label,
+          name: formData.directOwnershipName,
           vacancy_rate: formData.vacancyRate,
           capex: formData.capEx,
           cap_rate: formData.capRateValuation,

@@ -43,8 +43,6 @@ export const PortfolioDetails = () => {
     // }, 1000);
     // return () => clearInterval(intervalId);
     // // }
-
-    // Cleanup interval on unmount
   }, [uniqueId]);
 
   const portfolioAllDetails = async () => {

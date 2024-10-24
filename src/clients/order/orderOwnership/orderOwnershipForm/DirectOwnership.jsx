@@ -51,8 +51,8 @@ const DirectOwnership = ({ formData, setFormData }) => {
             label="Name"
             variant="standard"
             fullWidth
-            name="directName"
-            value={formData.directName}
+            name="directOwnershipName"
+            value={formData.directOwnershipName}
             onChange={handleChange}
           />
         </Grid2>

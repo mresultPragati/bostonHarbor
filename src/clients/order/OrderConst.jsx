@@ -36,7 +36,7 @@ export const isSubmitDisabled = (
 
     case ownershipType?.direct:
       return (
-        !formData.directName ||
+        !formData.directOwnershipName ||
         !formData.vacancyRate ||
         !formData.capEx ||
         !formData.capRateValuation ||
