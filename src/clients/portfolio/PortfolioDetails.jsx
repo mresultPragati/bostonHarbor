@@ -134,12 +134,13 @@ export const PortfolioDetails = () => {
           severity: "error",
         });
         // alert("Pop-up blocked! Please enable pop-ups for this site.");
-      } else {
-        newWindow = window.open(
-          `/client/portfolioAnalysis/${selectedClient?.uniqueId}`,
-          "_blank"
-        );
       }
+      // else {
+      //   newWindow = window.open(
+      //     `/client/portfolioAnalysis/${selectedClient?.uniqueId}`,
+      //     "_blank"
+      //   );
+      // }
 
       if (newWindow) {
         const checkIfClosed = setInterval(() => {
