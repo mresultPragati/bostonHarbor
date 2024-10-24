@@ -78,17 +78,16 @@ export const directList = [
 export const commodities = [
   { label: "Commodities Index", ticker: "COM" },
   { label: "Commodities Basket", ticker: "BSKT" },
-  { label: "Resource Fund", ticker: "RSRC" },
+  // { label: "Resource Fund", ticker: "RSRC" },
   { label: "Natural Assets", ticker: "NAT" },
   { label: "Metals Index", ticker: "AMI" },
 ];
 
 export const mutualFunds = [
-  { label: "Growth Fund", ticker: "GF" },
-  { label: "Balanced Fund", ticker: "BF" },
-  { label: "Income Fund", ticker: "IF" },
-  { label: "Equity Fund", ticker: "EF" },
-  { label: "Diversified Fund", ticker: "DF" },
+  { label: "Fidelity 500 Index Fund", ticker: "FXAIX" },
+  { label: "Dodge & Cox Stock Fund", ticker: "DODGX" },
+  { label: "Schwab S&P 500 Index Fund", ticker: "SWPPX" },
+  { label: "Fidelity Contrafund", ticker: "FCNTX" },
 ];
 
 export const stocks = [
