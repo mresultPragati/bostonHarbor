@@ -12,27 +12,42 @@ const DirectOwnership = ({ formData, setFormData }) => {
       Number(formData?.insurance) +
       Number(formData?.utilities);
 
+    let adjustedGrosIncome =
+      Number(selectedClient?.investmentAmount) * (1 - formData?.vacancyRate);
+    // 50000 * (1 - Number(formData?.vacancyRate));   // example
+
     let NOI;
-    if (
-      formData?.propertyManageFees &&
-      formData?.maintenanceRepairs &&
-      formData?.propertyManageFees &&
-      formData?.insurance &&
-      formData?.utilities
-    )
-      NOI =
-        Number(selectedClient?.investmentAmount) - Number(operatingExpenses);
-    else NOI = Number(selectedClient?.investmentAmount);
+    // if (
+    //   formData?.propertyManageFees &&
+    //   formData?.maintenanceRepairs &&
+    //   formData?.propertyManageFees &&
+    //   formData?.insurance &&
+    //   formData?.utilities
+    // )
+    NOI = Number(adjustedGrosIncome) - Number(operatingExpenses);
+    // else NOI = Number(selectedClient?.investmentAmount);
 
     let cap_Rate = (NOI / Number(formData?.currentMarketValue)) * 100;
-    console.log("cap_Rate", cap_Rate, cap_Rate.isNaN);
+
+    // let cap_Rate =
+    //   NOI && formData?.currentMarketValue
+    //     ? (NOI / Number(formData.currentMarketValue)) * 100
+    //     : 0;
+
+    console.log(
+      "cap_Rate",
+      cap_Rate,
+      Number(formData?.currentMarketValue),
+      NOI,
+      "-------"
+    );
 
     setFormData({
       ...formData,
-      capRateValuation: cap_Rate.toFixed(2),
+      capRateValuation: cap_Rate ? `${cap_Rate.toFixed(2)}` : 0,
       // capRateValuation: cap_Rate.isNaN ? cap_Rate.toFixed(2) : 0,
     });
-  }, [formData?.currentMarketValue]);
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -178,6 +193,7 @@ const DirectOwnership = ({ formData, setFormData }) => {
             fullWidth
             name="capRateValuation"
             value={formData.capRateValuation}
+            // value={`${formData.capRateValuation}%`}
             onChange={handleChange}
             sx={{
               "& .Mui-disabled": {

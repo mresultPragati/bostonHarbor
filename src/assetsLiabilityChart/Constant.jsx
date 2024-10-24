@@ -2,7 +2,9 @@ import { isEmpty } from "../resusedComponents/constant/ResusableConst";
 
 export const total = (chartData) => {
   return chartData?.datasets?.[0]?.data?.reduce(
-    (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
+    (accumulator, currentValue) =>
+      Number(accumulator ? accumulator : 0) +
+      Number(currentValue ? currentValue : 0),
 
     0
   );
@@ -24,7 +26,9 @@ export const extractKeysAndValues = (obj) => {
   //   ----------------------------OLD-------------------------
   // if (isEmpty(obj)) {
   obj?.datasets?.[0]?.data?.map((item, index) => {
-    if (item) {
+    console.log("itemitem", item);
+
+    if (typeof item === "number" && !isNaN(item)) {
       labelsArray?.push(obj?.labels[index]);
       valueArray?.push(Number(item));
     }
@@ -32,7 +36,8 @@ export const extractKeysAndValues = (obj) => {
 
   var backgroundColor = [];
 
-  for (let i = 0; i <= obj?.datasets?.[0]?.data?.length; i++) {
+  for (let i = 0; i <= labelsArray?.length; i++) {
+    // for (let i = 0; i <= obj?.datasets?.[0]?.data?.length; i++) {
     backgroundColor?.push(getMidDarkColor());
   }
 
@@ -41,13 +46,17 @@ export const extractKeysAndValues = (obj) => {
 
   const sortedDataWithLabels = labels?.map((label, index) => ({
     label,
-    data: parseFloat(data[index]),
+    data: !isNaN(data[index]) && parseFloat(data[index]),
   }));
+  console.log("sortedDataWithLabels", sortedDataWithLabels);
 
   sortedDataWithLabels?.sort((a, b) => b.data - a.data);
 
   const sortedLabels = sortedDataWithLabels?.map((item) => item.label);
-  const sortedData = sortedDataWithLabels?.map((item) => item.data);
+  // const sortedData = sortedDataWithLabels?.map((item) => item.data);
+  const sortedData = sortedDataWithLabels
+    ?.map((item) => item.data)
+    .filter((data) => typeof data === "number" && !isNaN(data));
 
   obj.labels = sortedLabels;
   obj.datasets[0].data = sortedData;

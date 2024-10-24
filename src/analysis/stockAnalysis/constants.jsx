@@ -1,8 +1,8 @@
 export const ownershipType = {
   direct: "direct",
   reit: "reit",
-  commercial: "commercial",
-  crowdfund: "crowdfund",
+  // commercial: "commercial",
+  // crowdfund: "crowdfund",
 };
 
 export const country = [
@@ -10,6 +10,14 @@ export const country = [
   { label: "US" },
   { label: "UK" },
   { label: "Japan" },
+];
+
+// -----------stock companies------------------
+
+export const companies = [
+  { label: "Tesla", ticker: "TSLA" },
+  { label: "NVIDIA Corporation", ticker: "NVDA" },
+  { label: "Apple", ticker: "AAPL" },
 ];
 
 // -------------------------market-----------------------
@@ -110,6 +118,6 @@ export const assets = [
   { label: "Real Estate", isChangeUI: true },
   { label: "Commodities", isChangeUI: false },
   { label: "Mutual Funds", isChangeUI: false },
-  { label: "ETFS", isChangeUI: false },
+  // { label: "ETFS", isChangeUI: false },
   { label: "Cryptocurrency", isChangeUI: false },
 ];

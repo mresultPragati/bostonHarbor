@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,11 +12,15 @@ import { BostonTableHead } from "../OrderStyled";
 import { BoldCell } from "../../portfolio/PortfolioStyled";
 import { calculateTotals } from "../../../resusedComponents/constant/ResusableConst";
 import { BostonTableCell } from "./OrderListStyled";
+import { BostonPaginationElement } from "../../../resusedComponents/BostonPaginationElement";
 
 export const FinancialInstrument = ({ investmentList }) => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   return (
     <>
-      {investmentList?.length > 0 ? (
+      {investmentList?.length > 0 && (
         <>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="transaction table">
@@ -52,26 +56,30 @@ export const FinancialInstrument = ({ investmentList }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {investmentList?.map((row, index) => (
-                  <TableRow key={index}>
-                    <BostonTableCell>{index + 1}</BostonTableCell>
-                    <BostonTableCell>{row.assetClass}</BostonTableCell>
-                    <BostonTableCell>{row.name}</BostonTableCell>
-                    <BostonTableCell align="center">
-                      {row.Action}
-                    </BostonTableCell>
-                    <BostonTableCell align="center">
-                      {row.Units}
-                    </BostonTableCell>
-                    <BostonTableCell align="center">
-                      ${row.UnitPrice?.toFixed(2)}{" "}
-                    </BostonTableCell>
-                    <BostonTableCell align="center">
-                      ${row.clientAmount?.toFixed(2)}
-                    </BostonTableCell>
-                    <BostonTableCell align="center">{row.date}</BostonTableCell>
-                  </TableRow>
-                ))}
+                {investmentList
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.map((row, index) => (
+                    <TableRow key={index}>
+                      <BostonTableCell>{index + 1}</BostonTableCell>
+                      <BostonTableCell>{row.assetClass}</BostonTableCell>
+                      <BostonTableCell>{row.name}</BostonTableCell>
+                      <BostonTableCell align="center">
+                        {row.Action}
+                      </BostonTableCell>
+                      <BostonTableCell align="center">
+                        {row.Units}
+                      </BostonTableCell>
+                      <BostonTableCell align="center">
+                        ${row.UnitPrice?.toFixed(2)}{" "}
+                      </BostonTableCell>
+                      <BostonTableCell align="center">
+                        ${row.clientAmount?.toFixed(2)}
+                      </BostonTableCell>
+                      <BostonTableCell align="center">
+                        {row.date}
+                      </BostonTableCell>
+                    </TableRow>
+                  ))}
                 <TableRow>
                   <BoldCell colSpan={4}>Total</BoldCell>
 
@@ -89,10 +97,22 @@ export const FinancialInstrument = ({ investmentList }) => {
             </Table>
           </TableContainer>
         </>
-      ) : (
+      )}
+
+      {investmentList?.length === 0 && (
         <div className="mt-5 row">
           <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
         </div>
+      )}
+
+      {investmentList?.length > 0 && (
+        <BostonPaginationElement
+          count={investmentList?.length}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          page={page}
+          setPage={setPage}
+        />
       )}
     </>
   );

@@ -19,6 +19,8 @@ export const AssetsChart = ({
   secondPartAssetsData,
   options,
 }) => {
+  console.log("secondPartAssetsData", secondPartAssetsData);
+
   return (
     <>
       <h3 style={{ textAlign: "start" }} className="mt-5">
@@ -81,13 +83,15 @@ export const AssetsChart = ({
                       <TableRow sx={{ " td": { border: 1 } }}>
                         <TableCell
                           colSpan={2}
-                          sx={{ width: "auto" }}
+                          sx={{ width: "auto", fontWeight: "bold" }}
                           align="center"
                         >
                           Total
                         </TableCell>
 
-                        <TableCell>{total(chartData)}</TableCell>
+                        <TableCell sx={{ width: "auto", fontWeight: "bold" }}>
+                          {total(chartData)}
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>

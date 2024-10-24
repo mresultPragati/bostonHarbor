@@ -73,12 +73,14 @@ export const LiabilityChart = ({ options, chartData }) => {
                     <TableRow sx={{ " td": { border: 1 } }}>
                       <TableCell
                         colSpan={2}
-                        sx={{ width: "auto" }}
+                        sx={{ width: "auto", fontWeight: "bold" }}
                         align="center"
                       >
                         Total
                       </TableCell>
-                      <TableCell>{total(chartData)}</TableCell>
+                      <TableCell sx={{ width: "auto", fontWeight: "bold" }}>
+                        {total(chartData)}
+                      </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>

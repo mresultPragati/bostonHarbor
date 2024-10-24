@@ -8,7 +8,7 @@ import { isEmpty } from "../resusedComponents/constant/ResusableConst";
 export const AssetsLiabilityChart = () => {
   const clientList = JSON?.parse?.(localStorage?.getItem?.("financialForm"));
   const [firstPartAssetsData, setFirstPartAssestData] = useState({});
-  const [secondPartAssetsData, setLargeValueChartData] = useState({});
+  const [secondPartAssetsData, setSecondPartAssestData] = useState({});
   const [assetsChartData, setAssetsChartData] = useState({});
   const [liabilityChartData, setLiabilityChartData] = useState({});
   const { id } = useParams();
@@ -113,7 +113,7 @@ export const AssetsLiabilityChart = () => {
     };
 
     setFirstPartAssestData(chartObj?.firstPartOfAssetCHart);
-    setLargeValueChartData(chartObj?.secondPartOfAssets);
+    setSecondPartAssestData(chartObj?.secondPartOfAssets);
     setAssetsChartData(
       extractKeysAndValues(result?.assetsDatasets ? result?.assetsDatasets : {})
     );

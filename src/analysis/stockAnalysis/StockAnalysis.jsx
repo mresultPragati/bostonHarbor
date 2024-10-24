@@ -6,13 +6,13 @@ import { generateStockAnalysis } from "../../api/apiServiece";
 import BostonLoader from "../../resusedComponents/BostonLoader";
 import { BostonAlertMessage } from "../../resusedComponents/BostonAlertMessage";
 import { BostonSearch } from "../../resusedComponents/BostonSearch";
-import { stocks, markets } from "./constants";
+import { stocks, markets, companies } from "./constants";
 import { AnalysisResponse } from "./AnalysisResponse";
 import { StockSelection } from "./StockSelection";
 
 export const StockAnalysis = () => {
   const [stockMarket, setStockMarket] = useState(markets);
-  const [stockCompany, setStockCompany] = useState([]);
+  const [stockCompany, setStockCompany] = useState(companies);
   const [htmlResponse, setHtmlResponse] = useState("");
   const [selectedCompany, setSelectedCompany] = useState({});
   const [selectedMarket, setSelectedMarket] = useState({});

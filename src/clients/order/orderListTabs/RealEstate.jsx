@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,11 +11,15 @@ import {
 import { BostonTableHead } from "../OrderStyled";
 import { calculateTotals } from "../../../resusedComponents/constant/ResusableConst";
 import { BoldCell } from "../../portfolio/PortfolioStyled";
+import { BostonPaginationElement } from "../../../resusedComponents/BostonPaginationElement";
 
 export const RealEstate = ({ realEstateList }) => {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   return (
     <>
-      {realEstateList?.length > 0 ? (
+      {realEstateList?.length > 0 && (
         <>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="transaction table">
@@ -78,10 +82,22 @@ export const RealEstate = ({ realEstateList }) => {
             </Table>
           </TableContainer>
         </>
-      ) : (
+      )}
+
+      {realEstateList?.length === 0 && (
         <div className="mt-5 row">
           <h4 style={{ fontWeight: 300 }}>No Data Found!!!</h4>
         </div>
+      )}
+
+      {realEstateList?.length > 0 && (
+        <BostonPaginationElement
+          count={realEstateList?.length}
+          rowsPerPage={rowsPerPage}
+          setRowsPerPage={setRowsPerPage}
+          page={page}
+          setPage={setPage}
+        />
       )}
     </>
   );

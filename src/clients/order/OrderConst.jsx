@@ -38,7 +38,7 @@ export const isSubmitDisabled = (
       return (
         !formData.directOwnershipName ||
         !formData.vacancyRate ||
-        !formData.capEx ||
+        // !formData.capEx ||
         !formData.capRateValuation ||
         !formData.currentMarketValue ||
         !formData.propertyManageFees ||

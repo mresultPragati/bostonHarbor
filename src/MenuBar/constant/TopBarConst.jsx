@@ -18,7 +18,7 @@ export const topbarMenu = [
   { name: "Investor Assessment", path: navigatorPath?.InvestmentPersonality },
   // { name: "Transaction Form", path: navigatorPath?.transaction },
   // { name: "Investment Allocation", path: navigatorPath?.investment },
-  { name: "Investor Suggestion", path: navigatorPath?.advisorAnalysis },
+  { name: "Suggestion", path: navigatorPath?.advisorAnalysis },
   {
     name: "Analysis",
     subMenu: [
